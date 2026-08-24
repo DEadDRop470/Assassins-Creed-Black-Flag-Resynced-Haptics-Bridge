@@ -1,8 +1,5 @@
 # ACBFHapticsBridge
-AC Black Flag Resynced – Shadows Haptics Bridge  Adds Assassin’s Creed Shadows–derived haptic feedback and conventional rumble to Assassin’s Creed Black Flag Resynced. Supports X-input/Dinput , Xbox 360/DS4/DS5 Controllers wired or wirelessly , native or emulated.
 
-
-AC Black Flag Resynced – Shadows Haptics Bridge
 
 Adds Assassin’s Creed Shadows–derived haptic feedback and conventional rumble to Assassin’s Creed Black Flag Resynced.
 The mod supports native DualSense haptics (wired-native) and wirelessly through DSX(+ dlc), as well as ordinary rumble for Xbox 360, DS4, XInput-emulated and other compatible controllers. 
