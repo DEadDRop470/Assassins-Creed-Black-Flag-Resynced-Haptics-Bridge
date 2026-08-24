@@ -1,0 +1,45 @@
+# Visual Studio / build output
+.vs/
+.vscode/
+build/
+Build/
+Debug/
+Release-build/
+x64/
+x86/
+obj/
+bin/
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+
+# Runtime/debug output
+*.log
+*.dmp
+*.tmp
+*.bak
+*.cache
+
+# Local test/game files
+ACBlackFlag.exe
+ACBlackFlag_DX11.exe
+ShadowsHapticsPack*.hfx
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.user
+*.suo
+
+# Secrets / local environment
+.env
+.env.*
+*.key
+*.pem
+
+# Python cache
+__pycache__/
+*.pyc

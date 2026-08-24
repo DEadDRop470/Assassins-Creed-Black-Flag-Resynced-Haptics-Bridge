@@ -1,0 +1,3 @@
+ACBFHapticsBridge NexusMods v2.1 / internal r7 target
+Expected file: ACBFHapticsBridge-v7.asi
+SHA-256: fb77b55728185e453fcc2046716f1d299bb78e92aededae906c9c56db58383b9
