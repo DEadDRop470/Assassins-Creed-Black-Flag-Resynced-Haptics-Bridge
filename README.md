@@ -1,272 +1,412 @@
 # ACBFHapticsBridge
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Release-v2.1-2ea44f?style=for-the-badge" alt="Release v2.1">
+  <img src="https://img.shields.io/badge/Internal-v7--r7--kick--walk4x-6f42c1?style=for-the-badge" alt="Internal v7-r7-kick-walk4x">
+  <img src="https://img.shields.io/badge/DualSense-Haptics-0070d1?style=for-the-badge" alt="DualSense Haptics">
+  <img src="https://img.shields.io/badge/XInput-Rumble-555555?style=for-the-badge" alt="XInput Rumble">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+</p>
 
-Adds Assassin’s Creed Shadows–derived haptic feedback and conventional rumble to Assassin’s Creed Black Flag Resynced.
-The mod supports native DualSense haptics (wired-native) and wirelessly through DSX(+ dlc), as well as ordinary rumble for Xbox 360, DS4, XInput-emulated and other compatible controllers. 
+<p align="center">
+  <strong>Assassin's Creed Shadows-derived haptic feedback and conventional rumble for Assassin's Creed IV: Black Flag Resynced.</strong>
+</p>
 
-Works by hooking into the game exe and using the wwise motion native pipeline that Anvil Engine has to trigger the haptic events so it should technically work with other emulation software like dsx , ds4windows or viiper releases or completely native dinput and x-input.
+---
 
+## 🔗 Nexus Mods
 
-NEXUS MODS : https://www.nexusmods.com/assassinscreedblackflagresynced/mods/412?tab=description 
+**NEXUS MODS:**  
+https://www.nexusmods.com/assassinscreedblackflagresynced/mods/412?tab=description
 
-Confirmed compatible: Steam version, Title Update 1.0.6  ( will update Ubisoft/ Epic versions  in the next day/days-need the files/sha256 hash/logs from those versions)
+---
 
-MOD REQUIREMENTS/INSTALATION : version.dll(from Ultimate Asi Loader or ACBlackFlagFix mod on Nexusmods--check above link)(version.dll not included in release for now. Download v2.1 not source version. Add version.dll alongisde the other .ini, .asi and .hfx files in the same folder where AcBlagFlag.exe is  )
+## 🎮 What this mod does
 
+ACBFHapticsBridge adds **Assassin's Creed Shadows-derived haptic feedback** to **Assassin's Creed IV: Black Flag Resynced**.
 
-If you use the Ubisoft Connect or Epic version, please provide your ACBlackFlag.exe SHA-256 hash and the generated ACBFHapticsBridge log(pressing f10 while in menus and once again while in gameplay then close game) so support can be added. Thanks!
+The mod supports:
 
+| Controller / Output | Support |
+|---|:---:|
+| Native DualSense haptics — wired | ✅ |
+| DualSense through DSX + DLC / Virtual DualSense with Audio | ✅ |
+| Xbox 360 / XInput rumble | ✅ |
+| DS4 / compatible emulated rumble paths | ✅ |
+| Xbox 360 emulation through DSX | ✅ |
+| Compatible GameInput controllers | ✅ |
+| Steam Input with native wired DualSense | ✅ |
 
-DONATING ( not obligated to, but apreciated nonetheless! :D)
+The bridge hooks into the game executable and uses the **native Wwise Motion / Quad Audio Haptics pipeline already present in Anvil Engine** to inject or supplement controller feedback.
 
-If you liked this mod and  wanna buy me a coffee, show your apreciation/ leave a tip , you can donate via these  wallets , multicoin, preferably BSC Network , ETH Network (BNB , USDC , or whatever you would like) ( Not obligated to , just helps pay bills , motivate me :D and encourages me to pursue my endeavours)
- 
-0xFfd40Cf24B1484f8567181E1c550eA494967f36f (metamask multicoin wallet)
+Because the controller side is handled through **GameInput / XInput-compatible paths**, it can also work with compatible controller-emulation setups such as **DSX** or **DS4Windows**, depending on how the virtual controller is exposed to the game.
 
-DYgtA98yJ7yMf7rg8Mx65jiybeL4FyqpKGoED3VW2MuG --- Solana Network adress
+> [!NOTE]
+> I previously described this more broadly as native DInput/XInput compatibility. The verified v2.1 bridge itself primarily uses **GameInput and XInput paths**, so generic DirectInput support should not be assumed for every device.
 
-TL2oF5L8UNVLS58BmmsynndjY3nZAkTnid --Tron Network adress
+---
 
-bc1qjl3kv3s7l2wrmx68vhdmuqnfcj6hl6650krufx  --Bitcoin Native Segwit adress
+## ✅ Confirmed game version
 
-Paypal profile donate not working for my country and cant leave the direct link here as that would mean doxxing myself :(
+**Confirmed compatible:**
 
+| Store / Version | Status |
+|---|:---:|
+| Steam — Title Update 1.0.6 | ✅ Confirmed |
+| Ubisoft Connect | 🧪 Needs executable/hash/log testing |
+| Epic Games | 🧪 Needs executable/hash/log testing |
 
-AAAANDDDDDDDDDD THIS IS MY FIRST MOD!! Glad it works for me at least!! :D ( please report any bugs or stuff so i can work on them if i can)
+Support for Ubisoft Connect / Epic versions can be added once I have the required executable information.
 
+If you use the **Ubisoft Connect or Epic version**, please provide:
 
-What the ASI mod does (v2.1)
+- your `ACBlackFlag.exe` **SHA-256 hash**
+- the generated `ACBFHapticsBridge` log
+- press **F10 while in menus**
+- press **F10 once again during gameplay**
+- then close the game and provide the log
 
-ACBFHapticsBridge adds Shadows-derived feedback to Black Flag Resynced:
-Full 48 kHz stereo DualSense haptics through the game’s native Wwise haptic path.
-Conventional two-motor rumble for Xbox, DS4, DSX Xbox 360 emulation, and compatible GameInput controllers.
-Walking and running textures.
-Sprint-start and water-lunge impacts.
-Jump takeoff and airtime-based landing feedback.
-Climbing-jump, swimming, diving, water-entry and surface effects.
-Ground and directional dodge effects.
-Parry, light attack and two-stage heavy-attack fallbacks.
-Hood and sheathe/unsheathe feedback.
-Short feedback for inventory/map menu navigation.
-Detection of Black Flag’s existing native feedback to prevent doubled effects.
-Native wired DualSense also works normally with Steam Input enabled.
+Thanks!
 
-V2.1 Changelog
-Compared with v6-r5-menu-state-recovery(v2.0)
+---
 
-R7 includes the subsequent controller movement work from r6 plus the new r7 gameplay additions.
+# 📦 MOD REQUIREMENTS / INSTALLATION
 
-NEW — Kick Haptic
+A compatible ASI loader is required.
 
-Added dedicated kick detection:
+You can use:
 
-Hold R2 + press Square
+- `version.dll` from **Ultimate ASI Loader**
+- or the compatible `version.dll` supplied by **ACBlackFlagFix** on NexusMods
 
-New KickModifier input binding
-New KickAction input binding
-Activates only from the Square press edge while R2 is already held
-Holding Square first and then pressing R2 does not incorrectly trigger it
-Holding Square does not continuously retrigger the effect
-Disabled during inferred menu state
-Uses native-output arbitration to prevent duplicated feedback
-Dedicated 120 ms anti-double-trigger cooldown
-Separate [Effect.Kick] configuration section
-Independently configurable intensity and timing
-DualSense Walking Feedback Increased
+> [!IMPORTANT]
+> `version.dll` is **not included in the v2.1 release for now**.
+
+### Installation
+
+1. Download the normal **v2.1 release**, not the source package.
+2. Place:
+   - `ACBFHapticsBridge-v7.asi`
+   - `ACBFHapticsBridge-v7.ini`
+   - the required `.hfx` haptics pack
+   - `version.dll`
+3. Put all of them in the same folder as:
+   - `ACBlackFlag.exe`
+4. Launch the game.
+5. Press **F9** if you want to quickly test whether the bridge is producing feedback.
+
+---
+
+# ☕ DONATING
+
+> **Not obligated to, but appreciated nonetheless! :D**
+
+If you liked this mod and wanna buy me a coffee, show your appreciation / leave a tip, you can donate via these wallets.
+
+Multicoin is available; **BSC Network / ETH Network** is preferred for things such as BNB, USDC, or whatever you would like.
+
+**Not obligated to — it just helps pay bills, motivates me :D, and encourages me to pursue my endeavours.**
+
+| Network | Address |
+|---|---|
+| **MetaMask / Multicoin** | `0xFfd40Cf24B1484f8567181E1c550eA494967f36f` |
+| **Solana** | `DYgtA98yJ7yMf7rg8Mx65jiybeL4FyqpKGoED3VW2MuG` |
+| **TRON** | `TL2oF5L8UNVLS58BmmsynndjY3nZAkTnid` |
+| **Bitcoin — Native SegWit** | `bc1qjl3kv3s7l2wrmx68vhdmuqnfcj6hl6650krufx` |
+
+> PayPal profile donate is not working for my country, and I can't leave the direct link here because that would mean doxxing myself :(
+
+---
+
+# 😄 AAAANDDDDDDDDDD THIS IS MY FIRST MOD!!
+
+Glad it works for me at least!! :D
+
+Please report any bugs or weird stuff so I can work on them if I can.
+
+---
+
+# ✨ What the ASI mod does — v2.1
+
+ACBFHapticsBridge currently adds contextual feedback for:
+
+| Area | Effects |
+|---|---|
+| **DualSense** | Full 48 kHz stereo haptics through Black Flag's native Wwise haptic path |
+| **Conventional rumble** | Two-motor rumble conversion for Xbox/XInput, DS4/emulated and compatible GameInput controllers |
+| **Movement** | Walking, running, sprint-start impact |
+| **Parkour** | Jump takeoff, short/normal/long landing, haystack landing, climbing-jump correlation |
+| **Dodging** | Ground dodge, directional dodge |
+| **Water** | Dive/water entry, surface, swim-up, water lunge / fast-swim start |
+| **Combat** | Parry, light attack, two-stage heavy attack, R2 + Square kick |
+| **Character / equipment** | Hood action, sheathe / unsheathe |
+| **Menus** | Menu-open feedback, navigation ticks, tab/shoulder feedback |
+| **Runtime protection** | Native-feedback arbitration to reduce doubled effects |
+| **Recovery** | Menu/player-state recovery and Wwise haptic-sink rebind after reloads |
+
+The bridge keeps **Black Flag's own native controller feedback whenever possible** and fills in actions where the original game provides little or no controller response.
+
+---
+
+# 🆕 v2.1 Changelog
+
+Compared with:
+
+`v6-r5-menu-state-recovery` — Nexus **v2.0**
+
+R7 includes the subsequent controller-movement work from r6 plus the new r7 gameplay additions.
+
+## 🦵 NEW — Kick Haptic
+
+v2.1 adds a guarded gameplay kick:
+
+| Input condition | Result |
+|---|---|
+| Hold **R2**, then press **Square** | ✅ Kick feedback |
+| Press Square alone | ❌ No kick |
+| Hold Square first, then press R2 | ❌ No kick |
+| Keep Square held | ❌ No continuous retrigger |
+| Input occurs while inferred menu state is active | ❌ Gameplay kick suppressed |
+
+Technical behavior:
+
+- activates only from the **Square press edge while R2 is already held**
+- uses `[Input] TriggerThreshold` — default `160`
+- uses the existing `parry` HFX waveform
+- gain follows the normal parry fallback strength — default `0.45`
+- native-output arbitration remains active
+- approximately **120 ms** anti-double-trigger guard in the r7 logic
+- Square/X raw waveform slot is binary-gated by the R2 modifier
+
+> [!NOTE]
+> The verified v2.1 INI does **not** expose separate `KickModifier`, `KickAction`, or `[Effect.Kick]` entries. The kick is implemented by the r7 binary gate around the Square/X effect path.
+
+---
+
+## 🚶 DualSense Walking Feedback Increased
 
 The original r5 walking level was considered too subtle on DualSense.
 
-Controller-movement tuning introduced a dedicated DualSense-only walking multiplier.
+Controller-movement tuning introduced a dedicated **DualSense-only walking multiplier**:
 
-r6:
+| Build | DualSense native walking |
+|---|---:|
+| r5 | `1.00x` baseline |
+| r6 | `2.00x` original r5 level |
+| **r7 / v2.1** | **`4.00x` original r5 level** |
 
-DualSense Haptic Walking = 2x original r5 level
+This amplification affects **DualSense / Wwise native haptics only**.
 
-r7:
-
-DualSense Haptic Walking = 4x original r5 level
-
-This amplification affects DualSense/Wwise native haptics only.
-
-It does not make conventional Xbox/XInput walking rumble four times stronger.
+It does **not** make conventional Xbox/XInput walking rumble four times stronger.
 
 This allows DualSense footsteps to remain clearly perceptible without making ordinary rumble excessive.
 
-Improved Conventional Running Feedback
+---
 
-Retains the controller movement tuning introduced after r5.
+## 🏃 Improved Conventional Running Feedback
 
-Conventional/XInput running now receives a dedicated movement pulse system so sustained running remains clearly noticeable on normal two-motor controllers.
+v2.1 retains the controller movement tuning introduced after r5.
 
-Current tuning uses short repeated running pulses rather than relying entirely on the DualSense-oriented haptic waveform behavior.
+Conventional/XInput running receives a dedicated movement pulse system so sustained running remains clearly noticeable on normal two-motor controllers.
+
+Current tuning uses:
+
+| Setting | Value |
+|---|---:|
+| Pulse interval | `300 ms` |
+| Pulse duration | `75 ms` |
+| Quiet gap | `225 ms` |
+| Opening run phase | first `5 s` |
+| Settled run gain | `1.25` |
+| Opening run gain | `1.50` |
 
 This makes running more distinct from walking on conventional controllers.
 
-Preserved Menu-State Recovery
+---
 
-All menu-state recovery improvements from v6-r5-menu-state-recovery are retained.
+## 🔄 Preserved Menu-State Recovery
+
+All menu-state recovery improvements from `v6-r5-menu-state-recovery` are retained.
 
 This includes recovery after:
 
-Opening/closing menus
-Controller/menu state changes
-Temporary player-state loss
-Returning from menus to gameplay
-Rebinding Edward's gameplay-state context after interruption
+- opening / closing menus
+- controller / menu state changes
+- temporary player-state loss
+- returning from menus to gameplay
+- rebinding Edward's gameplay-state context after interruption
 
 Movement feedback resumes only after gameplay movement has been confirmed, helping prevent false walking/running effects while a menu is open.
 
-Native Haptic Arbitration Retained
+---
+
+## 🛡️ Native Haptic Arbitration Retained
 
 The bridge continues to watch Black Flag's existing:
 
-Quad Audio haptics
-GameInput rumble
-XInput rumble
+- Quad Audio haptics
+- GameInput rumble
+- XInput rumble
 
 When the game already generates suitable native feedback, the bridge suppresses the corresponding fallback effect rather than stacking another effect on top of it.
 
-This is especially useful for combat actions such as attacks, clashes and parries.
+This is especially useful for:
 
-Movement Tuning Retained
+- attacks
+- clashes
+- parries
+- other actions where Black Flag already produces feedback
+
+---
+
+# 🚶 Movement Tuning Retained
 
 R7 keeps the tuned movement behavior introduced during the r6 development branch:
 
-Stable walking loop
-Stable running loop
-Smooth movement fade
-Stronger opening section when starting to run
-Sprint-start impact
-Separate walk/run thresholds
-Sprint toggle support
-Movement suppression while menus are active
-Gameplay-State Haptics Retained
+- stable walking loop
+- stable running loop
+- smooth movement fade
+- stronger opening section when starting to run
+- sprint-start impact
+- separate walk/run thresholds
+- sprint toggle support
+- movement suppression while menus are active
+
+---
+
+# 🧗 Gameplay-State Haptics Retained
 
 The state-based traversal system remains active for:
 
-Jumping
-Falling
-Short landings
-Normal landings
-Long landings
-Haystack landings
-Water entry
-Water surface
-Swimming
-Swim-up
-Water lunge
-Climbing-related traversal
+| Movement / State | Feedback |
+|---|:---:|
+| Jumping | ✅ |
+| Falling | ✅ |
+| Short landing | ✅ |
+| Normal landing | ✅ |
+| Long landing | ✅ |
+| Haystack landing | ✅ |
+| Water entry | ✅ |
+| Water surface | ✅ |
+| Swimming | ✅ |
+| Swim-up | ✅ |
+| Water lunge | ✅ |
+| Climbing-related traversal | ✅ |
 
 Landing strength continues to scale according to measured airtime.
 
-Per-Effect Configuration Retained
+---
 
-Each automatic effect remains independently configurable where applicable.
+# ⚙️ Per-Effect Configuration
+
+Automatic effects remain independently configurable where applicable.
 
 Users can adjust:
 
-Enable/disable state
-Intensity
-Trigger timing
-Waveform start trim
-Cooldowns
-Movement loop timing
+- enable / disable state
+- intensity
+- trigger timing
+- waveform start trim
+- cooldowns
+- movement loop timing
 
-This allows the bridge to be tuned without recompiling the ASI.
+This allows the bridge to be tuned **without recompiling the ASI**.
 
-R7 Effect Summary
+---
 
-R7 currently provides contextual feedback for:
+# 🎛️ R7 Effect Summary
 
-Movement
+## Movement
 
-Walking
-Running
-Sprint start
+- Walking
+- Running
+- Sprint start
 
-Parkour
+## Parkour
 
-Jump
-Short landing
-Normal landing
-Long landing
-Haystack landing
-Ground dodge
-Directional dodge
+- Jump
+- Short landing
+- Normal landing
+- Long landing
+- Haystack landing
+- Ground dodge
+- Directional dodge
 
-Water
+## Water
 
-Dive / water entry
-Surface
-Swim up
-Water lunge / fast-swim start
+- Dive / water entry
+- Surface
+- Swim up
+- Water lunge / fast-swim start
 
-Combat
+## Combat
 
-Parry
-Light attack
-Heavy attack first impact
-Heavy attack second impact
-Kick
+- Parry
+- Light attack
+- Heavy attack — first impact
+- Heavy attack — second impact
+- Kick
 
-Character / Equipment
+## Character / Equipment
 
-Weapon sheathe / unsheathe
-Shared hood/action transition
+- Weapon sheathe / unsheathe
+- Shared hood / action transition
 
-Menus
+## Menus
 
-Menu open
-Menu navigation ticks
-Menu/tab interaction
+- Menu open
+- Menu navigation ticks
+- Menu / tab interaction
 
-The bridge keeps Black Flag's native feedback whenever possible and fills in actions where the original game provides little or no controller response.
-Keyboard/ASI hotkeys
+---
 
-Keyboard key	ASI function
-F9	Plays the Dodge test effect through DualSense haptics and conventional rumble. Useful to know if the mod works or not.
-F10	Writes diagnostic information to
-ACBFHapticsBridge-v6.log
-, including controller backend, game state, effects, rumble activity, and r5 movement tuning.( will require this in case of bugfixes)
-F11	Enables/disables the entire mod. Disabling immediately stops all ASI-added haptics and rumble.
-F12	Enables/disables only automatic gameplay and menu effects. The ASI stays loaded, native game feedback remains active, and F9 still works. Useful for comparisons and ship gameplay.(basicaly disables haptic feedback/rumble by mod while keeping the asi loaded for testing/jackdaw steering. Will update in future the jackdaw state ship event)
+# ⌨️ Keyboard / ASI Hotkeys
 
-Default controller bindings
+| Key | ASI function |
+|---|---|
+| **F9** | Plays the Dodge test effect through DualSense haptics and conventional rumble. Useful to know if the mod works or not. |
+| **F10** | Writes diagnostic information to `ACBFHapticsBridge-v7.log`, including controller backend, game state, effects, rumble activity and movement tuning. I may require this log for bugfixes. |
+| **F11** | Enables / disables the entire mod. Disabling immediately stops all ASI-added haptics and rumble. |
+| **F12** | Enables / disables only automatic gameplay and menu effects. The ASI stays loaded, native game feedback remains active, and F9 still works. Useful for comparisons and ship gameplay — basically disables mod-added haptics/rumble while keeping the ASI loaded for testing / Jackdaw steering. A future update may automate this with a reliable ship-state event. |
 
-INI action	Default input	What it controls
-Jump
-Cross
-Ground jump, directional climbing jump, swim-up and jump/landing state correlation
-DodgeDive
-Circle
-Ground dodge, directional roll, airborne dive request and water dive
-Parry
-L1
-Parry fallback when the game produces no native effect
-Attack
-R1
-Tap/release light attack and held two-stage heavy attack
-SprintLunge
-L3
-Sprint latch, sprint-start kick and water lunge/fast swimming
-SheatheHood
-DPadLeft
-Hood toggle and sheathe/unsheathe feedback
-The left stick remains responsible for:
-Walking and running strength.
-Directional-dodge detection.
-Climbing-jump direction.
-Menu navigation.
+---
+
+# 🎮 Default Controller Bindings
+
+| INI action | Default input | What it controls |
+|---|---|---|
+| `Jump` | `Cross` | Ground jump, directional climbing jump, swim-up and jump/landing state correlation |
+| `DodgeDive` | `Circle` | Ground dodge, directional roll, airborne dive request and water dive |
+| `Parry` | `L1` | Parry fallback when the game produces no native effect |
+| `Attack` | `R1` | Tap/release light attack and held two-stage heavy attack |
+| `SprintLunge` | `L3` | Sprint latch, sprint-start kick and water lunge / fast swimming |
+| `SheatheHood` | `DPadLeft` | Hood toggle and sheathe / unsheathe feedback |
+| **Kick** | **R2 + Square** | r7 binary-gated gameplay kick |
+
+The **left stick** remains responsible for:
+
+- walking and running strength
+- directional-dodge detection
+- climbing-jump direction
+- menu navigation
+
 Landing, haystack entry, water entry and water surface effects are primarily triggered by detected character states rather than a remappable button.
-Changing controller inputs
 
-Open
-ACBFHapticsBridge-v6.ini
-beside
-ACBlackFlag.exe
-and find:
+---
 
+# 🔧 Changing Controller Inputs
 
+Open:
+
+`ACBFHapticsBridge-v7.ini`
+
+beside:
+
+`ACBlackFlag.exe`
+
+Find:
+
+```ini
 [InputBindings]
 Jump=Cross
 DodgeDive=Circle
@@ -274,13 +414,13 @@ Parry=L1
 Attack=R1
 SprintLunge=L3
 SheatheHood=DPadLeft
+```
 
-Change the value after
-=
-to match the corresponding in-game controller assignment.
+Change the value after `=` to match the corresponding in-game controller assignment.
+
 For example, if you change Jump to Triangle in Black Flag:
 
-
+```ini
 [InputBindings]
 Jump=Triangle
 DodgeDive=Circle
@@ -288,286 +428,389 @@ Parry=L1
 Attack=R1
 SprintLunge=L3
 SheatheHood=DPadLeft
+```
 
 This moves all relevant Jump processing to Triangle, including:
-Immediate takeoff feedback.
-Jump-state correlation.
-Climbing-jump detection.
-Swim-up feedback.
-The guarded landing cycle.
+
+- immediate takeoff feedback
+- jump-state correlation
+- climbing-jump detection
+- swim-up feedback
+- guarded landing cycle
+
 Cross will no longer trigger provisional jump feedback.
-Restart the game after changing the INI. Settings are only loaded during startup.
-Available input names
-PlayStation value	Xbox alias	Physical position
-Cross
-A
-Bottom face button
-Circle
-B
-Right face button
-Square
-X
-Left face button
-Triangle
-Y
-Top face button
-L1
-LB
-Left shoulder
-R1
-RB
-Right shoulder
-L2
-LT
-Left trigger
-R2
-RT
-Right trigger
-L3
-LS
-Left-stick click
-R3
-RS
-Right-stick click
-DPadUp
-Same	D-pad Up
-DPadDown
-Same	D-pad Down
-DPadLeft
-Same	D-pad Left
-DPadRight
-Same	D-pad Right
-None
-Disabled
-or
-Off
-No direct input
+
+> [!IMPORTANT]
+> Restart the game after changing the INI. Settings are loaded during startup.
+
+---
+
+# 🕹️ Available Input Names
+
+| PlayStation value | Xbox alias | Physical position |
+|---|---|---|
+| `Cross` | `A` | Bottom face button |
+| `Circle` | `B` | Right face button |
+| `Square` | `X` | Left face button |
+| `Triangle` | `Y` | Top face button |
+| `L1` | `LB` | Left shoulder |
+| `R1` | `RB` | Right shoulder |
+| `L2` | `LT` | Left trigger |
+| `R2` | `RT` | Right trigger |
+| `L3` | `LS` | Left-stick click |
+| `R3` | `RS` | Right-stick click |
+| `DPadUp` | Same | D-pad Up |
+| `DPadDown` | Same | D-pad Down |
+| `DPadLeft` | Same | D-pad Left |
+| `DPadRight` | Same | D-pad Right |
+| `None` / `Disabled` / `Off` | — | No direct input |
+
 Values are case-insensitive. Spaces, underscores and hyphens are ignored.
-Important: use
-Cross
-for the PlayStation cross/X button. Writing
-X
-means the Xbox X position, which corresponds to PlayStation Square.
-The following cannot be used as gameplay action bindings:
-Touchpad
-PS/Guide button
-Controller paddles
-Keyboard keys
-Analog-stick directions
-Options/Start
-Share/Create/View
+
+> [!WARNING]
+> Use `Cross` for the PlayStation cross/X button. Writing `X` means the **Xbox X position**, which corresponds to **PlayStation Square**.
+
+The following cannot be used as normal gameplay action bindings:
+
+- Touchpad
+- PS / Guide button
+- controller paddles
+- keyboard keys
+- analog-stick directions
+- Options / Start
+- Share / Create / View
+
 Menu controls are handled separately.
-Do not give multiple action entries the same physical button unless you intentionally want both actions to trigger. The mod does not automatically resolve duplicate assignments.
-Press
-F10
-after launching. The log should contain something similar to:
 
+Do not give multiple action entries the same physical button unless you intentionally want both actions to trigger.
 
+The mod does not automatically resolve duplicate assignments.
+
+Press **F10** after launching. The log should contain something similar to:
+
+```text
 INPUTCFG jump=Triangle dodgeDive=Circle parry=L1 attack=R1 sprintLunge=L3 sheatheHood=DPadLeft invalidFallbacks=0
+```
 
-If a name is invalid, that action falls back to its tested default and
-invalidFallbacks
-increases.
-Changing individual effects
+If a name is invalid, that action falls back to its tested default and `invalidFallbacks` increases.
 
-Every automatic effect has its own section:
+---
 
+# 🎚️ Changing Individual Effects
 
+Every automatic effect has its own section where applicable.
+
+Example:
+
+```ini
 [Effect.Jump]
 Enabled=1
 IntensityMultiplier=1.00
 TriggerOffsetMs=0
 StartTrimOffsetMs=0
 CooldownMs=300
+```
 
-The common settings mean:
-Setting	Function
-Enabled=1
-Effect enabled
-Enabled=0
-Effect disabled
-IntensityMultiplier=0.50
-Half strength
-IntensityMultiplier=1.00
-Default strength
-IntensityMultiplier=1.25
-25% stronger
-IntensityMultiplier=2.00
-Double strength
-TriggerOffsetMs
-Adds or removes delay after the input/state is detected
-StartTrimOffsetMs
-Changes where playback begins inside the captured waveform
-IntensityMultiplier
-changes both DualSense haptics and conventional rumble.
-For timing:
-Negative
-TriggerOffsetMs=-20
-makes the effect earlier, but never before the input/state was detected.
-Positive
-TriggerOffsetMs=20
-makes it later.
-Positive
-StartTrimOffsetMs=20
-skips more of the waveform’s beginning, producing a faster impact.
-Negative
-StartTrimOffsetMs=-20
-restores more of the original lead-in.
-These settings never change game or animation speed.
-Examples
-Disable walking feedback:
+## Common settings
 
+| Setting | Meaning |
+|---|---|
+| `Enabled=1` | Effect enabled |
+| `Enabled=0` | Effect disabled |
+| `IntensityMultiplier=0.50` | Half strength |
+| `IntensityMultiplier=1.00` | Default strength |
+| `IntensityMultiplier=1.25` | 25% stronger |
+| `IntensityMultiplier=2.00` | Double strength |
+| `TriggerOffsetMs` | Adds or removes delay after the input/state is detected |
+| `StartTrimOffsetMs` | Changes where playback begins inside the captured waveform |
 
+`IntensityMultiplier` changes **both DualSense haptics and conventional rumble**.
+
+### Timing
+
+| Example | Effect |
+|---|---|
+| `TriggerOffsetMs=-20` | Makes the effect earlier, but never before the input/state was detected |
+| `TriggerOffsetMs=20` | Makes the effect later |
+| `StartTrimOffsetMs=20` | Skips more of the waveform beginning, producing a faster impact |
+| `StartTrimOffsetMs=-20` | Restores more of the original lead-in |
+
+These settings **never change game or animation speed**.
+
+---
+
+# 🧪 Configuration Examples
+
+### Disable walking feedback
+
+```ini
 [Effect.Walk]
 Enabled=0
+```
 
-Reduce parry strength by 30%:
+### Reduce parry strength by 30%
 
-
+```ini
 [Effect.Parry]
 Enabled=1
 IntensityMultiplier=0.70
+```
 
-Make the ground-dodge impact start faster:
+### Make the ground-dodge impact start faster
 
-
+```ini
 [Effect.GroundDodge]
 TriggerOffsetMs=-20
 StartTrimOffsetMs=25
+```
 
-Disable only the second heavy-attack impact:
+### Disable only the second heavy-attack impact
 
-
+```ini
 [Effect.HeavyAttackSecond]
 Enabled=0
+```
 
-Make menu navigation softer:
+### Make menu navigation softer
 
-
+```ini
 [Effect.MenuTick]
 IntensityMultiplier=0.60
+```
 
-Special effect settings
+---
+
+# 🧩 Special Effect Settings
 
 Some sections include additional controls:
-Section	Additional controls
-[Effect.Walk]
-LoopStartMs
-,
-LoopEndMs
-,
-FadeMs
-[Effect.Run]
-Loop points, fade and
-OpeningDurationMs
-[Effect.Jump]
-CooldownMs
-Landing sections	Separate short, normal and long intensity/timing controls
-[Effect.WaterDive]
-Input and game-state cooldowns
-[Effect.MenuTick]
-Direction-repeat delay and interval
-[Effect.HeavyAttackFirst]
-HoldThresholdMs
-[Effect.HeavyAttackSecond]
-DelayAfterFirstMs
+
+| Section | Additional controls |
+|---|---|
+| `[Effect.Walk]` | `LoopStartMs`, `LoopEndMs`, `FadeMs`, `DualSenseHapticMultiplier` |
+| `[Effect.Run]` | Loop points, fade, `OpeningDurationMs` |
+| `[Effect.Jump]` | `CooldownMs` |
+| Landing sections | Separate short / normal / long intensity and timing |
+| `[Effect.WaterDive]` | Input and game-state cooldowns |
+| `[Effect.MenuTick]` | Direction-repeat delay and interval |
+| `[Effect.HeavyAttackFirst]` | `HoldThresholdMs` |
+| `[Effect.HeavyAttackSecond]` | `DelayAfterFirstMs` |
+
 Example heavy-attack timing:
 
-
+```ini
 [Effect.HeavyAttackFirst]
 HoldThresholdMs=320
 
 [Effect.HeavyAttackSecond]
 DelayAfterFirstMs=640
+```
 
-Global settings
+---
 
-Output type
+# 🌐 Global Settings
 
+## Output type
 
+```ini
 [Output]
 NativeHaptics=1
 ConventionalRumble=1
 PreferGameInput=1
 RumbleOnDualSense=1
+```
 
-NativeHaptics=0
-disables full DualSense waveform injection.
-ConventionalRumble=0
-disables ordinary low/high-motor vibration.
-RumbleOnDualSense=0
-leaves only the full native DualSense haptic layer on detected DualSense devices.
-Keep both enabled for the normal hybrid configuration.
-Overall intensity
+| Setting | Function |
+|---|---|
+| `NativeHaptics=0` | Disables full DualSense waveform injection |
+| `ConventionalRumble=0` | Disables ordinary low/high-motor vibration |
+| `RumbleOnDualSense=0` | Leaves only the full native DualSense haptic layer on detected DualSense devices |
 
+Keep both native haptics and conventional rumble enabled for the normal hybrid configuration.
 
+---
+
+## Overall intensity
+
+```ini
 [Playback]
 MasterGain=1.00
 MovementGain=1.00
 OneShotGain=1.00
+```
 
-MasterGain
-changes everything.
-MovementGain
-changes walk/run textures.
-OneShotGain
-changes jump, landing, dodge, attack, water and menu impacts.
-Conventional rumble
+| Setting | Function |
+|---|---|
+| `MasterGain` | Changes everything |
+| `MovementGain` | Changes walk/run textures |
+| `OneShotGain` | Changes jump, landing, dodge, attack, water and menu impacts |
 
+---
 
+## Conventional rumble
+
+```ini
 [Rumble]
 Gain=1.00
 MovementGain=2.00
 LowMotorScale=3.00
 HighMotorScale=1.60
 Deadzone=0.008
+```
 
 These only control conversion of the Shadows waveforms into conventional controller motors.
-Movement
 
+---
 
+## Movement
+
+```ini
 [Movement]
 WalkThreshold=11000
 RunThreshold=24500
 SprintToggle=1
+```
 
 Lower thresholds make walking/running activate with less stick movement.
-SprintToggle=1
-means press SprintLunge once.
-SprintToggle=0
-means hold the configured SprintLunge input.
-Menus
 
+| Setting | Meaning |
+|---|---|
+| `SprintToggle=1` | Press SprintLunge once |
+| `SprintToggle=0` | Hold the configured SprintLunge input |
 
+---
+
+## Menus
+
+The verified v2.1 INI uses:
+
+```ini
 [Menus]
 Enabled=1
-TickGain=0.28
+TickGain=0.35
 OpenGain=0.28
+ShoulderGain=0.315
+```
 
-Setting
-Enabled=0
-disables ASI-added map/inventory menu feedback without disabling gameplay effects.
-Important INI warning
+`Enabled=0` disables ASI-added map/inventory/menu feedback without disabling gameplay effects.
 
-Use
+---
+
+# ⚠️ Important INI Warning
+
+Use:
+
+```ini
 [InputBindings]
+```
+
 for controller buttons.
-The lower
+
+The lower:
+
+```ini
 [Buttons]
-section contains advanced waveform names such as:
+```
 
+section contains **advanced waveform names**, for example:
 
+```ini
 BEffect=dodge
 LBEffect=parry
 RBEffect=light_attack_single
+XEffect=parry
+```
 
-Those are not controller-remapping fields. Changing them selects which captured HFX waveform an action uses. Normally, leave
-[Buttons]
-,
-[Hook]
-, and the advanced
-[GameplayState]
-addresses at their supplied values.
-Future updates will include (hopefully) better haptics and rumble effects captured from AC Shadows.
+Those are **not controller-remapping fields**.
 
-Not perfect but perfectible. DEadDRop out!
+Changing them selects which captured HFX waveform an action uses.
+
+Normally, leave:
+
+- `[Buttons]`
+- `[Hook]`
+- advanced `[GameplayState]` addresses
+
+at their supplied values.
+
+---
+
+# 🔐 Verified v2.1 Build
+
+| Property | Value |
+|---|---|
+| Nexus release | `v2.1` |
+| Internal build | `ACBFHapticsBridge-v7-r7-kick-walk4x-test` |
+| Runtime label | `v7-r7-kick-walk4x` |
+| ASI | `ACBFHapticsBridge-v7.asi` |
+| SHA-256 | `fb77b55728185e453fcc2046716f1d299bb78e92aededae906c9c56db58383b9` |
+| Confirmed executable target | Steam TU 1.0.6 |
+
+The source-review folder contains the reconstruction, exact r7 injected assembly stub, matching configuration and binary verification tooling.
+
+---
+
+# 📂 Source / Reconstruction Notice
+
+> [!CAUTION]
+> The r7/v2.1 source package does **not** falsely claim to be the lost original full C++ / Visual Studio project for the complete ASI.
+
+R7 was produced as a narrow binary patch over the compiled r6 runtime.
+
+The repository therefore provides:
+
+- source-level reconstruction of the r7-specific behavior
+- exact reconstructed 28-byte R2 + Square injected stub
+- matching v2.1 INI
+- binary-patch notes
+- verification tooling
+- verified v2.1 ASI reference binary
+
+---
+
+# 📁 Source v2.1 Repository Layout
+
+```text
+Source v2.1/
+├─ Source/
+│  ├─ RECONSTRUCTED-R7.cpp
+│  ├─ r7_kick_stub.S
+│  ├─ Reconstruction/
+│  │  ├─ IMPLEMENTATION.md
+│  │  └─ R7-BINARY-PATCH.md
+│  └─ Tools/
+│     └─ audit_r7.py
+├─ Release/
+│  ├─ ACBFHapticsBridge-v7.asi
+│  ├─ ACBFHapticsBridge-v7.ini
+│  └─ EXPECTED-V2.1-ASI-SHA256.txt
+├─ docs/
+│  ├─ NEXUS-REVIEW.md
+│  └─ PRIVACY-REVIEW.md
+├─ CHANGELOG.md
+├─ LICENSE
+├─ README.md
+├─ SHA256SUMS.txt
+└─ verify-v2.1.ps1
+```
+
+---
+
+# 📜 License
+
+The ACBFHapticsBridge source/reconstruction material in this repository is provided under the **MIT License** unless otherwise noted.
+
+This license applies to the ACBFHapticsBridge material only and does not grant rights to Ubisoft game files, trademarks, proprietary assets, or unrelated third-party content.
+
+---
+
+# 🔮 Future Updates
+
+Future updates will include — hopefully — better haptics and rumble effects captured from **Assassin's Creed Shadows**, along with improved state/context detection as I continue working on the bridge.
+
+This is my first mod, so if you find bugs, weird behavior, controller-specific problems, missed effects, or anything else useful, please report it.
+
+---
+
+<p align="center">
+  <strong>Not perfect but perfectible. DEadDRop out!</strong>
+</p>
