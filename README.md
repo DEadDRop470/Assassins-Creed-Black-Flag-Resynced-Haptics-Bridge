@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/Internal-v7--r7--kick--walk4x-6f42c1?style=for-the-badge" alt="Internal v7-r7-kick-walk4x">
   <img src="https://img.shields.io/badge/DualSense-Haptics-0070d1?style=for-the-badge" alt="DualSense Haptics">
   <img src="https://img.shields.io/badge/XInput-Rumble-555555?style=for-the-badge" alt="XInput Rumble">
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+  <img src="https://img.shields.io/badge/License-Non--Commercial-red?style=for-the-badge" alt="Non-Commercial License">
 </p>
 
 <p align="center">
@@ -13,6 +13,10 @@
 </p>
 
 ---
+
+> [!IMPORTANT]
+> **License:** ACBFHapticsBridge v2.1 uses the **ACBFHapticsBridge Non-Commercial License v1.0**.  
+> Free personal/non-commercial use, modification and free redistribution are permitted under the license terms. **Selling, paywalling, or commercially redistributing the mod is not permitted without prior written permission.**
 
 ## 🔗 Nexus Mods
 
@@ -795,11 +799,119 @@ Source v2.1/
 
 ---
 
-# 📜 License
+# 📜 License — Non-Commercial
 
-The ACBFHapticsBridge source/reconstruction material in this repository is provided under the **MIT License** unless otherwise noted.
+> [!IMPORTANT]
+> **ACBFHapticsBridge v2.1 is NOT released under the MIT License.**  
+> It is distributed under the **ACBFHapticsBridge Non-Commercial License v1.0**.
 
-This license applies to the ACBFHapticsBridge material only and does not grant rights to Ubisoft game files, trademarks, proprietary assets, or unrelated third-party content.
+The full license is included with the **source**, the **release files**, and **inside the downloadable release archive**.  
+See the included `LICENSE` / `ACBFHapticsBridge-v2.1-NONCOMMERCIAL-LICENSE.txt` for the complete terms.
+
+## What the license allows
+
+| Use | Allowed? |
+|---|:---:|
+| Download and use the mod personally | ✅ |
+| Use the mod for non-commercial purposes | ✅ |
+| Study the source / reconstruction material | ✅ |
+| Modify the ACBFHapticsBridge material | ✅ |
+| Make a non-commercial derivative | ✅ |
+| Redistribute the original or a modified version **for free** | ✅ |
+| Fork the source for non-commercial development | ✅ |
+| Keep reasonable attribution and the license with redistributed copies | **Required** |
+
+## What is NOT allowed without my prior written permission
+
+| Commercial use | Allowed? |
+|---|:---:|
+| Sell ACBFHapticsBridge | ❌ |
+| Charge for a download or copy | ❌ |
+| Put the mod behind a paywall | ❌ |
+| Require Patreon/subscription/payment to download the mod | ❌ |
+| Bundle it inside a paid mod pack or paid software package | ❌ |
+| Sell a modified or substantially identical derivative | ❌ |
+| Charge for activation, access, installation, or use of the mod itself | ❌ |
+| Remove the copyright/license notice and present the project as your own | ❌ |
+| Commercially sublicense or exploit the ASI/source/reconstruction/tools | ❌ |
+
+Changing the filename, repacking the files, making small modifications, or creating a substantially identical derivative **does not turn it into something that can be sold**.
+
+Commercial permission can only be granted separately by the ACBFHapticsBridge copyright holder in writing.
+
+### Donations
+
+Voluntary donations to support **my own development work** are fine.
+
+The mod itself is intended to remain freely accessible. A third-party redistributor may not make access to ACBFHapticsBridge dependent on a purchase, subscription, Patreon membership, donation, or other payment without written permission.
+
+---
+
+## Ubisoft / Assassin's Creed material
+
+The ACBFHapticsBridge Non-Commercial License only covers material for which the ACBFHapticsBridge contributors hold the applicable rights.
+
+It does **not** grant ownership of or commercial rights to:
+
+- **Assassin's Creed IV: Black Flag**
+- **Assassin's Creed Shadows**
+- Ubisoft trademarks, game code, artwork, audio, haptic design, assets, or other intellectual property
+- Anvil / AnvilNext material
+- Wwise or other third-party technology
+- Ubisoft executables, DLLs, data files, or proprietary game files
+- unrelated third-party components
+
+Nothing in this repository or release should be interpreted as granting permission to commercially exploit Ubisoft or other third-party intellectual property.
+
+---
+
+## Shadows HFX capture notice
+
+The release may contain:
+
+```text
+ShadowsHapticsPack-v5.hfx
+```
+
+This file contains **captured and/or processed haptic waveform data derived from controller/haptic output produced by Assassin's Creed Shadows**.
+
+The HFX pack is **not being claimed as wholly original Ubisoft-independent content**, and it is **not licensed as original ACBFHapticsBridge code** under the project license.
+
+The fact that I captured, processed, edited, reconstructed, packaged, or mapped the haptic data does **not** mean this license grants ownership of Ubisoft's underlying game content or haptic design.
+
+No commercial rights to Ubisoft material are granted by this project.
+
+Any redistribution or use of the HFX pack remains subject to applicable copyright, platform rules, permissions, and third-party terms.
+
+---
+
+## `version.dll` and other third-party files
+
+If a future release includes an ASI loader such as:
+
+```text
+version.dll
+```
+
+that file remains governed by **its original author's own license and redistribution terms**.
+
+Bundling a third-party loader with ACBFHapticsBridge does not place that loader under the ACBFHapticsBridge Non-Commercial License.
+
+---
+
+## Attribution / modified versions
+
+If you redistribute a permitted non-commercial modification:
+
+- keep the ACBFHapticsBridge copyright and license notice;
+- include the license with the files;
+- clearly state that your version is modified;
+- do not present an unofficial derivative as an official ACBFHapticsBridge release;
+- do not imply endorsement by the original project;
+- do not claim ownership of Ubisoft or other third-party material.
+
+> [!WARNING]
+> **Selling this mod, paywalling it, or commercially redistributing ACBFHapticsBridge material is not permitted under the project license without prior written permission.**
 
 ---
 
