@@ -6,7 +6,12 @@ The mod supports native DualSense haptics (wired-native) and wirelessly through 
 
 Works by hooking into the game exe and using the wwise motion native pipeline that Anvil Engine has to trigger the haptic events so it should technically work with other emulation software like dsx , ds4windows or viiper releases or completely native dinput and x-input.
 
+
+NEXUS MODS : https://www.nexusmods.com/assassinscreedblackflagresynced/mods/412?tab=description 
+
 Confirmed compatible: Steam version, Title Update 1.0.6  ( will update Ubisoft/ Epic versions  in the next day/days-need the files/sha256 hash/logs from those versions)
+
+MOD REQUIREMENTS/INSTALATION : version.dll(from Ultimate Asi Loader or ACBlackFlagFix mod on Nexusmods--check above link)(version.dll not included in release for now. Download v2.1 not source version. Add version.dll alongisde the other .ini, .asi and .hfx files in the same folder where AcBlagFlag.exe is  )
 
 
 If you use the Ubisoft Connect or Epic version, please provide your ACBlackFlag.exe SHA-256 hash and the generated ACBFHapticsBridge log(pressing f10 while in menus and once again while in gameplay then close game) so support can be added. Thanks!
