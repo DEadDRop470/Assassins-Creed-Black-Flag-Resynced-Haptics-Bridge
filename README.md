@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Release-v2.3-2ea44f?style=for-the-badge" alt="Release v2.1">
-  <img src="https://img.shields.io/badge/Internal-v8--r4--kick--walk4x-6f42c1?style=for-the-badge" alt="Internal v7-r7-kick-walk4x">
+  <img src="https://img.shields.io/badge/Internal-v8--r4-6f42c1?style=for-the-badge" alt="Internal v7-r7-kick-walk4x">
   <img src="https://img.shields.io/badge/DualSense-Haptics-0070d1?style=for-the-badge" alt="DualSense Haptics">
   <img src="https://img.shields.io/badge/XInput-Rumble-555555?style=for-the-badge" alt="XInput Rumble">
   <img src="https://img.shields.io/badge/License-Non--Commercial-red?style=for-the-badge" alt="Non-Commercial License">
