@@ -84,11 +84,11 @@ You can use:
 - or the compatible `version.dll` supplied by **ACBlackFlagFix** on NexusMods
 
 > [!IMPORTANT]
-> `version.dll` is **not included in the v2.1 release for now**.
+> `version.dll` is ** INCLUDED in the v2.3 release **.
 
 ### Installation
 
-1. Download the normal **v2.1 release**, not the source package.
+1. Download the normal **v2.3 release**, not the source package.
 2. Place:
    - `ACBFHapticsBridge-v7.asi`
    - `ACBFHapticsBridge-v7.ini`
