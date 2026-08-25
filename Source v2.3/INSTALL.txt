@@ -1,0 +1,15 @@
+ACBFHapticsBridge v8-r4
+
+1. Remove/rename older ACBFHapticsBridge ASI builds so only one bridge is loaded.
+2. Copy beside the game/mod-loader location:
+   ACBFHapticsBridge-v8-r4.asi
+   ACBFHapticsBridge-v8.ini
+   ShadowsHapticsPack-v5.hfx
+3. Start the game.
+4. Press F10 for a status line if you need to verify runtime state.
+
+Hotkeys:
+F9  dodge preview
+F10 status
+F11 complete bridge OFF/ON (ON reacquires state)
+F12 unresolved raw-input fallback toggle

@@ -1,0 +1,21 @@
+ASI: build/ACBFHapticsBridge-v8-r4.asi
+  SHA-256: d8276d2a197ac122bc648d072dce47d4085d1b685989175edca66f92c1eb2f00
+  sections: 16
+  timestamp: 0 (OK)
+  DllCharacteristics: 0x0160 (ASLR=yes, NX=yes, HEVA=yes)
+  RWX sections: none (OK)
+  import directory: RVA=0x43000 size=0x18; null-only=True (OK)
+  COFF symbols stripped: True (OK)
+  RESULT: PASS
+TARGET: /mnt/data/ACBlackFlag(2).exe
+  SHA-256: 8d52238155c9491f329c0b78af2d00ee67ab5e03946eea83e12b061b64b23140
+  profile: official
+  PostEvent: RVA=0x91DEA0 raw=0x91D4A0 match=True bytes=41 57 41 56 41 55
+  QuadFlush: RVA=0x4F78610 raw=0x4F77C10 match=True bytes=48 89 5C 24 18 55 56 57 48 83 EC 20 0F B7 79 42
+  RESULT: PASS
+TARGET: /mnt/data/ACBlackFlag(1).exe
+  SHA-256: 19920f34bb2fac814023ee3c27f0ceca1872e80a2aafb37c092c419fff77cc0d
+  profile: voices38
+  PostEvent: RVA=0x91DEA0 raw=0x91D4A0 match=True bytes=41 57 41 56 41 55
+  QuadFlush: RVA=0x4F78610 raw=0x4F77C10 match=True bytes=48 89 5C 24 18 55 56 57 48 83 EC 20 0F B7 79 42
+  RESULT: PASS
