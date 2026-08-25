@@ -130,7 +130,7 @@ Please report any bugs or weird stuff so I can work on them if I can.
 
 ---
 
-# ✨ What the ASI mod does — v2.1
+# ✨ What the ASI mod does — v2.3
 
 ACBFHapticsBridge currently adds contextual feedback for:
 
