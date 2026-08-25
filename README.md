@@ -90,8 +90,8 @@ You can use:
 
 1. Download the normal **v2.3 release**, not the source package.
 2. Place:
-   - `ACBFHapticsBridge-v7.asi`
-   - `ACBFHapticsBridge-v7.ini`
+   - `ACBFHapticsBridge-v8r4.asi`
+   - `ACBFHapticsBridge-v8.ini`
    - the required `.hfx` haptics pack
    - `version.dll`
 3. Put all of them in the same folder as:
