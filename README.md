@@ -152,152 +152,135 @@ The bridge keeps **Black Flag's own native controller feedback whenever possible
 
 ---
 
-# 🆕 v2.1 Changelog
+🆕 v2.3 / v8-r4 Changelog
 
 Compared with:
 
-`v6-r5-menu-state-recovery` — Nexus **v2.0**
+v2.1 / v7-r7-kick-walk4x
 
-R7 includes the subsequent controller-movement work from r6 plus the new r7 gameplay additions.
+v8-r4 is a major gameplay-feedback overhaul. The bridge now combines Black Flag's real Wwise gameplay events with gameplay-state callbacks, improving timing and context detection while reducing false or duplicated effects.
 
-## 🦵 NEW — Kick Haptic
+🧠 Hybrid Wwise + Gameplay-State Detection
 
-v2.1 adds a guarded gameplay kick:
+exact Wwise PostEvent gameplay-event router
 
-| Input condition | Result |
-|---|---|
-| Hold **R2**, then press **Square** | ✅ Kick feedback |
-| Press Square alone | ❌ No kick |
-| Hold Square first, then press R2 | ❌ No kick |
-| Keep Square held | ❌ No continuous retrigger |
-| Input occurs while inferred menu state is active | ❌ Gameplay kick suppressed |
+retains 21 gameplay-state hooks
 
-Technical behavior:
+new CHARACTER, WATER, HELM and MENU runtime contexts
 
-- activates only from the **Square press edge while R2 is already held**
-- uses `[Input] TriggerThreshold` — default `160`
-- uses the existing `parry` HFX waveform
-- gain follows the normal parry fallback strength — default `0.45`
-- native-output arbitration remains active
-- approximately **120 ms** anti-double-trigger guard in the r7 logic
-- Square/X raw waveform slot is binary-gated by the R2 modifier
+real events identify movement, dodge, parry, attacks, kick, sheathe/unsheathe, hood actions, swimming, water lunge, helm/naval activity and menus
 
-> [!NOTE]
-> The verified v2.1 INI does **not** expose separate `KickModifier`, `KickAction`, or `[Effect.Kick]` entries. The kick is implemented by the r7 binary gate around the Square/X effect path.
+This reduces incorrect feedback from actions sharing the same input.
 
----
+🧗 Jump + Landing Rebuilt
 
-## 🚶 DualSense Walking Feedback Increased
+Jumping now uses Black Flag's actual Jump / InAir states as the authoritative source.
 
-The original r5 walking level was considered too subtle on DualSense.
+Improved detection covers standing, forward, running and parkour/targeted jumps. Landing strength scales from measured airtime for short, normal and long landings, with better protection against stale or false airborne states.
 
-Controller-movement tuning introduced a dedicated **DualSense-only walking multiplier**:
+⚔️ Combat Improvements
 
-| Build | DualSense native walking |
-|---|---:|
-| r5 | `1.00x` baseline |
-| r6 | `2.00x` original r5 level |
-| **r7 / v2.1** | **`4.00x` original r5 level** |
+Light attacks: better R1 combo coverage using real events plus guarded fallback taps for unmapped later swings
 
-This amplification affects **DualSense / Wwise native haptics only**.
+Heavy R1: retimed two-phase effect with a stronger first impact and much earlier second impact
 
-It does **not** make conventional Xbox/XInput walking rumble four times stronger.
+Parry: fallback latency reduced from 60 ms → 24 ms; perfect parries remain native
 
-This allows DualSense footsteps to remain clearly perceptible without making ordinary rumble excessive.
+Dodge: can follow Black Flag's real dodge event instead of only Circle/B
 
----
+Kick: prefers the real kick event instead of only R2 + Square
 
-## 🏃 Improved Conventional Running Feedback
+Sheathe/unsheathe: dedicated event detection; strong second phase roughly 30% earlier
 
-v2.1 retains the controller movement tuning introduced after r5.
+Hood ON/OFF: recognized separately
 
-Conventional/XInput running receives a dedicated movement pulse system so sustained running remains clearly noticeable on normal two-motor controllers.
+Ubisoft's own combat feedback still receives priority when available.
 
-Current tuning uses:
+🚶 Movement Overhaul
 
-| Setting | Value |
-|---|---:|
-| Pulse interval | `300 ms` |
-| Pulse duration | `75 ms` |
-| Quiet gap | `225 ms` |
-| Opening run phase | first `5 s` |
-| Settled run gain | `1.25` |
-| Opening run gain | `1.50` |
+Walking and jogging now use Black Flag's real gait events for tighter synchronization and less feedback after Edward stops.
 
-This makes running more distinct from walking on conventional controllers.
+L3 running is now continuous:
 
----
+first 1.5 s: 1.90x opening response
 
-## 🔄 Preserved Menu-State Recovery
+sustained run: 1.50x
 
-All menu-state recovery improvements from `v6-r5-menu-state-recovery` are retained.
+roughly 50% stronger than normal jogging
 
-This includes recovery after:
+releasing movement stops it immediately
 
-- opening / closing menus
-- controller / menu state changes
-- temporary player-state loss
-- returning from menus to gameplay
-- rebinding Edward's gameplay-state context after interruption
+The old repeated ~300 ms XInput run pulses are disabled by default. Conventional rumble follows the same continuous run envelope.
 
-Movement feedback resumes only after gameplay movement has been confirmed, helping prevent false walking/running effects while a menu is open.
+🌊 Water / Underwater Improvements
 
----
+Water now has its own runtime context.
 
-## 🛡️ Native Haptic Arbitration Retained
+surface L3 fast-swim can sustain continuous feedback
 
-The bridge continues to watch Black Flag's existing:
+underwater lunge adds an immediate impact followed by fast-swim feedback
 
-- Quad Audio haptics
-- GameInput rumble
-- XInput rumble
+underwater sustain has a hard 3-second maximum per lunge
 
-When the game already generates suitable native feedback, the bridge suppresses the corresponding fallback effect rather than stacking another effect on top of it.
+surfacing, leaving swimming or entering shallow water clears the state
 
-This is especially useful for:
+This prevents stuck underwater/sprint feedback.
 
-- attacks
-- clashes
-- parries
-- other actions where Black Flag already produces feedback
+⛵ Helm / Naval Detection
 
----
+HELM is now a real gameplay context instead of a sticky inferred flag.
 
-# 🚶 Movement Tuning Retained
+Confirmed Edward activity—jumping, swimming, gait events, character actions, menus or recovery—can automatically return the bridge to CHARACTER mode.
 
-R7 keeps the tuned movement behavior introduced during the r6 development branch:
+Native naval feedback is left to Ubisoft where appropriate.
 
-- stable walking loop
-- stable running loop
-- smooth movement fade
-- stronger opening section when starting to run
-- sprint-start impact
-- separate walk/run thresholds
-- sprint toggle support
-- movement suppression while menus are active
+🛡️ Better Native-Feedback Arbitration
 
----
+The bridge better preserves Black Flag's own feedback and suppresses unnecessary fallbacks when suitable native feedback already exists, including:
 
-# 🧗 Gameplay-State Haptics Retained
+cannon / broadside Motion
 
-The state-based traversal system remains active for:
+player damage
 
-| Movement / State | Feedback |
-|---|:---:|
-| Jumping | ✅ |
-| Falling | ✅ |
-| Short landing | ✅ |
-| Normal landing | ✅ |
-| Long landing | ✅ |
-| Haystack landing | ✅ |
-| Water entry | ✅ |
-| Water surface | ✅ |
-| Swimming | ✅ |
-| Swim-up | ✅ |
-| Water lunge | ✅ |
-| Climbing-related traversal | ✅ |
+pistol fire
 
-Landing strength continues to scale according to measured airtime.
+perfect parry
+
+native menu feedback
+
+helm entry
+
+This reduces doubled or overly strong effects.
+
+📋 Menu + Recovery Improvements
+
+Menu handling follows real menu events more closely.
+
+Recovery now distinguishes between a normal Wwise sink rebound, which preserves gameplay context, and a genuine load/desync, which resets and reacquires CHARACTER, WATER, HELM or MENU.
+
+F11 re-enable also performs a clean state reacquisition.
+
+⚡ Performance + Timing
+
+effect queue increased from 64 → 256
+
+waveforms shortened/trimmed for faster response
+
+improved timing for dodge, parry, attacks, jump/landing, kick, water and sheathe effects
+
+long unused waveform tails are no longer kept unnecessarily
+
+🎮 Output + Source Improvements
+
+DualSense keeps full 48 kHz stereo haptics through Black Flag's native Wwise Quad Audio Haptics path.
+
+Conventional rumble remains supported for Xbox/XInput, DS4/emulated and compatible GameInput controllers.
+
+Unlike v2.1's reconstructed r7 patch material, v8-r4 includes the exact C++ source used to compile the released ASI, plus build verification, hook/PE auditing, HFX validation, event mapping and checksums.
+
+⭐ In Short
+
+v8-r4 moves ACBFHapticsBridge much closer to Black Flag's real gameplay: real Wwise event detection, hybrid gameplay-state routing, better jump/landing accuracy, improved R1 combos, faster combat feedback, event-synced movement, continuous L3 running, expanded swimming, smarter helm/menu handling, fewer duplicate effects, improved recovery and exact buildable C++ source.
 
 ---
 
