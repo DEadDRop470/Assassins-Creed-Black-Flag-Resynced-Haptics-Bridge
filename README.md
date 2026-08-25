@@ -15,7 +15,7 @@
 ---
 
 > [!IMPORTANT]
-> **License:** ACBFHapticsBridge v2.1 uses the **ACBFHapticsBridge Non-Commercial License v1.0**.  
+> **License:** ACBFHapticsBridge  uses the **ACBFHapticsBridge Non-Commercial License v1.0**.  
 > Free personal/non-commercial use, modification and free redistribution are permitted under the license terms. **Selling, paywalling, or commercially redistributing the mod is not permitted without prior written permission.**
 
 ## 🔗 Nexus Mods
