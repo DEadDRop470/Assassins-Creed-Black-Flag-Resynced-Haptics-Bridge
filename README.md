@@ -57,8 +57,8 @@ Because the controller side is handled through **GameInput / XInput-compatible p
 | Store / Version | Status |
 |---|:---:|
 | Steam — Title Update 1.0.6 | ✅ Confirmed |
-| Ubisoft Connect | 🧪 Needs executable/hash/log testing |
-| Epic Games | 🧪 Needs executable/hash/log testing |
+| Ubisoft Connect | 🧪 Needs executable/hash/log testing | TRY IT OUT--come back with feedback
+| Epic Games | 🧪 Needs executable/hash/log testing |TRY IT OUT--come back with feedback
 
 Support for Ubisoft Connect / Epic versions can be added once I have the required executable information.
 
