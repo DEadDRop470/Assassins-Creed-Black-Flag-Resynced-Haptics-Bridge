@@ -1,0 +1,12 @@
+ACBFHapticsBridge v2.3.6 / v8-r9g source rebuild
+
+Canonical build:
+  ./build_linux_pe_r9g.sh
+
+Expected ASI:
+  build/ACBFHapticsBridge-v8-r9g.asi
+
+Expected SHA-256:
+  4cf92a8e7b72766903ca5ac294c7cac0b84521b7a9d910af10520aa5ec25c4d0
+
+The release package is verified again from the assembled Source/ tree.
