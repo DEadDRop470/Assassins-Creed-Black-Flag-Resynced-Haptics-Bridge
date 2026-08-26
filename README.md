@@ -1,9 +1,16 @@
 <h1 align="center">ACBFHapticsBridge</h1>
-<div align="center">
-**DualSense haptics + conventional rumble for Assassin's Creed IV: Black Flag Resynced**
 
-VERSION 2.3.6  |  v8-r9g  |  NON-COMMERCIAL LICENSE
-Runtime: v8-r9g-500hz-input-perf-cleanup</div>
+<p align="center">
+  <strong>DualSense haptics + conventional rumble for Assassin's Creed IV: Black Flag Resynced</strong>
+</p>
+
+<p align="center">
+  <strong>VERSION 2.3.6</strong>
+  &nbsp; | &nbsp;
+  <strong>v8-r9g</strong>
+  &nbsp; | &nbsp;
+  <strong>NON-COMMERCIAL LICENSE</strong>
+</p>
 
 GitHub release: download the packaged release ZIP from the Assets section below.
 The separate source ZIP is provided for source review/rebuilding; the normal release ZIP is the one intended for installation.
