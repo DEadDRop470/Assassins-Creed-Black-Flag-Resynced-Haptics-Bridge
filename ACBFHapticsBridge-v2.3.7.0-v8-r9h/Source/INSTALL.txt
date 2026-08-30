@@ -1,0 +1,11 @@
+ACBFHapticsBridge v2.3.7.0 / v8-r9h
+
+1. Copy the release files into the Assassin's Creed IV Black Flag Resynced game folder.
+2. Keep ShadowsHapticsPack-v5.hfx beside the ASI unless HapticsPack is changed in the INI.
+3. Keep ACBFHapticsBridge-v8.ini beside the ASI. The shipped MasterGain is 0.90.
+4. Restart the game after INI changes.
+5. F10 writes status + performance diagnostics, F11 toggles the complete bridge, and F12 suspends/resumes controller polling/raw-input processing for A/B tests while semantic/state/native routing can continue.
+
+Verified executable profiles: Steam TU 1.0.6, voices38, Ubisoft Connect and Ubisoft+.
+
+The Source folder contains the exact source used to build this ASI.
