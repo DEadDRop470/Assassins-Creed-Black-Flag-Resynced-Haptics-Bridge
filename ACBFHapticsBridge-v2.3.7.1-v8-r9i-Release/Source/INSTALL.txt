@@ -1,0 +1,13 @@
+ACBFHapticsBridge v2.3.7.1 / v8-r9i
+
+1. Copy ACBFHapticsBridge-v8-r9i.asi, ACBFHapticsBridge-v8.ini, ShadowsHapticsPack-v5.hfx and version.dll into the Assassin's Creed IV Black Flag Resynced game folder.
+2. Keep ShadowsHapticsPack-v5.hfx beside the ASI unless HapticsPack is changed in the INI.
+3. Keep ACBFHapticsBridge-v8.ini beside the ASI. The ASI opens this exact filename; the shipped MasterGain is 0.90.
+4. Restart the game after INI changes.
+5. F9 plays the Dodge preview effect.
+6. F10 writes full diagnostics, including the R9I OUTPUT line.
+7. F11 toggles the complete bridge. F12 suspends/resumes controller polling/raw-input processing for A/B diagnostics while semantic/state/native routing can continue.
+
+Steam TU 1.0.6 is r9i runtime-confirmed PASS. Ubisoft Connect and Ubisoft+ executable targets are statically verified; return the full ACBFHapticsBridge-v8.log after first r9i testing on those editions.
+
+The Source folder contains the exact source used to build the shipped ASI. Use PACKAGE-CHECKSUMS.sha256 to verify packaged files.

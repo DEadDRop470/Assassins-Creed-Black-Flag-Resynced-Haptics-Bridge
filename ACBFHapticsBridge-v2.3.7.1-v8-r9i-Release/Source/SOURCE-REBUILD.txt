@@ -1,0 +1,15 @@
+ACBFHapticsBridge v2.3.7.1 / v8-r9i source rebuild
+
+From this Source directory:
+  ./build_linux_pe_r9i.sh
+
+Expected output:
+  build/ACBFHapticsBridge-v8-r9i.asi
+
+Expected SHA-256:
+  8a68e6bcec34943f6b1afcf0ce9a063a592b36ecf2bfb3643b30d3abb7c36987
+
+Then run:
+  python3 audit_r9i.py build/ACBFHapticsBridge-v8-r9i.asi src/main.cpp ACBFHapticsBridge-v8.ini
+
+The packaged source was clean-rebuilt and compared byte-for-byte with the shipped ASI.

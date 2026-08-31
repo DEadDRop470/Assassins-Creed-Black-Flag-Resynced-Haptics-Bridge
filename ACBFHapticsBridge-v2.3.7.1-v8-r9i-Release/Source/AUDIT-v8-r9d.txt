@@ -1,0 +1,9 @@
+ASI: build/ACBFHapticsBridge-v8-r9d.asi
+  SHA-256: 59d5a007e4a50a0b04c6df6186ae40db99d0578983aad8b4654e7e0dc5089de5
+  sections: 16
+  timestamp: 0 (OK)
+  DllCharacteristics: 0x0160 (ASLR=yes, NX=yes, HEVA=yes)
+  RWX sections: none (OK)
+  import directory: RVA=0x4A000 size=0x18; null-only=True (OK)
+  COFF symbols stripped: True (OK)
+  RESULT: PASS

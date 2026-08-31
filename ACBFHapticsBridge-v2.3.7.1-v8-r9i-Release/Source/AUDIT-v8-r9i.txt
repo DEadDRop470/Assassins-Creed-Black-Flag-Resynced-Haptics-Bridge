@@ -1,0 +1,28 @@
+PASS source r9i runtime
+PASS source direct renderer
+PASS source race-safe takeover
+PASS source dynamic XInput IAT
+PASS source measured XInput route
+PASS source r9i diagnostics
+PASS source old DS skip removed
+PASS INI MasterGain=0.90
+PASS INI DirectDualSenseFallback=1
+PASS INI fallback delay=1000
+PASS INI native haptics enabled
+PASS INI conventional rumble enabled
+PASS PE PE header in file
+PASS PE PE signature
+PASS PE AMD64 machine
+PASS PE DLL characteristic
+PASS PE deterministic COFF timestamp=0
+PASS PE PE32+
+PASS PE HIGH_ENTROPY_VA
+PASS PE DYNAMIC_BASE / ASLR
+PASS PE NX_COMPAT
+PASS PE no real static imports (empty GNU ld descriptor allowed)
+PASS PE no RWX sections
+PASS PE r9i runtime string present
+PASS PE old r9h runtime string absent
+INFO PE sha256 8a68e6bcec34943f6b1afcf0ce9a063a592b36ecf2bfb3643b30d3abb7c36987
+INFO PE bytes 206848
+FINAL PASS

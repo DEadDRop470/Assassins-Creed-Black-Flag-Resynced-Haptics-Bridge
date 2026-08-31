@@ -1,0 +1,131 @@
+ACBFHapticsBridge Non-Commercial License v1.1
+Release identification: ACBFHapticsBridge v2.3.7.1 / internal build v8-r9i
+Copyright (c) 2026 ACBFHapticsBridge contributors
+
+1. PERMISSION FOR NON-COMMERCIAL USE
+
+Subject to the conditions in this License, permission is granted to use,
+copy, study, modify, create derivative works from, and redistribute the
+original ACBFHapticsBridge project material for non-commercial purposes.
+Redistribution may be of the original project or a modified version, provided
+access to the ACBFHapticsBridge material itself remains free of charge.
+
+2. COMMERCIAL USE IS NOT GRANTED
+
+Without prior written permission from the applicable ACBFHapticsBridge
+copyright holder, you may not:
+
+- sell ACBFHapticsBridge or a substantially identical derivative;
+- charge for a download, copy, activation, installation, access, or use;
+- put ACBFHapticsBridge behind a paywall, subscription, Patreon requirement,
+  mandatory donation, or other payment gate;
+- bundle ACBFHapticsBridge material into paid software or a paid mod pack;
+- commercially sublicense or commercially exploit ACBFHapticsBridge source,
+  binaries, configuration, build scripts, audit tools, documentation, release
+  metadata, or project-authored checksum manifests; or
+- remove attribution/license notices and present the project as your own.
+
+Changing names, repacking files, or making minor modifications does not make
+commercial exploitation permitted.
+
+Voluntary donations that support the original author's development work are
+not, by themselves, a sale of the mod, provided access to the mod is not
+conditioned on payment.
+
+3. MODIFICATIONS AND REDISTRIBUTION
+
+Permitted non-commercial redistributions and derivatives must:
+
+- retain reasonable attribution to ACBFHapticsBridge;
+- include this License;
+- clearly identify modified versions as modified; and
+- not imply endorsement or official-release status without permission.
+
+4. SCOPE OF LICENSED PROJECT MATERIAL
+
+This License applies only to original project material for which the
+ACBFHapticsBridge contributors hold the applicable rights, including where
+present:
+
+- ACBFHapticsBridge-authored source code and source-level patch material;
+- ACBFHapticsBridge-authored compiled ASI code;
+- configuration files;
+- build, verification, diagnostic, validation, and audit scripts;
+- project documentation, release notes, and project-authored checksum files.
+
+5. UBISOFT / ASSASSIN'S CREED / THIRD-PARTY MATERIAL
+
+This License does not grant ownership of, or commercial rights to:
+
+- Assassin's Creed IV: Black Flag or Assassin's Creed Shadows;
+- Ubisoft trademarks, game code, artwork, audio, haptic design, data, assets,
+  executable files, DLLs, or other Ubisoft intellectual property;
+- Anvil / AnvilNext material;
+- Wwise or other third-party technology;
+- third-party ASI loaders, including version.dll / Ultimate ASI Loader;
+- files originating from ACBlackFlagFix or another third-party project; or
+- any unrelated third-party component.
+
+Each third-party component remains governed by its own copyright, license,
+permissions, and redistribution terms. No Ubisoft executable or proprietary
+Ubisoft source code is licensed or redistributed by this ACBFHapticsBridge
+License.
+
+6. SHADOWS HAPTICS / HFX NOTICE
+
+A release may use a file such as ShadowsHapticsPack-v5.hfx containing captured,
+processed, edited, reconstructed, or mapped haptic waveform data derived from
+controller/haptic output produced by Assassin's Creed Shadows.
+
+Such HFX data is not claimed to be wholly Ubisoft-independent original code and
+is not relicensed as original ACBFHapticsBridge code by this License. Capturing,
+processing, editing, packaging, or mapping the data does not grant ownership of
+Ubisoft's underlying game content, haptic design, audio, trademarks, or other
+intellectual property. Redistribution/use remains subject to applicable law,
+platform rules, permissions, and third-party terms.
+
+7. THIRD-PARTY LOADER NOTICE
+
+If version.dll or another ASI loader is bundled with a release, that file is
+not placed under this License. Its original author's license and redistribution
+terms continue to apply. Inclusion in an ACBFHapticsBridge ZIP does not change
+ownership or licensing of that third-party file.
+
+8. CHECKSUM / RELEASE-INTEGRITY NOTICE
+
+Checksums distributed with an official release identify the exact files in
+that release and are provided for integrity verification. They do not expand
+this License to third-party material and do not imply ownership of such
+third-party files.
+
+9. TERMINATION
+
+Rights granted by this License terminate automatically upon material breach.
+Following termination, the violating party must stop distributing or
+commercially exploiting the licensed ACBFHapticsBridge material. This does not
+alter any separate third-party rights or obligations.
+
+10. NO WARRANTY
+
+THE ACBFHAPTICSBRIDGE MATERIAL IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT.
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+SHALL NOT BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM,
+OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+11. RELEASE IDENTIFICATION
+
+Nexus/project release: v2.3.7.1
+Internal build: ACBFHapticsBridge-v8-r9i
+Runtime label: v8-r9i-v2.3.7.1-ubisoft-output-hotfix
+Primary binary: ACBFHapticsBridge-v8-r9i.asi
+Required runtime configuration filename: ACBFHapticsBridge-v8.ini
+
+This release is an output/backend compatibility hotfix over v2.3.7.0. It does
+not license or redistribute Ubisoft executable files.
+
+12. COMMERCIAL LICENSING
+
+Commercial permission, if desired, must be granted separately in writing by
+the applicable ACBFHapticsBridge copyright holder.

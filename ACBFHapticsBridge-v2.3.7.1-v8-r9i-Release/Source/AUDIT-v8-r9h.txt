@@ -1,0 +1,28 @@
+ASI: build/ACBFHapticsBridge-v8-r9h.asi
+  SHA-256: 869361c87e445601d3d1ff5807922f4d0c60cb37f51a7bf37bdd05103514f914 (PASS)
+  size: 197120
+  timestamp: 0 (PASS)
+  ASLR/NX/HEVA: True/True/True
+  RWX sections: none (PASS)
+  observer candidate 0x1D0119E0: PRESENT
+  observer candidate 0x1C5769E0: PRESENT
+  observer candidate 0x1EC409E0: PRESENT
+  RESULT: PASS
+TARGET: /mnt/data/ACBlackFlag(4).exe
+  SHA-256: e553a964550a9a5d7baef578510974404d6ec40ee89ea228a1323a00c380601c
+  profile: Ubisoft Connect
+  Wwise PostEvent 0x91DEA0: PASS 41 57 41 56 41 55
+  Quad haptics flush 0x4F78610: PASS 48 89 5c 24 18 55 56 57 48 83 ec 20 0f b7 79 42
+  gameplay-state slots: 21/21 exact
+  XInputSetState: XINPUT9_1_0.dll IAT RVA=0x1C5769E0
+  expected r9h observer slot: 0x1C5769E0 (PASS)
+  RESULT: PASS
+TARGET: /mnt/data/ACBlackFlag_Plus.exe
+  SHA-256: b7a2c38212b1e92b4bd5399d29ceb44965a55b3d83110719cfb8053ad1bb3c75
+  profile: Ubisoft+
+  Wwise PostEvent 0x91DEA0: PASS 41 57 41 56 41 55
+  Quad haptics flush 0x4F78610: PASS 48 89 5c 24 18 55 56 57 48 83 ec 20 0f b7 79 42
+  gameplay-state slots: 21/21 exact
+  XInputSetState: XINPUT9_1_0.dll IAT RVA=0x1EC409E0
+  expected r9h observer slot: 0x1EC409E0 (PASS)
+  RESULT: PASS
