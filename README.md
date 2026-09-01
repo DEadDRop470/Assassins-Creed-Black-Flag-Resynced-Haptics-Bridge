@@ -1,18 +1,22 @@
-<div align="center">
-
 ACBFHapticsBridge
 
-DualSense haptics + conventional rumble for Assassin's Creed IV: Black Flag Resynced
+<p align="center">
+  <strong>DualSense haptics + conventional rumble for Assassin's Creed IV: Black Flag Resynced</strong>
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/RELEASE-v2.3.7.3-76C893?style=for-the-badge" alt="Release v2.3.7.3">
+  <img src="https://img.shields.io/badge/BUILD-v8--r9k-7FB3FF?style=for-the-badge" alt="Build v8-r9k">
+  <img src="https://img.shields.io/badge/DualSense-HAPTICS-0070D1?style=for-the-badge" alt="DualSense Haptics">
+  <img src="https://img.shields.io/badge/XInput-RUMBLE-555555?style=for-the-badge" alt="XInput Rumble">
+  <img src="https://img.shields.io/badge/LICENSE-NON--COMMERCIAL-E66B55?style=for-the-badge" alt="Non-Commercial License">
+</p>
 
+<p align="center">
+  <strong>Runtime:</strong> <code>v8-r9k-v2.3.7.3-ubisoft-isolated-fallback</code>
+</p>
 
-
-
-Runtime: v8-r9k-v2.3.7.3-ubisoft-isolated-fallback
-
-</div>
-
-[!IMPORTANT]
+🟠 IMPORTANT
 License: ACBFHapticsBridge uses the ACBFHapticsBridge Non-Commercial License v1.1.
 Free personal/non-commercial use, modification and free redistribution are permitted under the license terms. Selling, paywalling, or commercially redistributing the mod is not permitted without prior written permission.
 
@@ -56,10 +60,10 @@ Conventional controllers: the same effect timelines are converted into low/high-
 
 The bridge keeps Black Flag's own native controller feedback whenever possible, supplements selected native effects where useful, and fills in actions where the original game provides little or no controller response.
 
-[!NOTE]
+🔵 NOTE
 The verified v2.3.7.3 bridge primarily uses GameInput and XInput-compatible controller paths. Generic DirectInput support should not be assumed for every device.
 
-[!NOTE]
+🔵 NOTE
 DUALSENSE HAPTICS VS RUMBLE: The 48 kHz DualSense haptic stream and conventional rumble are parallel outputs. A strong haptic effect does not automatically "overflow" into rumble. The haptic path is limited by PeakLimit, while conventional rumble is generated separately when enabled. On Steam, v8-r9k preserves the proven v2.3.7.0 / r9h routing behavior.
 
 ✅ Confirmed / Supported Game Versions
@@ -152,7 +156,7 @@ version.dll from Ultimate ASI Loader
 
 or the compatible version.dll supplied by ACBlackFlagFix on NexusMods
 
-[!IMPORTANT]
+🟠 IMPORTANT
 version.dll is INCLUDED in the v2.3.7.3 release.
 It remains third-party software and is governed by its original author's license/redistribution terms.
 
@@ -324,7 +328,7 @@ UbisoftDirectDualSenseFallbackDelayMs=1000
 
 These settings have no effect on the Steam output path.
 
-[!NOTE]
+🔵 NOTE
 In short: v2.3.7.3 keeps the proven v2.3.7.0 Steam haptic behavior and adds the newer compatibility work only where it is needed: Ubisoft Connect / Ubisoft+.
 
 🚶 Spatial movement + footsteps
@@ -891,7 +895,7 @@ unchanged r9h gameplay/tuning configuration
 
 source-identical verification of the critical r9h baseline functions
 
-[!NOTE]
+🔵 NOTE
 v2.3.7.0 / r9h remains the confirmed working Steam behavioral baseline. v2.3.7.3 / r9k is deliberately built around that baseline while isolating the newer compatibility work to Ubisoft profiles.
 
 📂 Source Notice — v2.3.7.3
@@ -921,7 +925,7 @@ Source/
 
 📜 License — Non-Commercial
 
-[!IMPORTANT]
+🟠 IMPORTANT
 ACBFHapticsBridge v2.3.7.3 is NOT released under the MIT License.
 It is distributed under the ACBFHapticsBridge Non-Commercial License v1.1.
 
@@ -1041,7 +1045,7 @@ do not imply endorsement by the original project
 
 do not claim ownership of Ubisoft or other third-party material
 
-[!WARNING]
+🔴 WARNING
 Selling this mod, paywalling it, or commercially redistributing ACBFHapticsBridge material is not permitted under the project license without prior written permission.
 
 🔮 Future Updates
