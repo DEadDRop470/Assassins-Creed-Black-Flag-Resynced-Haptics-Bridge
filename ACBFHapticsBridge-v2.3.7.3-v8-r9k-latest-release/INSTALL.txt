@@ -1,0 +1,12 @@
+ACBFHapticsBridge v2.3.7.3 / v8-r9k
+
+Extract the ZIP directly into the folder containing ACBlackFlag.exe.
+The runtime files must be side-by-side with the game executable:
+
+  version.dll
+  ACBFHapticsBridge-v8-r9k.asi
+  ACBFHapticsBridge-v8.ini
+  ShadowsHapticsPack-v5.hfx
+
+Do not leave the runtime files inside an extra release subfolder.
+Use only one ACBFHapticsBridge ASI at a time.
