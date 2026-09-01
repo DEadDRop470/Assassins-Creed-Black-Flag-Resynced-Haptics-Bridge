@@ -1,5 +1,5 @@
 <p align="center">
-  ACBFHapticsBridge
+  <strong>ACBFHapticsBridge</strong>
 </p>
 <p align="center">
   <strong>DualSense haptics + conventional rumble for Assassin's Creed IV: Black Flag Resynced</strong>
