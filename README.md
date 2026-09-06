@@ -6,15 +6,15 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/RELEASE-v2.3.7.3-76C893?style=for-the-badge" alt="Release v2.3.7.3">
-  <img src="https://img.shields.io/badge/BUILD-v8--r9k-7FB3FF?style=for-the-badge" alt="Build v8-r9k">
+  <img src="https://img.shields.io/badge/RELEASE-v2.3.7.4-76C893?style=for-the-badge" alt="Release v2.3.7.4">
+  <img src="https://img.shields.io/badge/BUILD-v8--r9l-7FB3FF?style=for-the-badge" alt="Build v8-r9l">
   <img src="https://img.shields.io/badge/DualSense-HAPTICS-0070D1?style=for-the-badge" alt="DualSense Haptics">
   <img src="https://img.shields.io/badge/XInput-RUMBLE-555555?style=for-the-badge" alt="XInput Rumble">
   <img src="https://img.shields.io/badge/LICENSE-NON--COMMERCIAL-E66B55?style=for-the-badge" alt="Non-Commercial License">
 </p>
 
 <p align="center">
-  <strong>Runtime:</strong> <code>v8-r9k-v2.3.7.3-ubisoft-isolated-fallback</code>
+  <strong>Runtime:</strong> <code>v8-r9l-v2.3.7.4-1.06-1.07-compat</code>
 </p>
 
 🟠 IMPORTANT
@@ -33,11 +33,11 @@ GitHub — Source, release verification & project files: https://github.com/DEad
 
 ACBFHapticsBridge adds Assassin's Creed Shadows-derived haptic feedback to Assassin's Creed IV: Black Flag Resynced.
 
-The current v2.3.7.3 / v8-r9k build deliberately uses the proven v2.3.7.0 / v8-r9h behavior as its gameplay, Steam DualSense haptic and conventional-rumble baseline.
+The current v2.3.7.4 / v8-r9l build retains the v2.3.7.3 / v8-r9k gameplay, DualSense haptic and conventional-rumble behavior while adding discovered verified target compatibility for Steam Title Updates 1.0.6 and 1.0.7.
 
 On Steam, the bridge continues using Black Flag's existing Wwise Motion / Quad Audio Haptics path exactly as the known-good v2.3.7.0 baseline does. The Ubisoft compatibility additions are isolated to the Ubisoft Connect and Ubisoft+ executable profiles instead of changing the already-working Steam output path.
 
-For Ubisoft Connect / Ubisoft+, Black Flag's native Quad haptic path remains the first choice. If meaningful native Quad haptics are absent while bridge HFX playback is required, v8-r9k can use a guarded 48 kHz / 4-channel direct DualSense fallback on actuator channels 3/4.
+For Ubisoft Connect / Ubisoft+, Black Flag's native Quad haptic path remains the first choice. If meaningful native Quad haptics are absent while bridge HFX playback is required, v8-r9l retains the guarded 48 kHz / 4-channel direct DualSense fallback on actuator channels 3/4.
 
 The mod supports:
 
@@ -62,10 +62,10 @@ Conventional controllers: the same effect timelines are converted into low/high-
 The bridge keeps Black Flag's own native controller feedback whenever possible, supplements selected native effects where useful, and fills in actions where the original game provides little or no controller response.
 
 🔵 NOTE
-The verified v2.3.7.3 bridge primarily uses GameInput and XInput-compatible controller paths. Generic DirectInput support should not be assumed for every device.
+The verified v2.3.7.4 bridge primarily uses GameInput and XInput-compatible controller paths. Generic DirectInput support should not be assumed for every device.
 
 🔵 NOTE
-DUALSENSE HAPTICS VS RUMBLE: The 48 kHz DualSense haptic stream and conventional rumble are parallel outputs. A strong haptic effect does not automatically "overflow" into rumble. The haptic path is limited by PeakLimit, while conventional rumble is generated separately when enabled. On Steam, v8-r9k preserves the proven v2.3.7.0 / r9h routing behavior.
+DUALSENSE HAPTICS VS RUMBLE: The 48 kHz DualSense haptic stream and conventional rumble are parallel outputs. A strong haptic effect does not automatically "overflow" into rumble. The haptic path is limited by PeakLimit, while conventional rumble is generated separately when enabled. On Steam, v8-r9l retains the v2.3.7.3 / r9k output behavior and the proven v2.3.7.0 / r9h routing baseline.
 
 ✅ Confirmed / Supported Game Versions
 
@@ -75,7 +75,11 @@ Status
 
 Steam — Title Update 1.0.6
 
-✅ Supported — v2.3.7.0 / r9h is the confirmed working behavioral baseline used by r9k
+✅ Supported — v2.3.7.4 / r9l retains the proven r9k/r9h output behavior and uses the verified 1.0.6 target set
+
+Steam — Title Update 1.0.7
+
+✅ Supported — v2.3.7.4 / r9l adds discovered verified executable-dependent targets for 1.0.7
 
 Ubisoft Connect
 
@@ -107,19 +111,15 @@ ACBlackFlag_Plus.exe SHA-256
 
 b7a2c38212b1e92b4bd5399d29ceb44965a55b3d83110719cfb8053ad1bb3c75
 
-voices38 verified profile
-
-19920f34bb2fac814023ee3c27f0ceca1872e80a2aafb37c092c419fff77cc0d
-
 The supplied Ubisoft Connect and Ubisoft+ executables were statically verified against the bridge's executable-dependent hooks. Both retain the required Wwise PostEvent hook, Quad Audio Haptics flush hook and all 21/21 gameplay-state callback slots used by the bridge.
 
-v2.3.7.3 retains dynamic XInputSetState PE-import resolution, with verified executable-specific locations retained only as pointer-validated fail-closed fallbacks.
+v2.3.7.4 retains dynamic XInputSetState PE-import resolution, with verified executable-specific locations retained only as pointer-validated fail-closed fallbacks.
 
-The important difference in v8-r9k is that the newer output compatibility logic is isolated to Ubisoft Connect / Ubisoft+.
+v8-r9l retains the r9k Ubisoft-isolated output compatibility logic and adds discovered verified executable-dependent targets for Steam Title Updates 1.0.6 and 1.0.7.
 
 Steam keeps the known-good v2.3.7.0 / r9h output behavior.
 
-For Ubisoft profiles, r9k also:
+For Ubisoft profiles, r9l retains the r9k behavior that:
 
 preserves physical DualSense identity if the active controller backend temporarily changes;
 
@@ -158,16 +158,16 @@ version.dll from Ultimate ASI Loader
 or the compatible version.dll supplied by ACBlackFlagFix on NexusMods
 
 🟠 IMPORTANT
-version.dll is INCLUDED in the v2.3.7.3 release.
+version.dll is INCLUDED in the v2.3.7.4 release.
 It remains third-party software and is governed by its original author's license/redistribution terms.
 
 Installation
 
-Download the normal v2.3.7.3 release, not the source-only package.
+Download the normal v2.3.7.4 release, not the source-only package.
 
 Place these files in the Black Flag game folder:
 
-ACBFHapticsBridge-v8-r9k.asi
+ACBFHapticsBridge-v8-r9l.asi
 ACBFHapticsBridge-v8.ini
 ShadowsHapticsPack-v5.hfx
 version.dll
@@ -184,7 +184,7 @@ Press F10 if you need a diagnostic snapshot in the log.
 
 ☕ DONATING
 
-Not obligated to, but appreciated nonetheless! 
+Not obligated to, but appreciated nonetheless!
 
 If you liked this mod and wanna buy me a coffee, show your appreciation / leave a tip, you can donate via these wallets.
 
@@ -204,11 +204,11 @@ PayPal profile donate is not working for my country, and I can't leave the direc
 
 😄 AAAANDDDDDDDDDD THIS IS MY FIRST MOD!!
 
-Glad it works for me at least!! 
+Glad it works for me at least!!
 
 Please report any bugs or weird stuff so I can work on them if I can.
 
-✨ What the ASI mod does — v2.3.7.3
+✨ What the ASI mod does — v2.3.7.4
 
 ACBFHapticsBridge currently adds contextual feedback for:
 
@@ -236,31 +236,29 @@ Recovery: Player/menu/state reacquisition and optimized Wwise haptic-sink handli
 
 Performance: 500 Hz bridge-side input worker, cached GameInput metadata, lower menu/input overhead and runtime performance diagnostics
 
-🆕 v2.3.7.3 / v8-r9k — Ubisoft-Isolated Compatibility Update
+🆕 v2.3.7.4 / v8-r9l — Steam 1.0.6 + 1.0.7 Compatibility Update
 
-v2.3.7.3 deliberately returns to v2.3.7.0 / v8-r9h as the behavioral baseline.
+v2.3.7.4 retains the v2.3.7.3 / v8-r9k gameplay, native-Quad haptic and conventional-rumble behavior.
 
-The working Steam DualSense haptic path, conventional-rumble behavior, gameplay detection, HFX mixing and effect tuning from r9h are retained.
+The release focuses on executable compatibility for Steam Title Updates 1.0.6 and 1.0.7 without retuning the established effects.
 
-The compatibility work added afterward is now isolated to Ubisoft Connect / Ubisoft+.
+🎮 Steam 1.0.6 + 1.0.7 compatibility
 
-🎮 Steam behavior restored to the proven baseline
+r9l adds discovered verified executable-dependent target handling for both Steam 1.0.6 and Steam 1.0.7.
 
-Steam uses the same Black Flag native Wwise Quad Audio Haptics injection path as v2.3.7.0 / r9h.
+The native Wwise Quad Audio Haptics path remains the Steam DualSense output path.
 
-The direct 48 kHz DualSense renderer is not eligible on Steam.
+The direct 48 kHz DualSense renderer remains ineligible on Steam.
 
-The conventional-rumble implementation is restored to the r9h behavior.
+The conventional-rumble behavior remains the same as v2.3.7.3 / r9k.
 
-A detected DualSense successfully handled through GameInput is not newly mirrored through XInput.
-
-The r9i/r9j global native/direct output switching is not used on Steam.
+The runtime keeps dynamic XInputSetState import resolution with verified-profile fail-closed fallback handling.
 
 🎧 Ubisoft-only DualSense fallback
 
-Ubisoft Connect / Ubisoft+ keep the r9h native Quad Audio Haptics route as first choice.
+Ubisoft Connect / Ubisoft+ keep the native Quad Audio Haptics route as first choice.
 
-The direct DualSense fallback is eligible only on verified Ubisoft profiles.
+The direct DualSense fallback remains eligible only on verified Ubisoft profiles.
 
 The fallback requires meaningful bridge HFX work and absence of meaningful native Quad haptics.
 
@@ -272,19 +270,21 @@ Real Ubisoft-native haptics immediately retake priority.
 
 Bridge HFX are not injected through both native and direct waveform paths simultaneously.
 
-🔎 Ubisoft executable / XInput compatibility
+🔎 Executable / XInput compatibility
 
-Dynamic PE import-table resolution of XInputSetState.
+Steam 1.0.6 and 1.0.7 use discovered verified targets instead of relying on one fixed executable-specific target set.
+
+Dynamic PE import-table resolution of XInputSetState is retained.
 
 Known verified IAT locations remain pointer-validated fail-closed fallbacks.
 
-Runtime executable-profile classification determines whether the Ubisoft-only direct fallback can be used.
+Runtime executable-profile classification still determines whether the Ubisoft-only direct fallback can be used.
 
 Physical DualSense identity is retained for the Ubisoft fallback if the input backend temporarily changes.
 
-✅ r9h baseline preserved
+✅ r9k behavior preserved
 
-The following important functions were verified source-identical against the actual v2.3.7.0 / r9h baseline:
+v2.3.7.4 retains the v2.3.7.3 / r9k output behavior, including:
 
 conventional-rumble output
 
@@ -300,9 +300,7 @@ deferred-effect processing
 
 MasterGain=0.90
 
-all existing r9h INI values remain unchanged
-
-all gameplay-state hooks remain unchanged
+all existing effect and INI tuning remains unchanged
 
 all Wwise semantic mappings remain unchanged
 
@@ -322,7 +320,7 @@ ShadowsHapticsPack-v5.hfx remains unchanged
 
 version.dll remains unchanged
 
-Only two new configuration values are added:
+The existing Ubisoft fallback configuration values remain unchanged:
 
 UbisoftDirectDualSenseFallback=1
 UbisoftDirectDualSenseFallbackDelayMs=1000
@@ -330,7 +328,7 @@ UbisoftDirectDualSenseFallbackDelayMs=1000
 These settings have no effect on the Steam output path.
 
 🔵 NOTE
-In short: v2.3.7.3 keeps the proven v2.3.7.0 Steam haptic behavior and adds the newer compatibility work only where it is needed: Ubisoft Connect / Ubisoft+.
+In short: v2.3.7.4 keeps the v2.3.7.3 / r9k haptic and rumble behavior and adds Steam Title Update 1.0.7 compatibility alongside the existing 1.0.6 and Ubisoft profiles.
 
 🚶 Spatial movement + footsteps
 
@@ -482,7 +480,7 @@ Expanded diagnostics make controller backend, semantic domain, state hooks, wate
 
 F9: Plays the Dodge test effect through the active DualSense haptic / conventional rumble output paths. Useful for checking whether the mod is producing feedback.
 
-F10: Writes a detailed runtime snapshot to ACBFHapticsBridge-v8.log, including controller/backend information, semantic/gameplay state, water/landing diagnostics, native arbitration, effect activity and v8-r9k diagnostics.
+F10: Writes a detailed runtime snapshot to ACBFHapticsBridge-v8.log, including controller/backend information, semantic/gameplay state, water/landing diagnostics, native arbitration, effect activity and v8-r9l diagnostics.
 
 F11: Enables / disables the complete bridge. Disabling immediately stops ASI-added playback and clears bridge state. Re-enabling performs a clean runtime/state reacquisition.
 
@@ -615,7 +613,7 @@ Make menu navigation softer
 [Effect.MenuTick]
 IntensityMultiplier=0.60
 
-🧩 Special v2.3.7.3 Effect Settings
+🧩 Special v2.3.7.4 Effect Settings
 
 DualSense walk normalization
 
@@ -753,7 +751,7 @@ PeakLimit=2.00
 
 With NormalizedBaseline=1:
 
-MasterGain=0.90 = supplied v2.3.7.3 master setting, equal to 90% of the normalized tuned master baseline
+MasterGain=0.90 = supplied v2.3.7.4 master setting, equal to 90% of the normalized tuned master baseline
 
 OneShotGain=1.00 = tuned current one-shot baseline
 
@@ -832,7 +830,7 @@ advanced [GameplayState] addresses / hook-related values
 
 verified semantic event IDs
 
-🔐 Verified v2.3.7.3 Build
+🔐 Verified v2.3.7.4 Build
 
 Item
 
@@ -840,27 +838,19 @@ Value
 
 Release
 
-v2.3.7.3
+v2.3.7.4
 
 Internal build
 
-ACBFHapticsBridge-v8-r9k
+ACBFHapticsBridge-v8-r9l
 
 Runtime label
 
-v8-r9k-v2.3.7.3-ubisoft-isolated-fallback
+v8-r9l-v2.3.7.4-1.06-1.07-compat
 
 ASI
 
-ACBFHapticsBridge-v8-r9k.asi
-
-ASI SHA-256
-
-99e7862e3dfc8efbb0508394719649de937d2a618b2ed3a27832e445642c761e
-
-Release ZIP SHA-256
-
-3e43483b9605bd560b1f75bc943bf4fd75038a05c8bd5195f721659c52afad69
+ACBFHapticsBridge-v8-r9l.asi
 
 HFX SHA-256
 
@@ -870,38 +860,30 @@ version.dll SHA-256
 
 6203c5a0ba1f8c5c77c7c12c33be178a5057063ef1da265eb0a546495c6e6a4e
 
-Two clean consecutive r9k builds produced the same ASI byte-for-byte.
+Runtime verification confirms:
 
-Build verification confirms:
+v8-r9l / v2.3.7.4 startup
 
-AMD64 PE32+ DLL
+Steam 1.0.6 + 1.0.7 target-discovery routing
 
-deterministic COFF timestamp
+v2.3.7.3 / r9k output behavior retained
 
-ASLR
+verified 1.0.6-compatible gameplay-state targets selected in the supplied runtime log
 
-NX
+21 gameplay-state vtable hooks installed with 0 failures in the supplied runtime log
 
-High Entropy VA
+native Quad Audio Haptics injector active
 
-no RWX sections
+exact Wwise PostEvent router active
 
-no real static imports
-
-14-effect / 48 kHz stereo HFX pack
-
-unchanged version.dll
-
-unchanged r9h gameplay/tuning configuration
-
-source-identical verification of the critical r9h baseline functions
+dynamic XInputSetState resolution with verified-profile fallback retained
 
 🔵 NOTE
-v2.3.7.0 / r9h remains the confirmed working Steam behavioral baseline. v2.3.7.3 / r9k is deliberately built around that baseline while isolating the newer compatibility work to Ubisoft profiles.
+v2.3.7.0 / r9h remains the proven Steam behavioral baseline. v2.3.7.3 / r9k preserved that behavior while isolating Ubisoft fallback logic, and v2.3.7.4 / r9l retains the r9k output behavior while adding Steam 1.0.6 + 1.0.7 target compatibility.
 
-📂 Source Notice — v2.3.7.3
+📂 Source Notice — v2.3.7.4
 
-The current v2.3.7.3 release contains the actual buildable source used for the current ASI.
+The current v2.3.7.4 release contains the actual buildable source used for the current ASI.
 
 A simplified layout is:
 
@@ -920,19 +902,19 @@ Source/
 ├─ UBISOFT-CROSSREFERENCE.md
 ├─ TEST-CHECKLIST.md
 ├─ CHANGELOG-v2.3.7.0-to-v2.3.7.3.md
-├─ ACBFHapticsBridge-v2.3.7.3-NONCOMMERCIAL-LICENSE.txt
+├─ ACBFHapticsBridge-v2.3.7.4-NONCOMMERCIAL-LICENSE.txt
 ├─ LICENSE.txt
 └─ release/build provenance and historical change notes
 
 📜 License — Non-Commercial
 
 🟠 IMPORTANT
-ACBFHapticsBridge v2.3.7.3 is NOT released under the MIT License.
+ACBFHapticsBridge v2.3.7.4 is NOT released under the MIT License.
 It is distributed under the ACBFHapticsBridge Non-Commercial License v1.1.
 
 The full release-specific license is included with the source and inside the downloadable release archive as:
 
-ACBFHapticsBridge-v2.3.7.3-NONCOMMERCIAL-LICENSE.txt
+ACBFHapticsBridge-v2.3.7.4-NONCOMMERCIAL-LICENSE.txt
 
 What the license allows
 
@@ -1022,7 +1004,7 @@ Any redistribution or use of the HFX pack remains subject to applicable copyrigh
 
 version.dll and other third-party files
 
-The current v2.3.7.3 package includes:
+The current v2.3.7.4 package includes:
 
 version.dll
 
