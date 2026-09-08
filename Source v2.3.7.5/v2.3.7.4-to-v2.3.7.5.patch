@@ -1,0 +1,273 @@
+--- v2.3.7.4/main.cpp
++++ v2.3.7.5/main.cpp
+@@ -1,4 +1,4 @@
+-// ACBFHapticsBridge v8-r9l / v2.3.7.4 executable compatibility revision
++// ACBFHapticsBridge v8-r9m / v2.3.7.5 executable compatibility revision
+ // Built from the complete v6-r6 reconstruction source plus the exact Wwise
+ // PostEvent hook proven by ACBFStateTracer 2.3/2.4.  v8-r4 keeps confirmed
+ // actions from raw controller heuristics to real Black Flag gameplay/Wwise events.
+@@ -196,6 +196,13 @@
+ static HANDLE invalid_handle_value() { return (HANDLE)(~(usize)0); }
+ 
+ using PFN_VirtualAlloc = void* (WINABI*)(void*, usize, DWORD, DWORD);
++struct CompatMemoryInfo {
++    void* BaseAddress; void* AllocationBase;
++    DWORD AllocationProtect; WORD PartitionId; WORD padding;
++    usize RegionSize; DWORD State; DWORD Protect; DWORD Type; DWORD padding2;
++};
++static_assert(sizeof(CompatMemoryInfo) == 48, "Windows x64 MEMORY_BASIC_INFORMATION ABI");
++using PFN_VirtualQuery = usize (WINABI*)(LPCVOID, CompatMemoryInfo*, usize);
+ using PFN_VirtualProtect = BOOL (WINABI*)(void*, usize, DWORD, DWORD*);
+ using PFN_FlushInstructionCache = BOOL (WINABI*)(HANDLE, LPCVOID, usize);
+ using PFN_CreateThread = HANDLE (WINABI*)(void*, usize, LPTHREAD_START_ROUTINE, void*, DWORD, DWORD*);
+@@ -218,6 +225,7 @@
+ struct Api {
+     PFN_VirtualAlloc VirtualAlloc{};
+     PFN_VirtualProtect VirtualProtect{};
++    PFN_VirtualQuery VirtualQuery{};
+     PFN_FlushInstructionCache FlushInstructionCache{};
+     PFN_CreateThread CreateThread{};
+     PFN_Sleep Sleep{};
+@@ -499,6 +507,7 @@
+     if (!k32) return false;
+     g_api.LoadLibraryW = api_cast<PFN_LoadLibraryW>(resolve_export(k32, "LoadLibraryW"));
+     g_api.VirtualAlloc = api_cast<PFN_VirtualAlloc>(resolve_export(k32, "VirtualAlloc"));
++    g_api.VirtualQuery = api_cast<PFN_VirtualQuery>(resolve_export(k32, "VirtualQuery"));
+     g_api.VirtualProtect = api_cast<PFN_VirtualProtect>(resolve_export(k32, "VirtualProtect"));
+     g_api.FlushInstructionCache = api_cast<PFN_FlushInstructionCache>(resolve_export(k32, "FlushInstructionCache"));
+     g_api.CreateThread = api_cast<PFN_CreateThread>(resolve_export(k32, "CreateThread"));
+@@ -526,7 +535,7 @@
+             atomic_store_u64(&g_perfQpcFrequency, (u64)frequency.QuadPart);
+     }
+ 
+-    return g_api.VirtualAlloc && g_api.VirtualProtect && g_api.FlushInstructionCache &&
++    return g_api.VirtualAlloc && g_api.VirtualProtect && g_api.VirtualQuery && g_api.FlushInstructionCache &&
+            g_api.CreateThread && g_api.Sleep && g_api.GetTickCount64 &&
+            g_api.CreateFileW && g_api.ReadFile && g_api.WriteFile &&
+            g_api.GetFileSizeEx && g_api.CloseHandle;
+@@ -3474,7 +3483,7 @@
+ }
+ 
+ 
+-// v8-r9l / v2.3.7.4 Ubisoft-only direct DualSense fallback retained from r9k.
++// v8-r9m / v2.3.7.5 Ubisoft-only direct DualSense fallback retained from r9k.
+ // Steam/voices38 never enter this path: their HFX continues to be injected into
+ // Black Flag's native Wwise Quad sink exactly as in the working v2.3.7.0/r9h.
+ #pragma pack(push,1)
+@@ -3785,19 +3794,54 @@
+            size <= (u64)g_gameSize - rva;
+ }
+ 
++// Query before dereferencing: SizeOfImage includes inaccessible/discarded pages.
++static bool compat_region_allowed(const CompatMemoryInfo& m, bool executable) {
++    if (m.State != MEM_COMMIT || (m.Protect & (0x100u | 0x01u))) return false;
++    DWORD p = m.Protect & 0xFFu;
++    if (executable) return p == 0x20u || p == 0x40u || p == 0x80u;
++    return p == 0x02u || p == 0x04u || p == 0x08u ||
++           p == 0x20u || p == 0x40u || p == 0x80u;
++}
++static bool compat_memory_range(u64 rva, u64 length, bool executable) {
++    if (!compat_rva_valid(rva, length) || !length || !g_api.VirtualQuery) return false;
++    u64 at = (u64)g_gameBase + rva, end = at + length;
++    while (at < end) {
++        CompatMemoryInfo m{};
++        if (g_api.VirtualQuery((void*)at, &m, sizeof(m)) != sizeof(m) ||
++            !compat_region_allowed(m, executable)) return false;
++        u64 next = (u64)m.BaseAddress + m.RegionSize;
++        if ((u64)m.BaseAddress > at || next <= at) return false;
++        at = next < end ? next : end;
++    }
++    return true;
++}
++static bool compat_code_matches(u64 rva, const u8* sig, u32 len) {
++    return compat_memory_range(rva, len, true) && bytes_equal(g_gameBase+rva, sig, len);
++}
++using CompatMatcher = bool (*)(const u8*);
++static u64 compat_scan(u32 length, const u8* exact, CompatMatcher matcher) {
++    if (!g_gameBase || !g_api.VirtualQuery || !length || g_gameSize < length) return 0;
++    u64 base = (u64)g_gameBase, end = base + g_gameSize, at = base, found = 0;
++    u32 matches = 0;
++    while (at < end) {
++        CompatMemoryInfo m{};
++        if (g_api.VirtualQuery((void*)at, &m, sizeof(m)) != sizeof(m)) return 0;
++        u64 next = (u64)m.BaseAddress + m.RegionSize;
++        if ((u64)m.BaseAddress > at || next <= at) return 0;
++        if (next > end) next = end;
++        if (compat_region_allowed(m, true) && next-at >= length) {
++            for (u64 p=at; p<=next-length; ++p) {
++                const u8* q=(const u8*)p;
++                bool match=exact ? (q[0]==exact[0] && bytes_equal(q,exact,length)) : matcher(q);
++                if (match) { found=p-base; if (++matches>1) return 0; }
++            }
++        }
++        at=next;
++    }
++    return matches==1 ? found : 0;
++}
+ static u64 find_unique_exact_rva(const u8* signature, u32 length) {
+-    if (!g_gameBase || !signature || !length || (u64)g_gameSize < length)
+-        return 0;
+-    u64 found = 0;
+-    u32 matches = 0;
+-    for (u32 rva = 0; rva <= g_gameSize - length; ++rva) {
+-        const u8* at = g_gameBase + rva;
+-        if (at[0] != signature[0] || !bytes_equal(at, signature, length))
+-            continue;
+-        found = rva;
+-        if (++matches > 1) return 0;
+-    }
+-    return matches == 1 ? found : 0;
++    return signature ? compat_scan(length, signature, nullptr) : 0;
+ }
+ 
+ // The six-byte PostEvent prologue is common in this executable. These
+@@ -3823,31 +3867,22 @@
+ }
+ 
+ static u64 find_unique_v8_post_event_rva() {
+-    if (!g_gameBase || (u64)g_gameSize < 64ull) return 0;
+-    u64 found = 0;
+-    u32 matches = 0;
+-    for (u32 rva = 0; rva <= g_gameSize - 64u; ++rva) {
+-        const u8* at = g_gameBase + rva;
+-        if (at[0] != kV8PostPrefix[0] || !v8_post_anchor_matches(at))
+-            continue;
+-        found = rva;
+-        if (++matches > 1) return 0;
+-    }
+-    return matches == 1 ? found : 0;
+-}
+-
+-static bool compat_is_107_layout() {
+-    return compat_rva_valid(QUAD_FLUSH_RVA_107, sizeof(kQuadFlushSignature)) &&
+-           bytes_equal(g_gameBase + QUAD_FLUSH_RVA_107,
+-                       kQuadFlushSignature, sizeof(kQuadFlushSignature));
+-}
++    return compat_scan(64, nullptr, &v8_post_anchor_matches);
++}
++// Capture before install_flush_hook overwrites the identifying bytes.
++static bool g_compat107Layout{};
++static void compat_detect_layout() {
++    g_compat107Layout = compat_code_matches(QUAD_FLUSH_RVA_107,
++                                            kQuadFlushSignature, 16);
++}
++static bool compat_is_107_layout() { return g_compat107Layout; }
+ 
+ static bool install_flush_hook() {
+     u64 targetRva = g_cfg.flushRva;
+-    bool configuredMatch = compat_rva_valid(targetRva, sizeof(kQuadFlushSignature)) &&
+-                           bytes_equal(g_gameBase + targetRva,
+-                                       kQuadFlushSignature,
+-                                       sizeof(kQuadFlushSignature));
++    bool configuredMatch = compat_code_matches(targetRva, kQuadFlushSignature, 16);
++    if (!configuredMatch && compat_code_matches(QUAD_FLUSH_RVA_107, kQuadFlushSignature, 16)) {
++        targetRva=QUAD_FLUSH_RVA_107; configuredMatch=true;
++    }
+     if (!configuredMatch)
+         targetRva = find_unique_exact_rva(kQuadFlushSignature,
+                                           sizeof(kQuadFlushSignature));
+@@ -3885,13 +3920,15 @@
+     patch[k++] = 0; patch[k++] = 0; patch[k++] = 0; patch[k++] = 0;
+     *(u64*)(patch + k) = (u64)&flush_hook; k += 8;
+     while (k < 16) patch[k++] = 0x90;
++    g_flushTrampoline = trampoline;
++    g_originalFlush = (FlushFn)trampoline;
++    __atomic_thread_fence(__ATOMIC_SEQ_CST);
++    g_api.FlushInstructionCache(invalid_handle_value(), trampoline, p);
+     for (u32 i = 0; i < 16; ++i) target[i] = patch[i];
+     g_api.FlushInstructionCache(invalid_handle_value(), target, 16);
+     DWORD ignored = 0;
+     g_api.VirtualProtect(target, 16, oldProtect, &ignored);
+ 
+-    g_flushTrampoline = trampoline;
+-    g_originalFlush = (FlushFn)trampoline;
+     atomic_store_u32(&g_hookInstalled, 1);
+     TextBuf b{}; SYSTEMTIME st{};
+     if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+@@ -3973,6 +4010,10 @@
+     *(u64*)(tramp+k)=(u64)(target+len); k+=8;
+     DWORD old=0;
+     if (!g_api.VirtualProtect(target, len, PAGE_EXECUTE_READWRITE, &old)) return false;
++    g_v8PostEventOriginal = (V8PostEventFn)tramp;
++    __atomic_thread_fence(__ATOMIC_SEQ_CST);
++    if (g_api.FlushInstructionCache)
++        g_api.FlushInstructionCache(invalid_handle_value(), tramp, k);
+     target[0]=0xE9; *(i32*)(target+1)=(i32)rel;
+     for (u32 i=5;i<len;++i) target[i]=0x90;
+     if (g_api.FlushInstructionCache)
+@@ -4050,8 +4091,12 @@
+     if (!g_gameBase || !g_gameSize) return false;
+     static const u8 signature[6] = {0x41,0x57,0x41,0x56,0x41,0x55};
+     u64 targetRva = g_v8PostEventRva;
+-    bool configuredMatch = compat_rva_valid(targetRva, 64) &&
++    bool configuredMatch = compat_memory_range(targetRva, 64, true) &&
+                            v8_post_anchor_matches(g_gameBase + targetRva);
++    if (!configuredMatch && compat_memory_range(0x0091D950ull, 64, true) &&
++        v8_post_anchor_matches(g_gameBase+0x0091D950ull)) {
++        targetRva=0x0091D950ull; configuredMatch=true;
++    }
+     if (!configuredMatch)
+         targetRva = find_unique_v8_post_event_rva();
+     if (!targetRva || !compat_rva_valid(targetRva, 64)) {
+@@ -4461,8 +4506,8 @@
+ static bool patch_state_vtable(u64 slotRva, u64 expectedFunctionRva,
+                                StateVirtualFn replacement, StateVirtualFn* original,
+                                const char* label) {
+-    if (!g_gameBase || slotRva + sizeof(u64) > g_gameSize ||
+-        expectedFunctionRva >= g_gameSize || !replacement || !original) {
++    if (!compat_memory_range(slotRva, sizeof(u64), false) ||
++        !compat_memory_range(expectedFunctionRva, 1, true) || !replacement || !original) {
+         atomic_fetch_add_u32(&g_stateHookFailures, 1);
+         return false;
+     }
+@@ -4679,7 +4724,7 @@
+         g_gameXInputSetStateOriginal(index, vibration) : 1u;
+ }
+ 
+-// v8-r9l: dynamically resolve XInputSetState from the game's PE import table,
++// v8-r9m: dynamically resolve XInputSetState from the game's PE import table,
+ // while classifying only the four executable layouts already verified by r9h.
+ // Unknown layouts remain fail-closed and never enable the Ubisoft direct fallback.
+ static bool r9k_game_rva_valid(u64 rva, u64 size) {
+@@ -7725,7 +7770,7 @@
+         SYSTEMTIME st{};
+         if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+         tb_char(b, '['); tb_time(b, st);
+-        tb_str(b, "] ACBFHapticsBridge v8-r9l-v2.3.7.4-1.06-1.07-compat starting gameBase=0x"); tb_hex(b, (u64)g_gameBase);
++        tb_str(b, "] ACBFHapticsBridge v8-r9m-v2.3.7.5-1.06-1.07-compat starting gameBase=0x"); tb_hex(b, (u64)g_gameBase);
+         tb_str(b, " gameSize=0x"); tb_hex(b, g_gameSize); tb_str(b, " flushRVA=0x");
+         tb_hex(b, g_cfg.flushRva); tb_str(b, " masterUser/effective="); tb_float3(b, g_cfg.masterGain);
+         tb_char(b, '/'); tb_float3(b, effective_master_gain());
+@@ -7748,7 +7793,7 @@
+         TextBuf b{};
+         SYSTEMTIME st{};
+         if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-        tb_char(b, '['); tb_time(b, st); tb_str(b, "] v8-r9l / v2.3.7.4 1.06+1.07 target discovery; r9k output behavior retained legacyWalkLoopMs=");
++        tb_char(b, '['); tb_time(b, st); tb_str(b, "] v8-r9m / v2.3.7.5 1.06+1.07 target discovery; r9k output behavior retained legacyWalkLoopMs=");
+         tb_u64(b, g_cfg.walkLoopStartMs); tb_char(b, '-'); tb_u64(b, g_cfg.walkLoopEndMs);
+         tb_str(b, " runLoopMs=");
+         tb_u64(b, g_cfg.runLoopStartMs); tb_char(b, '-'); tb_u64(b, g_cfg.runLoopEndMs);
+@@ -7867,11 +7912,13 @@
+     resolve_mappings();
+     bool haveGameInput = init_gameinput();
+     bool haveXInput = init_xinput();
++    compat_detect_layout();
++    log_simple(g_compat107Layout ? "STARTUP layout cached=1.07 before code patching" : "STARTUP layout cached=1.06-compatible before code patching");
+     if (g_cfg.nativeHaptics && !install_flush_hook()) return 0;
+     if (!g_cfg.nativeHaptics) log_simple("Native haptic injection disabled by INI");
+     if (!install_v8_post_event_hook()) return 0;
+     install_gameplay_state_hooks();
+-    log_simple("v8-r9l / v2.3.7.4 routing: v2.3.7.3/r9k gameplay, native-Quad haptics and conventional-rumble behavior retained; 1.06 and 1.07 use discovered verified targets; Ubisoft Connect/Ubisoft+ may use a guarded 48kHz/4-channel DualSense fallback only when meaningful native Quad haptics are absent; XInputSetState import resolution is dynamic with verified-profile fallback");
++    log_simple("v8-r9m / v2.3.7.5 routing: v2.3.7.3/r9k gameplay, native-Quad haptics and conventional-rumble behavior retained; 1.06 and 1.07 use discovered verified targets; Ubisoft Connect/Ubisoft+ may use a guarded 48kHz/4-channel DualSense fallback only when meaningful native Quad haptics are absent; XInputSetState import resolution is dynamic with verified-profile fallback");
+     if (haveXInput) install_game_xinput_observer();
+ 
+     XINPUT_STATE previous{};
+@@ -7926,7 +7973,7 @@
+                                        108, loopNow, 0, ~0ull,
+                                        g_cfg.dodgeStartTrimMs,
+                                        g_cfg.semanticDodgeDurationMs);
+-            log_simple("F9 preview: v8-r9l semantic dodge trim/duration");
++            log_simple("F9 preview: v8-r9m semantic dodge trim/duration");
+         }
+         if (hotkey_pressed(VK_F10, f10Down)) { write_status(); log_r9k_output_status(loopNow); }
+         if (hotkey_pressed(VK_F11, f11Down)) {
