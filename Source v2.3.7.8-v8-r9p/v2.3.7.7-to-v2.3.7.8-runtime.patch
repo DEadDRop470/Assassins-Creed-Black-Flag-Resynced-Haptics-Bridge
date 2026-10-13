@@ -1,0 +1,919 @@
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -1,4 +1,4 @@
+-// ACBFHapticsBridge v8-r9o / v2.3.7.7 DS4 compatibility and hook safety revision
++// ACBFHapticsBridge v8-r9p / v2.3.7.8 DS4 compatibility and hook safety revision
+ // Built from the complete v6-r6 reconstruction source plus the exact Wwise
+ // PostEvent hook proven by ACBFStateTracer 2.3/2.4.  v8-r4 keeps confirmed
+ // actions from raw controller heuristics to real Black Flag gameplay/Wwise events.
+@@ -6,7 +6,7 @@
+ // Assassin's Creed Shadows through Assassin's Creed Black Flag Resynced's
+ // native Wwise AkQuadAudioHapticsSink flush path.
+ // The same timeline is reduced to conventional low/high-motor rumble through
+-// GameInput v0, with XInput as a fallback.
++// GameInput v0 / XInput, with a direct USB/Bluetooth HID transport for DS4.
+ //
+ // Freestanding Windows x64 DLL/ASI: no CRT or import libraries are required.
+ 
+@@ -1401,7 +1401,7 @@
+ 
+ // These device fields are declared before the rumble renderer because v8
+ // still uses the proven v6 output backends and controller-specific rendering.
+-static volatile u32 g_inputBackend{}; // 0=none, 1=GameInput, 2=XInput
++static volatile u32 g_inputBackend{}; // 0=none, 1=GameInput, 2=XInput, 3=DS4 HID
+ static volatile u32 g_activeVendor{};
+ static volatile u32 g_activeProduct{};
+ static volatile u32 g_activeDualSense{};
+@@ -3483,7 +3483,7 @@
+ }
+ 
+ 
+-// v8-r9o / v2.3.7.7 Ubisoft-only direct DualSense fallback retained from r9k.
++// v8-r9p / v2.3.7.8 Ubisoft-only direct DualSense fallback retained from r9k.
+ // Steam/voices38 never enter this path: their HFX continues to be injected into
+ // Black Flag's native Wwise Quad sink exactly as in the working v2.3.7.0/r9h.
+ #pragma pack(push,1)
+@@ -4644,7 +4644,7 @@
+         if (!valid) {
+             atomic_fetch_add_u32(&g_stateHookFailures, 1);
+             TextBuf b{}; SYSTEMTIME st{}; if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-            tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9O STATE preflight rejected ");
++            tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9P STATE preflight rejected ");
+             tb_str(b, target.label); tb_str(b, "; no state slots patched");
+             tb_endline(b); append_log(b.bytes, b.len);
+             return false;
+@@ -4660,7 +4660,7 @@
+     }
+     if (!g_compatLayoutKnown) {
+         atomic_fetch_add_u32(&g_stateHookFailures, 1);
+-        log_simple("R9O STATE unknown or ambiguous layout; state slots left untouched");
++        log_simple("R9P STATE unknown or ambiguous layout; state slots left untouched");
+         return;
+     }
+     bool use107 = compat_is_107_layout();
+@@ -4690,8 +4690,8 @@
+                     ++installed;
+             }
+             atomic_store_u32(&g_stateHooksInstalled, installed);
+-            log_simple(installed ? "ERROR R9O STATE rollback incomplete; saved originals retained" :
+-                                    "R9O STATE install rejected; all modified state slots rolled back");
++            log_simple(installed ? "ERROR R9P STATE rollback incomplete; saved originals retained" :
++                                    "R9P STATE install rejected; all modified state slots rolled back");
+             break;
+         }
+         ++installed;
+@@ -4786,7 +4786,7 @@
+ static volatile u64 g_rawControllerButtons{};
+ static volatile u32 g_rawTouchpadDown{};
+ static volatile u64 g_rawTouchpadEdges{};
+-static volatile u32 g_rumbleBackend{}; // 0=none, 1=GameInput, 2=XInput
++static volatile u32 g_rumbleBackend{}; // 0=none, 1=GameInput dispatch, 2=XInput success, 3=DS4 HID
+ static volatile u32 g_activeDeviceStatus{};
+ static volatile u64 g_rumbleWrites{};
+ static volatile u64 g_gameInputRumbleWrites{};
+@@ -4962,13 +4962,13 @@
+     if (original == (u64)&game_xinput_set_state_observer ||
+         !compat_address_range((void*)original, 1, true)) {
+         atomic_fetch_add_u32(&g_gameXInputObserverFailures, 1);
+-        log_simple("WARNING R9O XInput observer rejected an invalid or recursive target");
++        log_simple("WARNING R9P XInput observer rejected an invalid or recursive target");
+         return;
+     }
+     atomic_store_u64((volatile u64*)&g_gameXInputSetStateOriginal, original);
+     if (!compat_swap_pointer(slot, original, (u64)&game_xinput_set_state_observer)) {
+         atomic_fetch_add_u32(&g_gameXInputObserverFailures, 1);
+-        log_simple("WARNING R9O XInput observer atomic installation failed; saved original retained");
++        log_simple("WARNING R9P XInput observer atomic installation failed; saved original retained");
+         return;
+     }
+     atomic_store_u32(&g_gameXInputObserverInstalled,1);
+@@ -5048,6 +5048,7 @@
+ static bool g_rumbleOutputWasActive{};
+ static u64 g_lastRumblePhysicalWriteTick{};
+ static bool set_gameinput_rumble(float low, float high);
++static bool is_ds4_product(u32 vendor, u32 product);
+ static void* com_method(void* object, u32 index);
+ 
+ static void gameinput_stage(u32 bit, const char* label) {
+@@ -5098,10 +5099,10 @@
+             if (compat_swap_pointer((u64*)slot, (u64)&gameinput_rumble_observer, original)) {
+                 atomic_fetch_add_u32(&g_gameInputObserversInstalled, ~0u);
+                 atomic_fetch_add_u64(&g_gameInputObserverRetirements, 1);
+-                log_simple("R9O GI shared observer retired for DS4/Sony-safe device");
++                log_simple("R9P GI shared observer retired for DS4/Sony-safe device");
+             } else {
+                 atomic_fetch_add_u32(&g_gameInputObserverFailures, 1);
+-                log_simple("WARNING R9O GI shared observer retirement failed; saved original retained");
++                log_simple("WARNING R9P GI shared observer retirement failed; saved original retained");
+             }
+         }
+         return;
+@@ -5244,12 +5245,12 @@
+ 
+         GameInputDeviceGetInfoFn getInfo = api_cast<GameInputDeviceGetInfoFn>(
+             com_method(g_gameInputDevice, 3));
+-        gameinput_stage(0x0008u, "R9O GI stage=GetDeviceInfo begin");
++        gameinput_stage(0x0008u, "R9P GI stage=GetDeviceInfo begin");
+         const GameInputDeviceInfoPrefixV0* info =
+             getInfo ? getInfo(g_gameInputDevice) : nullptr;
+         if (!compat_address_range(info, sizeof(*info), false) || info->infoSize < sizeof(*info))
+             info = nullptr;
+-        gameinput_stage(0x0010u, "R9O GI stage=GetDeviceInfo complete");
++        gameinput_stage(0x0010u, "R9P GI stage=GetDeviceInfo complete");
+         u16 vendor = info ? info->vendorId : 0;
+         u16 product = info ? info->productId : 0;
+         g_gameInputCachedVendor = vendor;
+@@ -5269,16 +5270,16 @@
+         bool sonySafe = vendor == 0x054C && !dualSense;
+         if (sonySafe) atomic_fetch_add_u64(&g_gameInputSonySafeDevices, 1);
+         TextBuf b{}; SYSTEMTIME st{}; if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-        tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9O GI device vid=0x");
++        tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9P GI device vid=0x");
+         tb_hex(b, vendor, 4); tb_str(b, " pid=0x"); tb_hex(b, product, 4);
+         tb_str(b, " dualSense="); tb_u64(b, dualSense ? 1u : 0u);
+         tb_str(b, " sonySafe="); tb_u64(b, sonySafe ? 1u : 0u);
+         tb_str(b, sonySafe ? " observer=skip rawTouchpad=skip" :
+                            (dualSense ? " rawTouchpad=DualSense-only" : " rawTouchpad=skip"));
+         tb_endline(b); append_log(b.bytes, b.len);
+-        gameinput_stage(0x0020u, "R9O GI stage=observer policy begin");
++        gameinput_stage(0x0020u, "R9P GI stage=observer policy begin");
+         install_gameinput_rumble_observer(g_gameInputDevice, vendor, dualSense);
+-        gameinput_stage(0x0040u, "R9O GI stage=observer policy complete");
++        gameinput_stage(0x0040u, "R9P GI stage=observer policy complete");
+         atomic_fetch_add_u64(&g_perfDeviceIdentityRefreshes, 1);
+     }
+     g_gameInputDeviceIdentityTick = now;
+@@ -5295,11 +5296,11 @@
+              (u64)g_cfg.gameInputStatusRefreshMs)) {
+         GameInputDeviceGetStatusFn getStatus = api_cast<GameInputDeviceGetStatusFn>(
+             com_method(g_gameInputDevice, 4));
+-        gameinput_stage(0x0080u, "R9O GI stage=GetDeviceStatus begin");
++        gameinput_stage(0x0080u, "R9P GI stage=GetDeviceStatus begin");
+         atomic_store_u32(&g_activeDeviceStatus,
+                          getStatus ? getStatus(g_gameInputDevice) : 0u);
+         g_gameInputDeviceStatusTick = now;
+-        gameinput_stage(0x0100u, "R9O GI stage=GetDeviceStatus complete");
++        gameinput_stage(0x0100u, "R9P GI stage=GetDeviceStatus complete");
+         atomic_fetch_add_u64(&g_perfDeviceStatusRefreshes, 1);
+     }
+ }
+@@ -5338,7 +5339,7 @@
+             continue;
+         }
+         auto getState = api_cast<GameInputReadingGetGamepadStateFn>(com_method(reading, 22));
+-        gameinput_stage(0x0200u, "R9O GI stage=GetGamepadState begin");
++        gameinput_stage(0x0200u, "R9P GI stage=GetGamepadState begin");
+         source = {};
+         if (getState && getState(reading, &source)) {
+             atomic_store_u32(&g_gameInputReadRoute, attempt ? 2u : 1u);
+@@ -5366,7 +5367,7 @@
+     atomic_store_u32(&g_gameInputNormalizedReady, 0);
+     GameInputGamepadStateV0 source{};
+     void* feedbackDevice = nullptr;
+-    gameinput_stage(0x0001u, "R9O GI stage=GetCurrentReading legacy-combined begin");
++    gameinput_stage(0x0001u, "R9P GI stage=GetCurrentReading legacy-combined begin");
+     void* reading = acquire_gameinput_reading(getReading, source, &feedbackDevice);
+     if (!reading && feedbackDevice) {
+         update_gameinput_device(feedbackDevice, now);
+@@ -5377,26 +5378,26 @@
+             atomic_store_u64(&g_rawControllerButtons, 0);
+             atomic_store_u32(&g_rawTouchpadDown, 0);
+             atomic_fetch_add_u64(&g_gameInputFeedbackOnlyPolls, 1);
+-            gameinput_stage(0x10000u, "R9O GI Sony feedback device acquired; normalized input unavailable, semantic/output path active");
++            gameinput_stage(0x10000u, "R9P GI Sony feedback device acquired; normalized input unavailable, semantic/output path active");
+             return true;
+         }
+     }
+     if (!reading) {
+         clear_gameinput_device(now);
+         atomic_fetch_add_u64(&g_gameInputPollFailures, 1);
+-        gameinput_stage(0x20000u, "R9O GI no accepted reading; native/state/preview haptics remain active; see automatic INPUT report for HRESULTs");
++        gameinput_stage(0x20000u, "R9P GI no accepted reading; native/state/preview haptics remain active; see automatic INPUT report for HRESULTs");
+         return false;
+     }
+     if (feedbackDevice) com_release(feedbackDevice);
+     u32 acceptedRoute = atomic_load_u32(&g_gameInputReadRoute);
+-    gameinput_stage(0x0002u, "R9O GI stage=GetCurrentReading accepted normalized state");
+-    gameinput_stage(0x0400u, "R9O GI stage=GetGamepadState complete");
++    gameinput_stage(0x0002u, "R9P GI stage=GetCurrentReading accepted normalized state");
++    gameinput_stage(0x0400u, "R9P GI stage=GetGamepadState complete");
+     auto getDevice = api_cast<GameInputReadingGetDeviceFn>(com_method(reading, 6));
+     void* device = nullptr;
+-    gameinput_stage(0x0800u, "R9O GI stage=GetDevice begin");
++    gameinput_stage(0x0800u, "R9P GI stage=GetDevice begin");
+     if (getDevice) getDevice(reading, &device);
+     atomic_fetch_add_u64(&g_gameInputDeviceQueries, 1);
+-    gameinput_stage(0x1000u, "R9O GI stage=GetDevice complete");
++    gameinput_stage(0x1000u, "R9P GI stage=GetDevice complete");
+     if (!device) {
+         com_release(reading);
+         clear_gameinput_device(now);
+@@ -5462,16 +5463,21 @@
+     convert_gameinput_state(source, state);
+     atomic_store_u32(&g_gameInputNormalizedReady, 1u);
+     com_release(reading);
+-    gameinput_stage(0x2000u, "R9O GI stage=first normalized poll complete");
++    gameinput_stage(0x2000u, "R9P GI stage=first normalized poll complete");
+     return true;
+ }
+ 
+ static bool set_gameinput_rumble(float low, float high) {
+     if (!g_gameInputDevice) return false;
++    // DS4's generic GameInput device does not supply a motor transport.
++    // Never count its void/no-op method as delivery. The direct HID backend
++    // below receives the existing mixer envelope for this controller family.
++    if (is_ds4_product(atomic_load_u32(&g_activeVendor),
++                       atomic_load_u32(&g_activeProduct))) return false;
+     GameInputDeviceSetRumbleFn setRumble = api_cast<GameInputDeviceSetRumbleFn>(
+         com_method(g_gameInputDevice, 10));
+     if (!setRumble) return false;
+-    gameinput_stage(0x4000u, "R9O GI stage=SetRumbleState begin");
++    gameinput_stage(0x4000u, "R9P GI stage=SetRumbleState begin");
+     GameInputRumbleParamsV0 params{};
+     params.lowFrequency = clampf(low, 0.0f, 1.0f);
+     params.highFrequency = clampf(high, 0.0f, 1.0f);
+@@ -5480,7 +5486,7 @@
+     setRumble(g_gameInputDevice, &params);
+     atomic_store_u32(&g_pluginGameInputWriterThread, 0);
+     atomic_fetch_add_u64(&g_gameInputRumbleWrites, 1);
+-    gameinput_stage(0x8000u, "R9O GI stage=SetRumbleState complete");
++    gameinput_stage(0x8000u, "R9P GI stage=SetRumbleState complete");
+     return true;
+ }
+ 
+@@ -5523,9 +5529,16 @@
+     return wrote;
+ }
+ 
++#include "ds4_hid.h"
++
+ static void write_rumble_output(const RumbleSample& sample) {
+     u64 now = atomic_load_u64(&g_workerNowTick);
+     if (native_rumble_active(now)) {
++        // The native XInput/GameInput write cannot stop a directly driven DS4
++        // motor. Drop any bridge-owned HID envelope before yielding arbitration.
++        if (atomic_load_u32(&g_inputBackend) == 3u && g_ds4Active &&
++            (g_ds4Active->desiredActive || g_ds4Active->sentActive))
++            set_ds4_hid_rumble(0.0f, 0.0f);
+         // The game's write already replaced the motor state owned by the
+         // bridge.  A zero here would cancel the native effect, so relinquish
+         // the device without issuing any competing write.
+@@ -5538,6 +5551,8 @@
+         // motor state. Clear only a motor state that this bridge previously
+         // owned, once, while leaving the native haptic buffer untouched.
+         if (g_rumbleOutputWasActive) {
++            if (atomic_load_u32(&g_inputBackend) == 3u)
++                set_ds4_hid_rumble(0.0f, 0.0f);
+             bool clearedGI = false;
+             if (atomic_load_u32(&g_inputBackend) == 1 && g_gameInputDevice)
+                 clearedGI = set_gameinput_rumble(0.0f, 0.0f);
+@@ -5578,6 +5593,7 @@
+     bool gameInputWrote = false;
+     bool xinputWrote = false;
+     u32 backend = atomic_load_u32(&g_inputBackend);
++    bool ds4Wrote = backend == 3u && set_ds4_hid_rumble(low, high);
+     if (backend == 1 && g_gameInputDevice) {
+         gameInputWrote = set_gameinput_rumble(low, high);
+     }
+@@ -5587,11 +5603,12 @@
+     // the same motor state through XInput for every non-DualSense controller.
+     // Native DS4 pads simply return DEVICE_NOT_CONNECTED on this route, while
+     // DSX/ViGEm Xbox devices receive the write they require.
+-    if (!atomic_load_u32(&g_activeDualSense) || !gameInputWrote) {
++    if (backend != 3u && (!atomic_load_u32(&g_activeDualSense) || !gameInputWrote)) {
+         xinputWrote = set_xinput_rumble(low, high);
+     }
+-    bool wrote = gameInputWrote || xinputWrote;
+-    if (xinputWrote) atomic_store_u32(&g_rumbleBackend, 2);
++    bool wrote = gameInputWrote || xinputWrote || ds4Wrote;
++    if (ds4Wrote) atomic_store_u32(&g_rumbleBackend, 3);
++    else if (xinputWrote) atomic_store_u32(&g_rumbleBackend, 2);
+     else if (gameInputWrote) atomic_store_u32(&g_rumbleBackend, 1);
+     if (!wrote) atomic_store_u32(&g_rumbleBackend, 0);
+     else {
+@@ -8019,7 +8036,7 @@
+ 
+ static void log_r9n_safety_status() {
+     TextBuf b{}; SYSTEMTIME st{}; if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-    tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9O SAFETY giStageMask=0x");
++    tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9P SAFETY giStageMask=0x");
+     tb_hex(b, atomic_load_u32(&g_gameInputStageMask), 4);
+     tb_str(b, " sonySafe=");
+     tb_u64(b, atomic_load_u32(&g_activeVendor) == 0x054C && !atomic_load_u32(&g_activeDualSense) ? 1u : 0u);
+@@ -8036,9 +8053,9 @@
+     tb_endline(b); append_log(b.bytes, b.len);
+ }
+ 
+-static void log_r9o_input_status(u64 now) {
++static void log_r9p_input_status(u64 now) {
+     TextBuf b{}; SYSTEMTIME st{}; if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-    tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9O INPUT route/normalized/backend/connected=");
++    tb_char(b, '['); tb_time(b, st); tb_str(b, "] R9P INPUT route/normalized/backend/connected=");
+     tb_u64(b, atomic_load_u32(&g_gameInputReadRoute)); tb_char(b, '/');
+     tb_u64(b, atomic_load_u32(&g_gameInputNormalizedReady)); tb_char(b, '/');
+     tb_u64(b, atomic_load_u32(&g_inputBackend)); tb_char(b, '/');
+@@ -8106,7 +8123,7 @@
+         SYSTEMTIME st{};
+         if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+         tb_char(b, '['); tb_time(b, st);
+-        tb_str(b, "] ACBFHapticsBridge v8-r9o-v2.3.7.7-output-fix starting gameBase=0x"); tb_hex(b, (u64)g_gameBase);
++        tb_str(b, "] ACBFHapticsBridge v8-r9p-v2.3.7.8-output-fix starting gameBase=0x"); tb_hex(b, (u64)g_gameBase);
+         tb_str(b, " gameSize=0x"); tb_hex(b, g_gameSize); tb_str(b, " flushRVA=0x");
+         tb_hex(b, g_cfg.flushRva); tb_str(b, " masterUser/effective="); tb_float3(b, g_cfg.masterGain);
+         tb_char(b, '/'); tb_float3(b, effective_master_gain());
+@@ -8129,7 +8146,7 @@
+         TextBuf b{};
+         SYSTEMTIME st{};
+         if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-        tb_char(b, '['); tb_time(b, st); tb_str(b, "] v8-r9o / v2.3.7.7 1.06+1.07 target discovery; r9k output behavior retained legacyWalkLoopMs=");
++        tb_char(b, '['); tb_time(b, st); tb_str(b, "] v8-r9p / v2.3.7.8 1.06+1.07 target discovery; r9k output behavior retained legacyWalkLoopMs=");
+         tb_u64(b, g_cfg.walkLoopStartMs); tb_char(b, '-'); tb_u64(b, g_cfg.walkLoopEndMs);
+         tb_str(b, " runLoopMs=");
+         tb_u64(b, g_cfg.runLoopStartMs); tb_char(b, '-'); tb_u64(b, g_cfg.runLoopEndMs);
+@@ -8248,6 +8265,7 @@
+     resolve_mappings();
+     bool haveGameInput = init_gameinput();
+     bool haveXInput = init_xinput();
++    init_ds4_hid();
+     compat_detect_layout();
+     log_simple(!g_compatLayoutKnown ? "STARTUP layout unknown; fixed state targets disabled" :
+                (g_compat107Layout ? "STARTUP layout cached=1.07 before code patching" :
+@@ -8256,9 +8274,9 @@
+     if (!g_cfg.nativeHaptics) log_simple("Native haptic injection disabled by INI");
+     if (!install_v8_post_event_hook()) return 0;
+     install_gameplay_state_hooks();
+-    log_simple("v8-r9o / v2.3.7.7 routing: v2.3.7.3/r9k gameplay, native-Quad haptics and conventional-rumble behavior retained; 1.06 and 1.07 use discovered verified targets; Ubisoft Connect/Ubisoft+ may use a guarded 48kHz/4-channel DualSense fallback only when meaningful native Quad haptics are absent; XInputSetState import resolution is dynamic with verified-profile fallback");
++    log_simple("v8-r9p / v2.3.7.8 routing: v2.3.7.3/r9k gameplay, native-Quad haptics and conventional-rumble behavior retained; 1.06 and 1.07 use discovered verified targets; Ubisoft Connect/Ubisoft+ may use a guarded 48kHz/4-channel DualSense fallback only when meaningful native Quad haptics are absent; XInputSetState import resolution is dynamic with verified-profile fallback");
+     if (haveXInput) install_game_xinput_observer();
+-    log_simple("R9O STARTUP hooks complete; entering worker/poll loop");
++    log_simple("R9P STARTUP hooks complete; entering worker/poll loop");
+ 
+     XINPUT_STATE previous{};
+     bool havePrevious = false;
+@@ -8315,9 +8333,9 @@
+                                        108, loopNow, 0, ~0ull,
+                                        g_cfg.dodgeStartTrimMs,
+                                        g_cfg.semanticDodgeDurationMs);
+-            log_simple("F9 preview: v8-r9o semantic dodge trim/duration");
+-        }
+-        if (hotkey_pressed(VK_F10, f10Down)) { write_status(); log_r9k_output_status(loopNow); log_r9n_safety_status(); log_r9o_input_status(loopNow); }
++            log_simple("F9 preview: v8-r9p semantic dodge trim/duration");
++        }
++        if (hotkey_pressed(VK_F10, f10Down)) { write_status(); log_r9k_output_status(loopNow); log_r9n_safety_status(); log_r9p_input_status(loopNow); log_ds4_hid_status(); }
+         if (hotkey_pressed(VK_F11, f11Down)) {
+             u32 next = atomic_load_u32(&g_enabled) ? 0u : 1u;
+             atomic_store_u32(&g_enabled, next);
+@@ -8350,6 +8368,9 @@
+         }
+ 
+         process_v8_semantic_events(loopNow);
++        // Finish overlapped input/output even while F12 suspends inference.
++        // In particular, a queued zero must survive the last effect ending.
++        ds4_hid_service(loopNow);
+ 
+         XINPUT_STATE current{};
+         bool connected = false;
+@@ -8378,10 +8399,15 @@
+                 }
+             }
+ 
++            // Keep the proven DualSense/XInput routes. Only a selected DS4 or
++            // absence of any other controller may open the DS4 HID fallback.
++            // Output works while the first asynchronous input report is pending.
++            select_ds4_hid_transport(current, backend, connected, loopNow);
+             atomic_store_u32(&g_inputBackend, backend);
+             if (connected) {
+                 u64 deviceIdentity = backend == 1u ?
+-                    atomic_load_u64(&g_perfDeviceIdentityRefreshes) : 0ull;
++                    atomic_load_u64(&g_perfDeviceIdentityRefreshes) :
++                    (backend == 3u && g_ds4Active ? g_ds4Active->generation : 0ull);
+                 if (backend != previousBackend || deviceIdentity != previousDeviceIdentity) {
+                     havePrevious = false;
+                     previousRawTouchpad = false;
+@@ -8402,10 +8428,12 @@
+                     g_gameInputRawButtonCountValid = false;
+                 }
+                 atomic_store_u32(&g_controllerConnected, 1);
+-                bool normalizedInput = backend == 2u || atomic_load_u32(&g_gameInputNormalizedReady);
++                bool normalizedInput = backend == 2u ||
++                    (backend == 1u && atomic_load_u32(&g_gameInputNormalizedReady)) ||
++                    (backend == 3u && g_ds4InputReady);
+                 if (normalizedInput) atomic_fetch_add_u64(&g_controllerPackets, 1);
+                 atomic_store_u32(&g_lastControllerButtons, normalizedInput ? current.Gamepad.wButtons : 0u);
+-                bool rawTouchpadDown = backend == 1 &&
++                bool rawTouchpadDown = (backend == 1u || backend == 3u) &&
+                     atomic_load_u32(&g_rawTouchpadDown) != 0;
+                 bool rawTouchpadRising = rawTouchpadDown && !previousRawTouchpad;
+                 if (normalizedInput) {
+@@ -8463,8 +8491,9 @@
+         perf_record_rumble_write(
+             perf_elapsed_us(rumblePerfStart, perf_counter_now()));
+         if (now >= automaticStatusDue) {
+-            log_r9o_input_status(now);
++            log_r9p_input_status(now);
+             log_r9n_safety_status();
++            log_ds4_hid_status();
+             automaticStatusDue = now + 10000ull;
+         }
+ 
+@@ -8482,6 +8511,7 @@
+     stop.timelineActive = false;
+     g_rumbleOutputWasActive = true;
+     write_rumble_output(stop);
++    ds4_hid_shutdown();
+     if (g_gameInputDevice) { com_release(g_gameInputDevice); g_gameInputDevice = nullptr; }
+     if (g_gameInput) { com_release(g_gameInput); g_gameInput = nullptr; }
+     log_simple("Worker ending");
+--- /dev/null
++++ b/src/ds4_hid.h
+@@ -0,0 +1,490 @@
++// DS4 transport only. The r9m effects, waveform reduction and gains live in
++// main.cpp unchanged. Protocol facts: Linux hid-playstation and SDL PS4 HID.
++// All storage belongs to the worker. No GameInput vtable/raw-button calls.
++#pragma once
++
++struct Ds4Guid { u32 a; u16 b, c; u8 d[8]; };
++struct Ds4Interface { u32 size; Ds4Guid guid; u32 flags; u64 reserved; };
++struct Ds4Attributes { u32 size; u16 vendor, product, version, padding; };
++struct Ds4Caps {
++    u16 usage, page, inputBytes, outputBytes, featureBytes, reserved[17];
++    u16 counts[10];
++};
++struct Ds4Overlapped { u64 internal, internalHigh, offset; HANDLE event; };
++struct alignas(8) Ds4Detail { u32 size; WCHAR path[1024]; };
++static_assert(sizeof(Ds4Guid) == 16 && sizeof(Ds4Interface) == 32, "SetupAPI x64 ABI");
++static_assert(sizeof(Ds4Attributes) == 12 && sizeof(Ds4Caps) == 64, "HID ABI");
++static_assert(sizeof(Ds4Overlapped) == 32, "OVERLAPPED x64 ABI");
++#if !defined(_MSC_VER)
++static_assert(__builtin_offsetof(Ds4Detail, path) == 4, "Unicode device path offset");
++#endif
++
++using Ds4GetGuidFn = void (WINABI*)(Ds4Guid*);
++using Ds4GetAttrsFn = u8 (WINABI*)(HANDLE, Ds4Attributes*);
++using Ds4GetPreparsedFn = u8 (WINABI*)(HANDLE, void**);
++using Ds4FreePreparsedFn = u8 (WINABI*)(void*);
++using Ds4GetCapsFn = i32 (WINABI*)(void*, Ds4Caps*);
++using Ds4GetClassFn = HANDLE (WINABI*)(const Ds4Guid*, const WCHAR*, HANDLE, DWORD);
++using Ds4EnumFn = BOOL (WINABI*)(HANDLE, void*, const Ds4Guid*, DWORD, Ds4Interface*);
++using Ds4GetDetailFn = BOOL (WINABI*)(HANDLE, Ds4Interface*, void*, DWORD, DWORD*, void*);
++using Ds4DestroyListFn = BOOL (WINABI*)(HANDLE);
++using Ds4CreateEventFn = HANDLE (WINABI*)(void*, BOOL, BOOL, const WCHAR*);
++using Ds4ResetEventFn = BOOL (WINABI*)(HANDLE);
++using Ds4LastErrorFn = DWORD (WINABI*)();
++using Ds4ResultFn = BOOL (WINABI*)(HANDLE, Ds4Overlapped*, DWORD*, BOOL);
++using Ds4CancelFn = BOOL (WINABI*)(HANDLE, Ds4Overlapped*);
++struct Ds4Api {
++    Ds4GetGuidFn guid; Ds4GetAttrsFn attrs; Ds4GetPreparsedFn preparsed;
++    Ds4FreePreparsedFn freePreparsed; Ds4GetCapsFn caps;
++    Ds4GetClassFn getClass; Ds4EnumFn enumerate; Ds4GetDetailFn detail;
++    Ds4DestroyListFn destroyList; Ds4CreateEventFn createEvent;
++    Ds4ResetEventFn resetEvent; Ds4LastErrorFn lastError;
++    Ds4ResultFn result; Ds4CancelFn cancel;
++};
++static Ds4Api g_ds4Api{};
++static bool g_ds4ApiReady{};
++static constexpr u32 DS4_HID_BUFFER = 1024;
++static constexpr u32 DS4_HID_SLOTS = 4;
++static constexpr DWORD DS4_IO_PENDING = 997, DS4_IO_INCOMPLETE = 996;
++static constexpr DWORD DS4_FILE_OVERLAPPED = 0x40000000u;
++struct Ds4HidDevice {
++    HANDLE file{};
++    Ds4Overlapped read{}, write{};
++    u8 input[DS4_HID_BUFFER]{}, output[DS4_HID_BUFFER]{};
++    u16 vendor{}, product{}, inputBytes{}, outputBytes{};
++    bool bluetooth{}, retired{}, closing{}, readPending{}, writePending{};
++    bool ready{}, touch{}, dirty{}, desiredActive{}, sentActive{};
++    u8 desiredLow{}, desiredHigh{}, sentLow{}, sentHigh{};
++    u64 openTick{}, inputTick{}, writeTick{};
++    u32 generation{};
++    XINPUT_STATE state{};
++};
++static Ds4HidDevice g_ds4Hid[DS4_HID_SLOTS]{};
++static Ds4HidDevice* g_ds4Active{};
++static u64 g_ds4ScanDue{};
++static u32 g_ds4NextGeneration{};
++static volatile u64 g_ds4HidScans{}, g_ds4HidOpens{}, g_ds4HidOpenFailures{};
++static volatile u64 g_ds4HidInputReports{}, g_ds4HidInvalidReports{};
++static volatile u64 g_ds4HidSubmitted{}, g_ds4HidCompleted{}, g_ds4HidWriteErrors{};
++static volatile u64 g_ds4HidReadErrors{}, g_ds4HidBusyCoalesces{};
++static volatile u32 g_ds4HidLastError{};
++static bool g_ds4InputReady{};
++
++static bool is_ds4_product(u32 vendor, u32 product) {
++    return vendor == 0x054Cu &&
++        (product == 0x05C4u || product == 0x09CCu || product == 0x0BA0u);
++}
++
++static u32 ds4_crc32_update(u32 crc, u8 byte) {
++    crc ^= byte;
++    for (u32 bit = 0; bit < 8; ++bit)
++        crc = (crc >> 1) ^ ((crc & 1u) ? 0xEDB88320u : 0u);
++    return crc;
++}
++static u32 ds4_report_crc(u8 seed, const u8* data, u32 count) {
++    u32 crc = ds4_crc32_update(0xFFFFFFFFu, seed);
++    for (u32 i = 0; i < count; ++i) crc = ds4_crc32_update(crc, data[i]);
++    return ~crc;
++}
++static u32 ds4_read_le32(const u8* p) {
++    return (u32)p[0] | ((u32)p[1] << 8) | ((u32)p[2] << 16) | ((u32)p[3] << 24);
++}
++static u8 ds4_motor_byte(float level) {
++    return (u8)(clampf(level, 0.0f, 1.0f) * 255.0f + 0.5f);
++}
++static u32 ds4_make_output(u8* dst, u32 capacity, bool bluetooth, u8 low, u8 high) {
++    const u32 length = bluetooth ? 78u : 32u;
++    if (capacity < length) return 0;
++    memset(dst, 0, capacity); // Windows requires the descriptor's full output length.
++    dst[0] = bluetooth ? 0x11u : 0x05u;
++    const u32 common = bluetooth ? 3u : 1u;
++    if (bluetooth) dst[1] = 0xC4u; // HID + CRC; 4 ms input interval.
++    dst[common] = 0x01u; // Motors only: no LED, blink, speaker or audio changes.
++    dst[common + 3u] = high; // small/right motor
++    dst[common + 4u] = low;  // large/left motor
++    if (bluetooth) {
++        u32 crc = ds4_report_crc(0xA2u, dst, 74u);
++        for (u32 i = 0; i < 4; ++i) dst[74u + i] = (u8)(crc >> (8u * i));
++    }
++    return length;
++}
++static i16 ds4_axis(u8 value, bool invert) {
++    // Map the centre exactly to zero and both ends to XInput's full range.
++    i32 axis = value < 128u ? ((i32)value - 128) * 256 :
++        (((i32)value - 128) * 32767) / 127;
++    if (invert) axis = axis == -32768 ? 32767 : -axis;
++    return (i16)axis;
++}
++static bool ds4_decode_input(const u8* bytes, u32 count, bool bluetooth,
++                             u16 product, XINPUT_STATE& state, bool& touch) {
++    u32 offset = 0;
++    if (!bytes || count < 10u) return false;
++    if (bytes[0] == 0x01u && (bluetooth || count == 64u)) offset = 1u;
++    else if (bluetooth && bytes[0] == 0x11u && count >= 78u) {
++        if (!(bytes[1] & 0x80u) ||
++            ds4_report_crc(0xA1u, bytes, 74u) != ds4_read_le32(bytes + 74u)) return false;
++        offset = 3u;
++    } else return false;
++    if (count < offset + 9u) return false;
++    if (product == 0x0BA0u && count >= offset + 31u &&
++        (bytes[offset + 30u] & 0x04u)) return false; // adapter has no paired pad
++    const u8* p = bytes + offset;
++    XINPUT_STATE decoded{};
++    decoded.Gamepad.sThumbLX = ds4_axis(p[0], false);
++    decoded.Gamepad.sThumbLY = ds4_axis(p[1], true);
++    decoded.Gamepad.sThumbRX = ds4_axis(p[2], false);
++    decoded.Gamepad.sThumbRY = ds4_axis(p[3], true);
++    static constexpr WORD hats[9] = {
++        XINPUT_DPAD_UP, XINPUT_DPAD_UP | XINPUT_DPAD_RIGHT, XINPUT_DPAD_RIGHT,
++        XINPUT_DPAD_RIGHT | XINPUT_DPAD_DOWN, XINPUT_DPAD_DOWN,
++        XINPUT_DPAD_DOWN | XINPUT_DPAD_LEFT, XINPUT_DPAD_LEFT,
++        XINPUT_DPAD_LEFT | XINPUT_DPAD_UP, 0
++    };
++    u8 hat = p[4] & 15u;
++    decoded.Gamepad.wButtons = hats[hat < 8u ? hat : 8u];
++    if (p[4] & 0x10u) decoded.Gamepad.wButtons |= XINPUT_X;
++    if (p[4] & 0x20u) decoded.Gamepad.wButtons |= XINPUT_A;
++    if (p[4] & 0x40u) decoded.Gamepad.wButtons |= XINPUT_B;
++    if (p[4] & 0x80u) decoded.Gamepad.wButtons |= XINPUT_Y;
++    if (p[5] & 0x01u) decoded.Gamepad.wButtons |= XINPUT_LEFT_SHOULDER;
++    if (p[5] & 0x02u) decoded.Gamepad.wButtons |= XINPUT_RIGHT_SHOULDER;
++    if (p[5] & 0x10u) decoded.Gamepad.wButtons |= XINPUT_BACK;
++    if (p[5] & 0x20u) decoded.Gamepad.wButtons |= XINPUT_START;
++    if (p[5] & 0x40u) decoded.Gamepad.wButtons |= XINPUT_LEFT_THUMB;
++    if (p[5] & 0x80u) decoded.Gamepad.wButtons |= XINPUT_RIGHT_THUMB;
++    decoded.Gamepad.bLeftTrigger = p[7];
++    decoded.Gamepad.bRightTrigger = p[8];
++    touch = (p[6] & 0x02u) != 0;
++    decoded.dwPacketNumber = state.dwPacketNumber + 1u;
++    state = decoded;
++    return true;
++}
++
++static bool ds4_caps_transport(const Ds4Caps& caps, bool& bluetooth) {
++    if (caps.page != 1u || (caps.usage != 4u && caps.usage != 5u) ||
++        caps.inputBytes > DS4_HID_BUFFER || caps.outputBytes > DS4_HID_BUFFER) return false;
++    if (caps.inputBytes == 64u && caps.outputBytes == 32u) bluetooth = false;
++    else if (caps.inputBytes >= 78u && caps.outputBytes >= 78u) bluetooth = true;
++    else return false;
++    return true;
++}
++
++static void ds4_hid_error(const char* operation, DWORD error) {
++    atomic_store_u32(&g_ds4HidLastError, error);
++    TextBuf b{}; tb_str(b, "R9P DS4 HID "); tb_str(b, operation);
++    tb_str(b, " error="); tb_u64(b, error); tb_endline(b); append_log(b.bytes, b.len);
++}
++static bool init_ds4_hid() {
++    if (!g_api.LoadLibraryW) return false;
++    u8* hid = (u8*)g_api.LoadLibraryW(L"hid.dll");
++    u8* setup = (u8*)g_api.LoadLibraryW(L"setupapi.dll");
++    u8* kernel = find_module_ascii("kernel32.dll");
++    if (!hid || !setup || !kernel) return false;
++#define DS4_RESOLVE(member, type, module, name) \
++    g_ds4Api.member = api_cast<type>(resolve_export(module, name))
++    DS4_RESOLVE(guid, Ds4GetGuidFn, hid, "HidD_GetHidGuid");
++    DS4_RESOLVE(attrs, Ds4GetAttrsFn, hid, "HidD_GetAttributes");
++    DS4_RESOLVE(preparsed, Ds4GetPreparsedFn, hid, "HidD_GetPreparsedData");
++    DS4_RESOLVE(freePreparsed, Ds4FreePreparsedFn, hid, "HidD_FreePreparsedData");
++    DS4_RESOLVE(caps, Ds4GetCapsFn, hid, "HidP_GetCaps");
++    DS4_RESOLVE(getClass, Ds4GetClassFn, setup, "SetupDiGetClassDevsW");
++    DS4_RESOLVE(enumerate, Ds4EnumFn, setup, "SetupDiEnumDeviceInterfaces");
++    DS4_RESOLVE(detail, Ds4GetDetailFn, setup, "SetupDiGetDeviceInterfaceDetailW");
++    DS4_RESOLVE(destroyList, Ds4DestroyListFn, setup, "SetupDiDestroyDeviceInfoList");
++    DS4_RESOLVE(createEvent, Ds4CreateEventFn, kernel, "CreateEventW");
++    DS4_RESOLVE(resetEvent, Ds4ResetEventFn, kernel, "ResetEvent");
++    DS4_RESOLVE(lastError, Ds4LastErrorFn, kernel, "GetLastError");
++    DS4_RESOLVE(result, Ds4ResultFn, kernel, "GetOverlappedResult");
++    DS4_RESOLVE(cancel, Ds4CancelFn, kernel, "CancelIoEx");
++#undef DS4_RESOLVE
++    g_ds4ApiReady = g_ds4Api.guid && g_ds4Api.attrs && g_ds4Api.preparsed &&
++        g_ds4Api.freePreparsed && g_ds4Api.caps && g_ds4Api.getClass &&
++        g_ds4Api.enumerate && g_ds4Api.detail && g_ds4Api.destroyList &&
++        g_ds4Api.createEvent && g_ds4Api.resetEvent && g_ds4Api.lastError &&
++        g_ds4Api.result && g_ds4Api.cancel;
++    log_simple(g_ds4ApiReady ? "R9P DS4 HID backend ready; r9m mixer and effect tuning retained" :
++                              "WARNING R9P DS4 HID APIs unavailable");
++    return g_ds4ApiReady;
++}
++static void ds4_hid_retire(Ds4HidDevice& device) {
++    if (device.retired || !device.file) return;
++    device.retired = true; device.dirty = false; device.ready = false;
++    if (g_ds4Active == &device) g_ds4Active = nullptr;
++    // Cancel only this bridge's handle. Storage/events remain live until both
++    // operations have completed; CancelIoEx itself is not completion.
++    if (device.readPending) g_ds4Api.cancel(device.file, &device.read);
++    if (device.writePending) g_ds4Api.cancel(device.file, &device.write);
++}
++static void ds4_hid_complete_write(Ds4HidDevice& device) {
++    atomic_fetch_add_u64(&g_ds4HidCompleted, 1);
++    if (atomic_load_u64(&g_ds4HidCompleted) == 1u)
++        log_simple("R9P DS4 HID first motor report completed (Windows transport acknowledgement)");
++    device.sentActive = device.sentLow != 0u || device.sentHigh != 0u;
++}
++static bool ds4_hid_submit(Ds4HidDevice& device, u64 now) {
++    if (!device.file || device.retired || !device.dirty) return false;
++    if (device.writePending) { atomic_fetch_add_u64(&g_ds4HidBusyCoalesces, 1); return true; }
++    HANDLE event = device.write.event;
++    device.write = {}; device.write.event = event;
++    g_ds4Api.resetEvent(event);
++    if (!ds4_make_output(device.output, device.outputBytes, device.bluetooth,
++                         device.desiredLow, device.desiredHigh)) return false;
++    device.sentLow = device.desiredLow; device.sentHigh = device.desiredHigh;
++    device.dirty = false; device.writeTick = now;
++    DWORD bytes = 0;
++    BOOL success = g_api.WriteFile(device.file, device.output, device.outputBytes,
++                                   &bytes, &device.write);
++    DWORD error = success ? 0u : g_ds4Api.lastError();
++    if (success && bytes == device.outputBytes) {
++        atomic_fetch_add_u64(&g_ds4HidSubmitted, 1);
++        ds4_hid_complete_write(device);
++        return true;
++    }
++    if (!success && error == DS4_IO_PENDING) {
++        device.writePending = true;
++        atomic_fetch_add_u64(&g_ds4HidSubmitted, 1);
++        return true;
++    }
++    atomic_fetch_add_u64(&g_ds4HidWriteErrors, 1);
++    ds4_hid_error("write", success ? 13u : error);
++    ds4_hid_retire(device);
++    return false;
++}
++static bool set_ds4_hid_rumble(float low, float high) {
++    if (!g_ds4Active || g_ds4Active->retired) return false;
++    Ds4HidDevice& device = *g_ds4Active;
++    device.desiredLow = ds4_motor_byte(low); device.desiredHigh = ds4_motor_byte(high);
++    device.desiredActive = device.desiredLow != 0u || device.desiredHigh != 0u;
++    device.dirty = true;
++    return ds4_hid_submit(device, atomic_load_u64(&g_workerNowTick));
++}
++static void ds4_hid_accept_input(Ds4HidDevice& device, DWORD bytes, u64 now) {
++    if (bytes > device.inputBytes ||
++        !ds4_decode_input(device.input, bytes, device.bluetooth, device.product,
++                           device.state, device.touch)) {
++        atomic_fetch_add_u64(&g_ds4HidInvalidReports, 1);
++        if (device.product == 0x0BA0u && bytes >= 32u && (device.input[31] & 4u))
++            device.ready = false;
++        return;
++    }
++    device.ready = true; device.inputTick = now;
++    atomic_fetch_add_u64(&g_ds4HidInputReports, 1);
++}
++static void ds4_hid_service(u64 now) {
++    if (!g_ds4ApiReady) return;
++    for (u32 index = 0; index < DS4_HID_SLOTS; ++index) {
++        Ds4HidDevice& d = g_ds4Hid[index];
++        if (!d.file) continue;
++        if (d.writePending) {
++            DWORD bytes = 0;
++            BOOL success = g_ds4Api.result(d.file, &d.write, &bytes, 0);
++            DWORD error = success ? 0u : g_ds4Api.lastError();
++            if (success || error != DS4_IO_INCOMPLETE) {
++                d.writePending = false;
++                if (!d.retired) {
++                    if (success && bytes == d.outputBytes) ds4_hid_complete_write(d);
++                    else {
++                        atomic_fetch_add_u64(&g_ds4HidWriteErrors, 1);
++                        ds4_hid_error("write completion", success ? 13u : error);
++                        ds4_hid_retire(d);
++                    }
++                }
++            } else if (!d.retired && now >= d.writeTick && now - d.writeTick >= 1000u) {
++                atomic_fetch_add_u64(&g_ds4HidWriteErrors, 1);
++                ds4_hid_error("write timeout", 1460u); ds4_hid_retire(d);
++            }
++        }
++        // Drain at most eight ready reports per iteration, keeping a busy HID
++        // device from monopolizing the game's haptic worker.
++        for (u32 reads = 0; reads < 8u; ++reads) {
++            DWORD bytes = 0;
++            if (d.readPending) {
++                BOOL success = g_ds4Api.result(d.file, &d.read, &bytes, 0);
++                DWORD error = success ? 0u : g_ds4Api.lastError();
++                if (!success && error == DS4_IO_INCOMPLETE) break;
++                d.readPending = false;
++                if (!d.retired) {
++                    if (success) ds4_hid_accept_input(d, bytes, now);
++                    else {
++                        atomic_fetch_add_u64(&g_ds4HidReadErrors, 1);
++                        ds4_hid_error("read completion", error); ds4_hid_retire(d);
++                    }
++                }
++            }
++            if (d.retired) break;
++            HANDLE event = d.read.event;
++            d.read = {}; d.read.event = event; g_ds4Api.resetEvent(event);
++            BOOL success = g_api.ReadFile(d.file, d.input, d.inputBytes, &bytes, &d.read);
++            DWORD error = success ? 0u : g_ds4Api.lastError();
++            if (success) ds4_hid_accept_input(d, bytes, now);
++            else if (error == DS4_IO_PENDING) { d.readPending = true; break; }
++            else {
++                atomic_fetch_add_u64(&g_ds4HidReadErrors, 1);
++                ds4_hid_error("read", error); ds4_hid_retire(d); break;
++            }
++        }
++        if (!d.retired && d.ready && now >= d.inputTick && now - d.inputTick > 1000u)
++            d.ready = false;
++        if (!d.retired && now >= d.openTick && now - d.openTick > 5000u &&
++            (!d.inputTick || (now >= d.inputTick && now - d.inputTick > 5000u))) {
++            ds4_hid_error("input timeout", 1460u); ds4_hid_retire(d);
++        }
++        if (d.retired) {
++            if (!d.readPending && !d.writePending) {
++                g_api.CloseHandle(d.file); g_api.CloseHandle(d.read.event);
++                g_api.CloseHandle(d.write.event); d = {};
++            }
++        } else {
++            if (d.dirty) ds4_hid_submit(d, now);
++            if (d.closing && !d.writePending && !d.dirty) ds4_hid_retire(d);
++        }
++    }
++}
++
++static bool ds4_hid_open(u64 now, u16 desiredProduct) {
++    if (!g_ds4ApiReady) return false;
++    if (g_ds4Active && desiredProduct && g_ds4Active->product != desiredProduct) {
++        Ds4HidDevice* previous = g_ds4Active;
++        if (previous->desiredActive || previous->sentActive) {
++            set_ds4_hid_rumble(0.0f, 0.0f);
++            previous->closing = true; // let the final zero complete before cancellation
++        } else ds4_hid_retire(*previous);
++        g_ds4Active = nullptr; g_ds4ScanDue = 0;
++    }
++    if (g_ds4Active) return true;
++    if (g_ds4ScanDue && now < g_ds4ScanDue) return false;
++    g_ds4ScanDue = now + 2000u;
++    atomic_fetch_add_u64(&g_ds4HidScans, 1);
++    Ds4HidDevice* freeSlot = nullptr;
++    for (u32 i = 0; i < DS4_HID_SLOTS; ++i) if (!g_ds4Hid[i].file) { freeSlot = &g_ds4Hid[i]; break; }
++    if (!freeSlot) return false; // canceled storage cannot be reused while pending
++    Ds4Guid guid{}; g_ds4Api.guid(&guid);
++    HANDLE list = g_ds4Api.getClass(&guid, nullptr, nullptr, 0x12u); // present + interfaces
++    if (!list || list == invalid_handle_value()) {
++        ds4_hid_error("enumeration", g_ds4Api.lastError()); return false;
++    }
++    bool opened = false;
++    for (u32 i = 0; i < 256u; ++i) {
++        Ds4Interface iface{}; iface.size = sizeof(iface);
++        if (!g_ds4Api.enumerate(list, nullptr, &guid, i, &iface)) break;
++        DWORD required = 0;
++        g_ds4Api.detail(list, &iface, nullptr, 0, &required, nullptr);
++        Ds4Detail detail{}; detail.size = 8u; // sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA_W) on x64
++        if (required < 6u || required > sizeof(detail) ||
++            !g_ds4Api.detail(list, &iface, &detail, sizeof(detail), &required, nullptr)) continue;
++        HANDLE probe = g_api.CreateFileW(detail.path, 0u, FILE_SHARE_READ | FILE_SHARE_WRITE,
++                                         nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
++        if (!probe || probe == invalid_handle_value()) continue;
++        Ds4Attributes attributes{}; attributes.size = sizeof(attributes);
++        bool match = g_ds4Api.attrs(probe, &attributes) &&
++            is_ds4_product(attributes.vendor, attributes.product) &&
++            (!desiredProduct || attributes.product == desiredProduct);
++        Ds4Caps caps{}; void* preparsed = nullptr; bool bluetooth = false;
++        if (match) {
++            match = g_ds4Api.preparsed(probe, &preparsed) && preparsed;
++            if (match) match = g_ds4Api.caps(preparsed, &caps) >= 0 &&
++                               ds4_caps_transport(caps, bluetooth);
++            if (preparsed) g_ds4Api.freePreparsed(preparsed);
++        }
++        g_api.CloseHandle(probe);
++        if (!match) continue;
++        HANDLE file = g_api.CreateFileW(detail.path, GENERIC_READ | GENERIC_WRITE,
++            FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING,
++            FILE_ATTRIBUTE_NORMAL | DS4_FILE_OVERLAPPED, nullptr);
++        if (!file || file == invalid_handle_value()) {
++            atomic_fetch_add_u64(&g_ds4HidOpenFailures, 1);
++            ds4_hid_error("open read/write", g_ds4Api.lastError()); continue;
++        }
++        HANDLE readEvent = g_ds4Api.createEvent(nullptr, 1, 0, nullptr);
++        HANDLE writeEvent = g_ds4Api.createEvent(nullptr, 1, 0, nullptr);
++        if (!readEvent || !writeEvent) {
++            DWORD error = g_ds4Api.lastError();
++            if (readEvent) g_api.CloseHandle(readEvent);
++            if (writeEvent) g_api.CloseHandle(writeEvent);
++            g_api.CloseHandle(file); ds4_hid_error("event", error); continue;
++        }
++        Ds4HidDevice& d = *freeSlot; d = {};
++        d.file = file; d.read.event = readEvent; d.write.event = writeEvent;
++        d.vendor = attributes.vendor; d.product = attributes.product;
++        d.inputBytes = caps.inputBytes; d.outputBytes = caps.outputBytes;
++        d.bluetooth = bluetooth; d.openTick = now; d.generation = ++g_ds4NextGeneration;
++        g_ds4Active = &d; opened = true;
++        g_lastRumblePhysicalWriteTick = 0;
++        atomic_fetch_add_u64(&g_ds4HidOpens, 1);
++        TextBuf b{}; tb_str(b, "R9P DS4 HID opened vid=0x"); tb_hex(b, d.vendor, 4);
++        tb_str(b, " pid=0x"); tb_hex(b, d.product, 4);
++        tb_str(b, d.bluetooth ? " transport=Bluetooth" : " transport=USB");
++        tb_str(b, " inputBytes/outputBytes="); tb_u64(b, d.inputBytes); tb_char(b, '/');
++        tb_u64(b, d.outputBytes); tb_endline(b); append_log(b.bytes, b.len);
++        break;
++    }
++    g_ds4Api.destroyList(list);
++    return opened;
++}
++
++static bool poll_ds4_hid(XINPUT_STATE& state, u64 now, u16 desiredProduct) {
++    g_ds4InputReady = false;
++    if (!ds4_hid_open(now, desiredProduct) || !g_ds4Active) return false;
++    ds4_hid_service(now);
++    if (!g_ds4Active) return false;
++    Ds4HidDevice& d = *g_ds4Active;
++    atomic_store_u32(&g_activeVendor, d.vendor); atomic_store_u32(&g_activeProduct, d.product);
++    atomic_store_u32(&g_activeDualSense, 0); atomic_store_u32(&g_activeDeviceStatus, 1);
++    atomic_store_u32(&g_lastGameInputButtons, 0);
++    g_ds4InputReady = d.ready;
++    state = d.ready ? d.state : XINPUT_STATE{};
++    u32 wasTouch = atomic_load_u32(&g_rawTouchpadDown);
++    bool touch = d.ready && d.touch && g_cfg.menuRawTouchpad;
++    atomic_store_u32(&g_rawTouchpadDown, touch ? 1u : 0u);
++    // DS4's HID touch click has a documented bit. Do not pretend it is a
++    // GameInput raw-button array (index 13 was never verified for DS4).
++    atomic_store_u32(&g_rawControllerButtonCount, 0);
++    atomic_store_u64(&g_rawControllerButtons, 0);
++    if (touch && !wasTouch) atomic_fetch_add_u64(&g_rawTouchpadEdges, 1);
++    return true;
++}
++static void select_ds4_hid_transport(XINPUT_STATE& state, u32& backend,
++                                     bool& connected, u64 now) {
++    bool candidate = backend == 0u || (backend == 1u &&
++        is_ds4_product(atomic_load_u32(&g_activeVendor),
++                       atomic_load_u32(&g_activeProduct)));
++    if (candidate && poll_ds4_hid(state, now,
++            backend == 1u ? (u16)atomic_load_u32(&g_activeProduct) : 0u))
++        backend = 3u, connected = true;
++    if (backend != 3u && g_ds4Active &&
++        (g_ds4Active->desiredActive || g_ds4Active->sentActive))
++        set_ds4_hid_rumble(0.0f, 0.0f);
++}
++static void log_ds4_hid_status() {
++    TextBuf b{}; tb_str(b, "R9P DS4 HID active/normalized/transport=");
++    tb_u64(b, g_ds4Active ? 1u : 0u); tb_char(b, '/');
++    tb_u64(b, g_ds4InputReady ? 1u : 0u); tb_char(b, '/');
++    tb_str(b, !g_ds4Active ? "none" : (g_ds4Active->bluetooth ? "Bluetooth" : "USB"));
++    tb_str(b, " scans/opens/openFail="); tb_u64(b, atomic_load_u64(&g_ds4HidScans));
++    tb_char(b, '/'); tb_u64(b, atomic_load_u64(&g_ds4HidOpens)); tb_char(b, '/');
++    tb_u64(b, atomic_load_u64(&g_ds4HidOpenFailures));
++    tb_str(b, " input/invalid="); tb_u64(b, atomic_load_u64(&g_ds4HidInputReports));
++    tb_char(b, '/'); tb_u64(b, atomic_load_u64(&g_ds4HidInvalidReports));
++    tb_str(b, " submitted/completed/writeErr/readErr/coalesced=");
++    tb_u64(b, atomic_load_u64(&g_ds4HidSubmitted)); tb_char(b, '/');
++    tb_u64(b, atomic_load_u64(&g_ds4HidCompleted)); tb_char(b, '/');
++    tb_u64(b, atomic_load_u64(&g_ds4HidWriteErrors)); tb_char(b, '/');
++    tb_u64(b, atomic_load_u64(&g_ds4HidReadErrors)); tb_char(b, '/');
++    tb_u64(b, atomic_load_u64(&g_ds4HidBusyCoalesces));
++    tb_str(b, " lastError="); tb_u64(b, atomic_load_u32(&g_ds4HidLastError));
++    tb_str(b, " rumbleBackend:1=GI-dispatch,2=XI-success,3=DS4-HID; HID completed means Windows accepted the report");
++    tb_endline(b); append_log(b.bytes, b.len);
++}
++static void ds4_hid_shutdown() {
++    if (!g_ds4ApiReady) return;
++    if (g_ds4Active && (g_ds4Active->desiredActive || g_ds4Active->sentActive))
++        set_ds4_hid_rumble(0.0f, 0.0f);
++    for (u32 attempt = 0; attempt < 16u; ++attempt) {
++        u64 now = g_api.GetTickCount64 ? g_api.GetTickCount64() : 0;
++        ds4_hid_service(now);
++        if (!g_ds4Active || (!g_ds4Active->writePending && !g_ds4Active->dirty)) break;
++        g_api.Sleep(2);
++    }
++    for (u32 i = 0; i < DS4_HID_SLOTS; ++i) ds4_hid_retire(g_ds4Hid[i]);
++    ds4_hid_service(g_api.GetTickCount64 ? g_api.GetTickCount64() : 0);
++}
