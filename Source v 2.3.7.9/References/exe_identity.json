@@ -1,0 +1,207 @@
+{
+  "file_name": "ACBlackFlag.exe",
+  "file_size": 479096312,
+  "sha256": "6f89418be0de287c7dd29893326ebfb817c3472c0106ece8a6e8f81a915c3a55",
+  "machine": "0x8664",
+  "timestamp": "0x6ac68680",
+  "image_size": "0x1de68000",
+  "image_base": "0x140000000",
+  "sections": [
+    {
+      "name": ".udata",
+      "rva": "0x1000",
+      "virtual_size": "0x95c7000",
+      "raw_size": "0x95c7000",
+      "flags": "0x60000020"
+    },
+    {
+      "name": ".xpdata",
+      "rva": "0x95c8000",
+      "virtual_size": "0x1283000",
+      "raw_size": "0x1283000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".tls",
+      "rva": "0xa84b000",
+      "virtual_size": "0x1e51000",
+      "raw_size": "0x8d8200",
+      "flags": "0xc0000040"
+    },
+    {
+      "name": ".arch",
+      "rva": "0xc69c000",
+      "virtual_size": "0x3c9000",
+      "raw_size": "0x3c9000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".didata",
+      "rva": "0xca65000",
+      "virtual_size": "0x5000",
+      "raw_size": "0x5000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".xcode",
+      "rva": "0xca6a000",
+      "virtual_size": "0x1000",
+      "raw_size": "0x1000",
+      "flags": "0x0"
+    },
+    {
+      "name": ".sdata",
+      "rva": "0xca6b000",
+      "virtual_size": "0x1000",
+      "raw_size": "0x1000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".text",
+      "rva": "0xca6c000",
+      "virtual_size": "0x4000",
+      "raw_size": "0x200",
+      "flags": "0xc0000040"
+    },
+    {
+      "name": ".shared",
+      "rva": "0xca70000",
+      "virtual_size": "0x1000",
+      "raw_size": "0x1000",
+      "flags": "0x0"
+    },
+    {
+      "name": ".debug",
+      "rva": "0xca71000",
+      "virtual_size": "0x3000",
+      "raw_size": "0x3000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".vmp1",
+      "rva": "0xca74000",
+      "virtual_size": "0x4f000",
+      "raw_size": "0x4f000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".00cfg",
+      "rva": "0xcac3000",
+      "virtual_size": "0x258000",
+      "raw_size": "0x258000",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".xtext",
+      "rva": "0xcd1b000",
+      "virtual_size": "0xf5f5089",
+      "raw_size": "0xf5f5200",
+      "flags": "0xe0000020"
+    },
+    {
+      "name": ".rdata",
+      "rva": "0x1c311000",
+      "virtual_size": "0x48be3",
+      "raw_size": "0x48c00",
+      "flags": "0x40000020"
+    },
+    {
+      "name": ".xtls",
+      "rva": "0x1c35a000",
+      "virtual_size": "0xa8",
+      "raw_size": "0x200",
+      "flags": "0xc0000020"
+    },
+    {
+      "name": ".bss",
+      "rva": "0x1c35b000",
+      "virtual_size": "0x4178",
+      "raw_size": "0x4200",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".rodata",
+      "rva": "0x1c360000",
+      "virtual_size": "0x3c8274",
+      "raw_size": "0x3c8400",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".vmp0",
+      "rva": "0x1c729000",
+      "virtual_size": "0x347424",
+      "raw_size": "0x347600",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".nidata",
+      "rva": "0x1ca71000",
+      "virtual_size": "0x1000",
+      "raw_size": "0x800",
+      "flags": "0xc0000000"
+    },
+    {
+      "name": ".vmp2",
+      "rva": "0x1ca72000",
+      "virtual_size": "0x6092ba",
+      "raw_size": "0x609400",
+      "flags": "0x60000020"
+    },
+    {
+      "name": ".vmp3",
+      "rva": "0x1d07c000",
+      "virtual_size": "0x1598",
+      "raw_size": "0x1600",
+      "flags": "0xc0000040"
+    },
+    {
+      "name": ".vmp4",
+      "rva": "0x1d07e000",
+      "virtual_size": "0xa52d88",
+      "raw_size": "0xa52e00",
+      "flags": "0x68000060"
+    },
+    {
+      "name": ".rsrc",
+      "rva": "0x1dad1000",
+      "virtual_size": "0x4e3d3",
+      "raw_size": "0x4e400",
+      "flags": "0x40000040"
+    },
+    {
+      "name": ".reloc",
+      "rva": "0x1db20000",
+      "virtual_size": "0x347850",
+      "raw_size": "0x347a00",
+      "flags": "0x42000040"
+    }
+  ],
+  "imports": [
+    {
+      "dll": "GameInput.dll",
+      "original_thunk_rva": "0x1d0916dc",
+      "iat_rva": "0x1d07c1d0",
+      "symbols": [
+        {
+          "name": 1,
+          "rva": "0x1d07c1d0"
+        }
+      ]
+    },
+    {
+      "dll": "XINPUT9_1_0.dll",
+      "original_thunk_rva": "0x1d091ee4",
+      "iat_rva": "0x1d07c9d8",
+      "symbols": [
+        {
+          "name": "XInputGetState",
+          "rva": "0x1d07c9d8"
+        },
+        {
+          "name": "XInputSetState",
+          "rva": "0x1d07c9e0"
+        }
+      ]
+    }
+  ]
+}

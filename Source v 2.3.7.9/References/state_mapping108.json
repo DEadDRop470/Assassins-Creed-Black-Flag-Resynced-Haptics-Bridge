@@ -1,0 +1,233 @@
+[
+  {
+    "label": "InAir enter",
+    "slot106": "0x9151c18",
+    "function106": "0x15273a0",
+    "slot107": "0x91e0e98",
+    "function107": "0x1521c20",
+    "slot108": "0x96e3e58",
+    "function108": "0xded620",
+    "replacement": "state_air_enter",
+    "original": "g_origAirEnter"
+  },
+  {
+    "label": "InAir exit",
+    "slot106": "0x9151c20",
+    "function106": "0x17fc510",
+    "slot107": "0x91e0ea0",
+    "function107": "0x17fc1e0",
+    "slot108": "0x96e3e60",
+    "function108": "0x141ffa0",
+    "replacement": "state_air_exit",
+    "original": "g_origAirExit"
+  },
+  {
+    "label": "JumpOnSpot enter",
+    "slot106": "0x9152898",
+    "function106": "0x5e7f6c0",
+    "slot107": "0x91e1b18",
+    "function107": "0x5f1d4c0",
+    "slot108": "0x96e4ad8",
+    "function108": "0x6aec460",
+    "replacement": "state_jump_spot",
+    "original": "g_origJumpOnSpot"
+  },
+  {
+    "label": "FreeJump enter",
+    "slot106": "0x9152848",
+    "function106": "0x6b118e0",
+    "slot107": "0x91e1ac8",
+    "function107": "0x6baf660",
+    "slot108": "0x96e4a88",
+    "function108": "0x76dd300",
+    "replacement": "state_free_jump",
+    "original": "g_origFreeJump"
+  },
+  {
+    "label": "TargetedJump enter",
+    "slot106": "0x914e4e8",
+    "function106": "0x2750bf0",
+    "slot107": "0x91dd768",
+    "function107": "0x27d5940",
+    "slot108": "0x96e0728",
+    "function108": "0x2662e10",
+    "replacement": "state_targeted_jump",
+    "original": "g_origTargetedJump"
+  },
+  {
+    "label": "Freefall enter",
+    "slot106": "0x914e3f8",
+    "function106": "0x1fcd920",
+    "slot107": "0x91dd678",
+    "function107": "0x1fa4d60",
+    "slot108": "0x96e0638",
+    "function108": "0x1dbacc0",
+    "replacement": "state_freefall",
+    "original": "g_origFreefall"
+  },
+  {
+    "label": "FallFromLedge enter",
+    "slot106": "0x9151f38",
+    "function106": "0x6b01790",
+    "slot107": "0x91e11b8",
+    "function107": "0x6b9f510",
+    "slot108": "0x96e4178",
+    "function108": "0x76ced70",
+    "replacement": "state_ledge_fall_enter",
+    "original": "g_origLedgeFallEnter"
+  },
+  {
+    "label": "FallFromLedge exit",
+    "slot106": "0x9151f40",
+    "function106": "0x6b01a30",
+    "slot107": "0x91e11c0",
+    "function107": "0x6b9f7b0",
+    "slot108": "0x96e4180",
+    "function108": "0x76cf010",
+    "replacement": "state_ledge_fall_exit",
+    "original": "g_origLedgeFallExit"
+  },
+  {
+    "label": "TransitionExit enter",
+    "slot106": "0x914e218",
+    "function106": "0x6afdb60",
+    "slot107": "0x91dd498",
+    "function107": "0x6b9b8e0",
+    "slot108": "0x96e0458",
+    "function108": "0x76cb600",
+    "replacement": "state_transition_exit",
+    "original": "g_origTransitionExit"
+  },
+  {
+    "label": "Climb A enter",
+    "slot106": "0x9147a38",
+    "function106": "0x152d180",
+    "slot107": "0x91d6cb8",
+    "function107": "0x1527a00",
+    "slot108": "0x96d9c78",
+    "function108": "0xdf30f0",
+    "replacement": "state_climb_a_enter",
+    "original": "g_origClimbAEnter"
+  },
+  {
+    "label": "Climb A exit",
+    "slot106": "0x9147a40",
+    "function106": "0x102cc10",
+    "slot107": "0x91d6cc0",
+    "function107": "0x102b6f0",
+    "slot108": "0x96d9c80",
+    "function108": "0x10f14b0",
+    "replacement": "state_climb_a_exit",
+    "original": "g_origClimbAExit"
+  },
+  {
+    "label": "Climb B enter",
+    "slot106": "0x920dc90",
+    "function106": "0x6a98a70",
+    "slot107": "0x929d130",
+    "function107": "0x6b367f0",
+    "slot108": "0x979f968",
+    "function108": "0x76799b0",
+    "replacement": "state_climb_b_enter",
+    "original": "g_origClimbBEnter"
+  },
+  {
+    "label": "Climb B exit",
+    "slot106": "0x920dc98",
+    "function106": "0x6a99e00",
+    "slot107": "0x929d138",
+    "function107": "0x6b37b80",
+    "slot108": "0x979f970",
+    "function108": "0x767ad40",
+    "replacement": "state_climb_b_exit",
+    "original": "g_origClimbBExit"
+  },
+  {
+    "label": "Swimming A enter",
+    "slot106": "0x9159718",
+    "function106": "0x27d3cf0",
+    "slot107": "0x91e89b8",
+    "function107": "0x2859aa0",
+    "slot108": "0x96eb928",
+    "function108": "0x2764d70",
+    "replacement": "state_swim_a_enter",
+    "original": "g_origSwimAEnter"
+  },
+  {
+    "label": "Swimming A exit",
+    "slot106": "0x9159720",
+    "function106": "0x18a3d00",
+    "slot107": "0x91e89c0",
+    "function107": "0x18a05b0",
+    "slot108": "0x96eb930",
+    "function108": "0x1987540",
+    "replacement": "state_swim_a_exit",
+    "original": "g_origSwimAExit"
+  },
+  {
+    "label": "Swimming B enter",
+    "slot106": "0x91a3928",
+    "function106": "0x8065c00",
+    "slot107": "0x9232d28",
+    "function107": "0x80f8a70",
+    "slot108": "0x9735fb8",
+    "function108": "0x35b5cf0",
+    "replacement": "state_swim_b_enter",
+    "original": "g_origSwimBEnter"
+  },
+  {
+    "label": "Swimming B exit",
+    "slot106": "0x91a3930",
+    "function106": "0x8066540",
+    "slot107": "0x9232d30",
+    "function107": "0x80f93b0",
+    "slot108": "0x9735fc0",
+    "function108": "0x88dd660",
+    "replacement": "state_swim_b_exit",
+    "original": "g_origSwimBExit"
+  },
+  {
+    "label": "ShallowSwim enter",
+    "slot106": "0x915ab98",
+    "function106": "0x6c9ed00",
+    "slot107": "0x91e9e38",
+    "function107": "0x6d3cb40",
+    "slot108": "0x96ece98",
+    "function108": "0x77f0c30",
+    "replacement": "state_shallow_enter",
+    "original": "g_origShallowEnter"
+  },
+  {
+    "label": "ShallowSwim exit",
+    "slot106": "0x915aba0",
+    "function106": "0x6c9fac0",
+    "slot107": "0x91e9e40",
+    "function107": "0x6d3d900",
+    "slot108": "0x96ecea0",
+    "function108": "0x77f1770",
+    "replacement": "state_shallow_exit",
+    "original": "g_origShallowExit"
+  },
+  {
+    "label": "HayStack enter",
+    "slot106": "0x9145208",
+    "function106": "0x1b6c060",
+    "slot107": "0x91d4488",
+    "function107": "0x1b6c0c0",
+    "slot108": "0x96d7448",
+    "function108": "0x19101f0",
+    "replacement": "state_haystack_enter",
+    "original": "g_origHaystackEnter"
+  },
+  {
+    "label": "HayStack exit",
+    "slot106": "0x9145210",
+    "function106": "0x54f1850",
+    "slot107": "0x91d4490",
+    "function107": "0x559f190",
+    "slot108": "0x96d7450",
+    "function108": "0x1113d60",
+    "replacement": "state_haystack_exit",
+    "original": "g_origHaystackExit"
+  }
+]

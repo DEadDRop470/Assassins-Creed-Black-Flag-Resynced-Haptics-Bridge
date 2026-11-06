@@ -1,0 +1,181 @@
+--- r9p/src/main.cpp
++++ r9q/src/main.cpp
+@@ -1,4 +1,4 @@
+-// ACBFHapticsBridge v8-r9p / v2.3.7.8 DS4 compatibility and hook safety revision
++// ACBFHapticsBridge v8-r9q / v2.3.7.9 TU 1.08 compatibility and validated automatic discovery
+ // Built from the complete v6-r6 reconstruction source plus the exact Wwise
+ // PostEvent hook proven by ACBFStateTracer 2.3/2.4.  v8-r4 keeps confirmed
+ // actions from raw controller heuristics to real Black Flag gameplay/Wwise events.
+@@ -917,6 +917,8 @@
+ 
+ struct Config {
+     u64 flushRva = 0x04F78610ull;
++    u32 autoDetectTargets = 1; // fallback after known profiles fail validation
++    u32 forceAutoScan = 0;     // bypass fixed profiles to test address-independent discovery
+     u32 enabled = 1;
+     u32 inputBridge = 1;
+     u32 semanticEvents = 1;
+@@ -1417,7 +1419,9 @@
+     R9K_PROFILE_STEAM_FAMILY = 1,
+     R9K_PROFILE_UBISOFT_CONNECT = 2,
+     R9K_PROFILE_UBISOFT_PLUS = 3,
+-    R9K_PROFILE_STEAM_TU_107 = 4
++    R9K_PROFILE_STEAM_TU_107 = 4,
++    R9K_PROFILE_SUPPLIED_TU_108 = 5,
++    R9K_PROFILE_AUTO_VERIFIED = 6
+ };
+ static volatile u32 g_r9kGameProfile{};
+ static volatile u64 g_r9kXInputIatRva{};
+@@ -1438,6 +1442,8 @@
+ static u64 g_r9dXInputForceZeroUntil{};
+ 
+ static void load_config() {
++    g_cfg.autoDetectTargets = read_ini_i32(L"Compatibility", L"AutoDetectTargets", 1) != 0;
++    g_cfg.forceAutoScan = read_ini_i32(L"Compatibility", L"ForceAutoScan", 0) != 0;
+     g_cfg.enabled = (u32)read_ini_i32(L"General", L"Enabled", (i32)g_cfg.enabled);
+     g_cfg.inputBridge = (u32)read_ini_i32(L"General", L"InputBridge", (i32)g_cfg.inputBridge);
+     g_cfg.semanticEvents = (u32)read_ini_i32(L"SemanticEvents", L"Enabled", (i32)g_cfg.semanticEvents);
+@@ -3868,8 +3874,9 @@
+         u64 next = (u64)m.BaseAddress + m.RegionSize;
+         if ((u64)m.BaseAddress > at || next <= at) return 0;
+         if (next > end) next = end;
+-        if (compat_region_allowed(m, true) && next-at >= length) {
+-            for (u64 p=at; p<=next-length; ++p) {
++        if (compat_region_allowed(m, true)) {
++            for (u64 p=at; p<next && p<=end-length; ++p) {
++                if (next-p<length && !compat_address_range((void*)p,length,true)) continue;
+                 const u8* q=(const u8*)p;
+                 bool match=exact ? (q[0]==exact[0] && bytes_equal(q,exact,length)) : matcher(q);
+                 if (match) { found=p-base; if (++matches>1) return 0; }
+@@ -4630,13 +4637,15 @@
+     {0x09145210ull,0x054F1850ull,0x091D4490ull,0x0559F190ull,
+         &state_haystack_exit,&g_origHaystackExit,"HayStack exit"}
+ };
++#include "compat_autodetect.h"
++
+ static volatile u32 g_stateHookRollbacks{};
+ static volatile u32 g_stateHookRollbackFailures{};
+ 
+ static bool preflight_gameplay_state_hooks(bool use107) {
+     for (const StateHookTarget& target : kStateHookTargets) {
+-        u64 rva = use107 ? target.slot107 : target.slot106;
+-        u64 fn = use107 ? target.function107 : target.function106;
++        u64 rva = selected_state_slot(target, use107);
++        u64 fn = selected_state_function(target, use107);
+         bool valid = !(rva & 7ull) && target.replacement && target.original &&
+             compat_memory_range(rva, sizeof(u64), false) &&
+             compat_memory_range(fn, 1, true) &&
+@@ -4665,19 +4674,17 @@
+     }
+     bool use107 = compat_is_107_layout();
+     if (!preflight_gameplay_state_hooks(use107)) return;
+-    log_simple(use107 ?
+-        "Detected attached Assassin's Creed IV 1.07 executable layout; using verified 1.07 state targets" :
+-        "Using verified 1.06-compatible gameplay state targets");
++    log_simple("R9Q STATE installing all 21 preflight-verified targets");
+     u32 installed = 0;
+     for (const StateHookTarget& target : kStateHookTargets) {
+-        if (!patch_state_vtable(use107 ? target.slot107 : target.slot106,
+-                                use107 ? target.function107 : target.function106,
++        if (!patch_state_vtable(selected_state_slot(target, use107),
++                                selected_state_function(target, use107),
+                                 target.replacement, target.original, target.label)) {
+             atomic_fetch_add_u32(&g_stateHookRollbacks, 1);
+             for (u32 i = installed; i > 0; --i) {
+                 const StateHookTarget& undo = kStateHookTargets[i - 1];
+-                u64 rva = use107 ? undo.slot107 : undo.slot106;
+-                u64 fn = use107 ? undo.function107 : undo.function106;
++                u64 rva = selected_state_slot(undo, use107);
++                u64 fn = selected_state_function(undo, use107);
+                 if (!compat_swap_pointer((u64*)(g_gameBase + rva),
+                                          (u64)undo.replacement, (u64)g_gameBase + fn))
+                     atomic_fetch_add_u32(&g_stateHookRollbackFailures, 1);
+@@ -4685,7 +4692,7 @@
+             // Report actual residual hooks rather than claiming an unconditional rollback.
+             installed = 0;
+             for (const StateHookTarget& check : kStateHookTargets) {
+-                u64 rva = use107 ? check.slot107 : check.slot106;
++                u64 rva = selected_state_slot(check, use107);
+                 if (atomic_load_u64((volatile u64*)(g_gameBase + rva)) == (u64)check.replacement)
+                     ++installed;
+             }
+@@ -4905,6 +4912,7 @@
+     if (rva == 0x1C5769E0ull) return R9K_PROFILE_UBISOFT_CONNECT;
+     if (rva == 0x1EC409E0ull) return R9K_PROFILE_UBISOFT_PLUS;
+     if (rva == 0x1C6109E0ull) return R9K_PROFILE_STEAM_TU_107;
++    if (rva == kCompat108_xinput_iat_rva) return R9K_PROFILE_SUPPLIED_TU_108;
+     return R9K_PROFILE_UNKNOWN;
+ }
+ static const char* r9k_profile_name(u32 profile) {
+@@ -4912,6 +4920,8 @@
+     if (profile == R9K_PROFILE_UBISOFT_CONNECT) return "Ubisoft Connect";
+     if (profile == R9K_PROFILE_UBISOFT_PLUS) return "Ubisoft+";
+     if (profile == R9K_PROFILE_STEAM_TU_107) return "Steam/voices38 TU 1.0.7";
++    if (profile == R9K_PROFILE_SUPPLIED_TU_108) return "supplied TU 1.08";
++    if (profile == R9K_PROFILE_AUTO_VERIFIED) return "automatically verified engine / dynamic XInput import";
+     return "unknown";
+ }
+ static u64* r9k_resolve_and_classify_xinput(u64* outRva, u32* outMethod) {
+@@ -4919,7 +4929,7 @@
+     u64* slot = r9k_find_xinput_setstate_iat(&rva, &method);
+     if (!slot) {
+         static constexpr u64 known[] = {
+-            0x1D0119E0ull,0x1C5769E0ull,0x1EC409E0ull,0x1C6109E0ull
++            0x1D0119E0ull,0x1C5769E0ull,0x1EC409E0ull,0x1C6109E0ull,kCompat108_xinput_iat_rva
+         };
+         for (u32 i=0;i<(u32)(sizeof(known)/sizeof(known[0]));++i) {
+             if (!r9k_game_rva_valid(known[i], sizeof(u64))) continue;
+@@ -4930,6 +4940,8 @@
+         }
+     }
+     u32 profile = r9k_profile_from_xinput_rva(rva);
++    if (slot && profile == R9K_PROFILE_UNKNOWN && method == 1 &&
++        g_compatTargetMode == COMPAT_AUTO) profile = R9K_PROFILE_AUTO_VERIFIED;
+     atomic_store_u64(&g_r9kXInputIatRva, rva);
+     atomic_store_u32(&g_r9kXInputResolveMethod, method);
+     atomic_store_u32(&g_r9kGameProfile, profile);
+@@ -8123,7 +8135,7 @@
+         SYSTEMTIME st{};
+         if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+         tb_char(b, '['); tb_time(b, st);
+-        tb_str(b, "] ACBFHapticsBridge v8-r9p-v2.3.7.8-output-fix starting gameBase=0x"); tb_hex(b, (u64)g_gameBase);
++        tb_str(b, "] ACBFHapticsBridge v8-r9q-v2.3.7.9-auto-compat starting gameBase=0x"); tb_hex(b, (u64)g_gameBase);
+         tb_str(b, " gameSize=0x"); tb_hex(b, g_gameSize); tb_str(b, " flushRVA=0x");
+         tb_hex(b, g_cfg.flushRva); tb_str(b, " masterUser/effective="); tb_float3(b, g_cfg.masterGain);
+         tb_char(b, '/'); tb_float3(b, effective_master_gain());
+@@ -8146,7 +8158,7 @@
+         TextBuf b{};
+         SYSTEMTIME st{};
+         if (g_api.GetLocalTime) g_api.GetLocalTime(&st);
+-        tb_char(b, '['); tb_time(b, st); tb_str(b, "] v8-r9p / v2.3.7.8 1.06+1.07 target discovery; r9k output behavior retained legacyWalkLoopMs=");
++        tb_char(b, '['); tb_time(b, st); tb_str(b, "] v8-r9q / v2.3.7.9 1.06+1.07+1.08 profiles and automatic discovery; r9k output behavior retained legacyWalkLoopMs=");
+         tb_u64(b, g_cfg.walkLoopStartMs); tb_char(b, '-'); tb_u64(b, g_cfg.walkLoopEndMs);
+         tb_str(b, " runLoopMs=");
+         tb_u64(b, g_cfg.runLoopStartMs); tb_char(b, '-'); tb_u64(b, g_cfg.runLoopEndMs);
+@@ -8266,15 +8278,21 @@
+     bool haveGameInput = init_gameinput();
+     bool haveXInput = init_xinput();
+     init_ds4_hid();
+-    compat_detect_layout();
+-    log_simple(!g_compatLayoutKnown ? "STARTUP layout unknown; fixed state targets disabled" :
+-               (g_compat107Layout ? "STARTUP layout cached=1.07 before code patching" :
+-                                    "STARTUP layout cached=1.06-compatible before code patching"));
++    compat_resolve_targets();
++    {
++        TextBuf b{}; tb_str(b,"R9Q STARTUP compatibility mode=");
++        tb_str(b,compat_target_mode_name()); tb_endline(b); append_log(b.bytes,b.len);
++    }
++    if (!g_compatLayoutKnown) {
++        log_simple("R9Q STARTUP no complete verified engine target set; bridge engine hooks not installed");
++        ds4_hid_shutdown();
++        return 0;
++    }
+     if (g_cfg.nativeHaptics && !install_flush_hook()) return 0;
+     if (!g_cfg.nativeHaptics) log_simple("Native haptic injection disabled by INI");
+     if (!install_v8_post_event_hook()) return 0;
+     install_gameplay_state_hooks();
+-    log_simple("v8-r9p / v2.3.7.8 routing: v2.3.7.3/r9k gameplay, native-Quad haptics and conventional-rumble behavior retained; 1.06 and 1.07 use discovered verified targets; Ubisoft Connect/Ubisoft+ may use a guarded 48kHz/4-channel DualSense fallback only when meaningful native Quad haptics are absent; XInputSetState import resolution is dynamic with verified-profile fallback");
++    log_simple("v8-r9q / v2.3.7.9 routing: v2.3.7.3/r9k gameplay, native-Quad haptics and conventional-rumble behavior retained; 1.06, 1.07 and supplied 1.08 profiles plus validated automatic target discovery; Ubisoft Connect/Ubisoft+ may use a guarded 48kHz/4-channel DualSense fallback only when meaningful native Quad haptics are absent; XInputSetState import resolution is dynamic with verified-profile fallback");
+     if (haveXInput) install_game_xinput_observer();
+     log_simple("R9P STARTUP hooks complete; entering worker/poll loop");
+ 

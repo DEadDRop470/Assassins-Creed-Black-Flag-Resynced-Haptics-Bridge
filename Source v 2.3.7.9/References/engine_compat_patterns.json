@@ -1,0 +1,1321 @@
+{
+  "audio_patterns": {
+    "flush": [
+      62
+    ],
+    "post": [
+      63
+    ]
+  },
+  "format": 1,
+  "state_hook_count": 21,
+  "method_count": 9,
+  "models": [
+    {
+      "name": "InAir",
+      "hooks": [
+        {
+          "index": 0,
+          "offset": 7
+        },
+        {
+          "index": 1,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152378336,
+          "functions": [
+            33389776,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            22180768,
+            25150736
+          ],
+          "patterns": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158219808,
+          "functions": [
+            31212608,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            14603808,
+            21102496
+          ],
+          "patterns": [
+            9,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            10,
+            8
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "JumpOnSpot",
+      "hooks": [
+        {
+          "index": 2,
+          "offset": 7
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152381536,
+          "functions": [
+            100819744,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            99088064,
+            100812304
+          ],
+          "patterns": [
+            11,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            12,
+            13
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158223008,
+          "functions": [
+            113825952,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            112116832,
+            113817392
+          ],
+          "patterns": [
+            14,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            12,
+            13
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "FreeJump",
+      "hooks": [
+        {
+          "index": 3,
+          "offset": 7
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152381456,
+          "functions": [
+            33391744,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            112269536,
+            112271344
+          ],
+          "patterns": [
+            15,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            16,
+            17
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158222928,
+          "functions": [
+            31213952,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            124637952,
+            124639760
+          ],
+          "patterns": [
+            15,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            16,
+            17
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "TargetedJump",
+      "hooks": [
+        {
+          "index": 4,
+          "offset": 7
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152364208,
+          "functions": [
+            33358768,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            41225200,
+            23062576
+          ],
+          "patterns": [
+            18,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            19,
+            20
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158205680,
+          "functions": [
+            31184768,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            40250896,
+            20548576
+          ],
+          "patterns": [
+            21,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            22,
+            23
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "Freefall",
+      "hooks": [
+        {
+          "index": 5,
+          "offset": 7
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152363968,
+          "functions": [
+            33358048,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            33347872,
+            33350208
+          ],
+          "patterns": [
+            24,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            25,
+            26
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158205440,
+          "functions": [
+            31184208,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            31173824,
+            31176160
+          ],
+          "patterns": [
+            27,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            25,
+            28
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "FallFromLedge",
+      "hooks": [
+        {
+          "index": 6,
+          "offset": 7
+        },
+        {
+          "index": 7,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152379136,
+          "functions": [
+            112371024,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            112203664,
+            112204336
+          ],
+          "patterns": [
+            29,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            30,
+            31
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158220608,
+          "functions": [
+            124714512,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            124579184,
+            124579856
+          ],
+          "patterns": [
+            29,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            30,
+            31
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "TransitionExit",
+      "hooks": [
+        {
+          "index": 8,
+          "offset": 7
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152363488,
+          "functions": [
+            112350816,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            112188256,
+            112189488
+          ],
+          "patterns": [
+            32,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            33,
+            31
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158204960,
+          "functions": [
+            124696864,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            124564992,
+            124566224
+          ],
+          "patterns": [
+            32,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            33,
+            31
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "Climb A",
+      "hooks": [
+        {
+          "index": 9,
+          "offset": 7
+        },
+        {
+          "index": 10,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152336896,
+          "functions": [
+            33277712,
+            22162256,
+            16950672,
+            111423712,
+            111423840,
+            111423920,
+            87507440,
+            22204800,
+            16960528
+          ],
+          "patterns": [
+            34,
+            1,
+            2,
+            3,
+            4,
+            35,
+            6,
+            36,
+            37
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158178368,
+          "functions": [
+            31111088,
+            14587168,
+            17756064,
+            123936864,
+            123936992,
+            123937072,
+            102533936,
+            14627056,
+            17765552
+          ],
+          "patterns": [
+            38,
+            1,
+            2,
+            3,
+            4,
+            35,
+            6,
+            36,
+            37
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "Climb B",
+      "hooks": [
+        {
+          "index": 11,
+          "offset": 7
+        },
+        {
+          "index": 12,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 153148504,
+          "functions": [
+            111956560,
+            94093984,
+            92023424,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            111774320,
+            111779328
+          ],
+          "patterns": [
+            32,
+            1,
+            39,
+            3,
+            4,
+            5,
+            6,
+            40,
+            41
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158988592,
+          "functions": [
+            124383424,
+            108077024,
+            105943520,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            124230064,
+            124235072
+          ],
+          "patterns": [
+            32,
+            1,
+            39,
+            3,
+            4,
+            5,
+            6,
+            40,
+            41
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "Swimming A",
+      "hooks": [
+        {
+          "index": 13,
+          "offset": 7
+        },
+        {
+          "index": 14,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152409824,
+          "functions": [
+            33454624,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            41762032,
+            25836800
+          ],
+          "patterns": [
+            42,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            43,
+            44
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158251248,
+          "functions": [
+            31268448,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            41307504,
+            26768704
+          ],
+          "patterns": [
+            45,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            43,
+            44
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "Swimming B",
+      "hooks": [
+        {
+          "index": 15,
+          "offset": 7
+        },
+        {
+          "index": 16,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152713456,
+          "functions": [
+            134658368,
+            91348416,
+            113806816,
+            108752608,
+            108752736,
+            113806848,
+            87507440,
+            134634496,
+            134636864
+          ],
+          "patterns": [
+            32,
+            46,
+            39,
+            47,
+            48,
+            49,
+            6,
+            50,
+            51
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158556032,
+          "functions": [
+            143532080,
+            105540112,
+            125690800,
+            121629728,
+            121629856,
+            125690832,
+            102533936,
+            56319216,
+            143513184
+          ],
+          "patterns": [
+            32,
+            46,
+            39,
+            47,
+            48,
+            49,
+            6,
+            52,
+            51
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "ShallowSwim",
+      "hooks": [
+        {
+          "index": 17,
+          "offset": 7
+        },
+        {
+          "index": 18,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152415072,
+          "functions": [
+            114192272,
+            22162256,
+            25150384,
+            111423712,
+            111423840,
+            111448048,
+            87507440,
+            113896704,
+            113900224
+          ],
+          "patterns": [
+            32,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            53,
+            54
+          ],
+          "following_qword": 0
+        },
+        {
+          "version": "108",
+          "table_rva": 158256736,
+          "functions": [
+            41570224,
+            14587168,
+            21102144,
+            123936864,
+            123936992,
+            123959840,
+            102533936,
+            125766704,
+            125769584
+          ],
+          "patterns": [
+            55,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            53,
+            56
+          ],
+          "following_qword": 0
+        }
+      ]
+    },
+    {
+      "name": "HayStack",
+      "hooks": [
+        {
+          "index": 19,
+          "offset": 7
+        },
+        {
+          "index": 20,
+          "offset": 8
+        }
+      ],
+      "banks": [
+        {
+          "version": "106",
+          "table_rva": 152326608,
+          "functions": [
+            33205712,
+            94093984,
+            89066384,
+            111423712,
+            111423840,
+            111423920,
+            87507440,
+            28754016,
+            89069648
+          ],
+          "patterns": [
+            57,
+            1,
+            39,
+            3,
+            4,
+            35,
+            6,
+            58,
+            59
+          ],
+          "following_qword": 5376126864
+        },
+        {
+          "version": "108",
+          "table_rva": 158168080,
+          "functions": [
+            31047136,
+            108077024,
+            103617856,
+            123936864,
+            123936992,
+            123937072,
+            102533936,
+            26280432,
+            17907040
+          ],
+          "patterns": [
+            60,
+            1,
+            39,
+            3,
+            4,
+            35,
+            6,
+            58,
+            61
+          ],
+          "following_qword": 5375353904
+        }
+      ]
+    }
+  ],
+  "patterns": [
+    {
+      "bytes": "4157415641554154565755534883ec488954242c4889ce488b05000000004831e0488944244048bd00000000ffffffff48bfffffff01ffffff7f488d0500000000488901488b9940030000488d05000000004839c30f84000000004c8d35000000004c8b3d00000000eb00",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffff00000000ffffffffff00000000ffffff00000000ffffff00000000ff00",
+      "length": 107
+    },
+    {
+      "bytes": "564883ec204889ce488b4108488b90a80000008b42108941280fb742146689412c4883c2184883c130e800000000488b06488b4e100fb751106689562a8a4904f6d1884e2d4889f14883c4205e48ff6038",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 81
+    },
+    {
+      "bytes": "4157415641545657534883ec284889ce488b01ff5040488b4608488b80a8000000488b4860488d5648e800000000488b4608488b80a8000000488b4060488b78208b470825ff3f000074004c8b37c1e0034c8d3c40488d5e284531e4eb00",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffff00",
+      "length": 94
+    },
+    {
+      "bytes": "415741565657534883ec204889d34889cee800000000803b0074004883c4205b5f5e415e415fc3",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffff00ffffffffffffffffffffffff",
+      "length": 39
+    },
+    {
+      "bytes": "564883ec204889ce488b4108488b90a80000008b42108941280fb742146689412c4883c2184883c130e800000000488b46100fb7481066894e2a8a4004f6d088462d4883c4205ec3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 72
+    },
+    {
+      "bytes": "5657534883ec204889ce488b4108488b80a8000000488b4860488d5648e800000000488b4608488b80a8000000488b4060488b4820488d5620e8000000008b465c6685c0790089c181e1ff3f00007400488b7e54c1e103488d1c494889f9e8000000004883c7184883c3e875008b465c2500c0ffff89465c4883c4205b5f5ec3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00ffffffffffffffffff00ffffffffffffffffffffffffffffff00000000ffffffffffffffffff00ffffffffffffffffffffffffffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "c3",
+      "mask": "ff",
+      "length": 1
+    },
+    {
+      "bytes": "4157415641554154565755534881ecd8000000c5f829b424c00000004889ce488b05000000004831e048898424b8000000488b4108488b80a8000000488b4060488b4820488d0500000000488d9c2490000000488903c7430863e367f54531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903bd5f99b58b896b084c897318488d050000000048894310488d0500000000488943204883c150488b5620488d9c24900000004989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000",
+      "length": 261
+    },
+    {
+      "bytes": "41565657534883ec58c5f8297424404889ce488b05000000004831e0488944243880b948030000000f8500000000488bbe700200004885ff0f8400000000488b4608488b80a8000000488b4060488d5e48488b48184889fae8000000004889d94889fae800000000488b8e700200004885c90f8400000000488b01ff5040488bbe700200004885ff0f8400000000488b05000000004889f948c1e91c48baf8ffffff070000004821ca488b04104885c00f840000000089f9c1e90f81e1feff00008a04083cff74000fb6d8eb00",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00000000ffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00ffffffff00",
+      "length": 205
+    },
+    {
+      "bytes": "4156565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901488b8940030000e80000000048c7864003000000000000488b8ee80200004885c90f8500000000488b8ea00200004885c90f8500000000488b8e88020000e80000000031db48899e88020000488b8e80020000e800000000",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000",
+      "length": 128
+    },
+    {
+      "bytes": "415741564154565755534881ecc0000000c5f829b424b00000004889ce488b05000000004831e048898424a8000000488b4108488b80a8000000488b4060488b4820488d0500000000488d9c2480000000488903c7430863e367f54531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903bd5f99b58b896b084c897318488d050000000048894310488d0500000000488943204883c150488b5620488d9c24800000004989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000",
+      "length": 259
+    },
+    {
+      "bytes": "56574883ec2889d74889ce488d05000000004889014883c170e800000000488d0500000000488906f64669407400488d4e60488b114885d27500488d4e54e800000000488d4e48e800000000488d4e30e80000000085ff75004889f04883c4285f5ec3",
+      "mask": "ffffffffffffffffffffffffffff00000000ffffffffffffffff00000000ffffff00000000ffffffffffffffff00ffffffffffffffffffffff00ffffffffff00000000ffffffffff00000000ffffffffff00000000ffffff00ffffffffffffffffffff",
+      "length": 99
+    },
+    {
+      "bytes": "565755534881ec480100004889ce488b05000000004831e04889842440010000488b4108488b80a8000000488b4060488b4820488d5620e800000000488b4608488b80a8000000488b4058488b4010b9280400004803883037000048c74424200000000031edbaba25d77e41b80067e8974531c9e800000000488b4608488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f931d24989d8e8000000004889f931d24989d8e800000000488b4608488b80a8000000488b4060488b4058488b88380100008a9067010000e8000000004889c7488d5c24304889d9e800000000c7430821000000c5f828475048c7434002000000c5f8294330",
+      "mask": "ffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 258
+    },
+    {
+      "bytes": "5657534883ec204889ce488b4108488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f94889dae8000000004889f94889dae80000000048837e780075004883c4205b5f5ec3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffff00ffffffffffffffff",
+      "length": 80
+    },
+    {
+      "bytes": "56574883ec2889d74889ce488d0500000000488901488d050000000048894170488b8980000000e80000000048c7868000000000000000488d0500000000488906f64669407400488d4e60488b114885d27500488d4e54e800000000488d4e48e800000000488d4e30e80000000085ff75004889f04883c4285f5ec3",
+      "mask": "ffffffffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffff00000000ffffffffffffffff00ffffffffffffffffffffff00ffffffffff00000000ffffffffff00000000ffffffffff00000000ffffff00ffffffffffffffffffff",
+      "length": 124
+    },
+    {
+      "bytes": "4156565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901f64169407400488d4e60488b114885d20f8500000000488d4e54e8000000008b46500fbae00e7300488b5e484885db7500488d4e30e80000000085ff0f8500000000488b4c24384831e1e8000000004889f04883c4405b5d",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffff00ffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffff00ffffffffffffffff00ffffffffff00000000ffffffff00000000ffffffffffffffffff00000000ffffffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "41565657534883ec584889ce488b05000000004831e04889442450488b4108488b80a8000000488b4060488b4820488d7e204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b1d000000004883c3784889f14889dae8000000008a88900200008888910200004889f14889dae800000000c6809002000001b101e80000000048898688000000",
+      "mask": "ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffff",
+      "length": 259
+    },
+    {
+      "bytes": "5657534883ec204889ce488b4108488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f94889dae8000000004889f94889dae800000000488b4608488b80a8000000488b4058488b4010488b88d82d00004883c4205b5f5ee900000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000",
+      "length": 103
+    },
+    {
+      "bytes": "4157415641554154565755534883ec3889d74889ce488b05000000004831e04889442430488d0500000000488901488b99000100004885db0f850000000048c7860001000000000000488d050000000048898680010000488b9e900100004c8d25000000004c39e30f850000000048c7869001000000000000488d8e10010000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffffffffffffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "4157415641554154565755534883ec784889ce488b05000000004831e04889442470488b4108488b80a8000000488b4060488b4820488d0500000000488d5c2440488903c74308436098c84531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903bd5a883bd7896b084c897318488d050000000048894310488d0500000000488943204883c150488b5620488d5c24404989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903896b084c897318488d0500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffff00000000",
+      "length": 257
+    },
+    {
+      "bytes": "4157415641554154565755534883ec384889ce488b05000000004831e04889442430488b15000000004883c278e80000000080b887000000000f8500000000488b4608488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f94889dae8000000004889f94889dae800000000488b4608488b88a8000000488b4958488b491083b9602c0000007500488b567883ba38010000050f8400000000488b8988350000488b89c80100004885c97400488b098179fbde3bf23a7400488d15000000004889f9e800000000488b4608488b88a8000000488b4958488b4910488b9130370000488b9268030000c64210004c8bb188350000498b96c8010000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffff00ffffff00000000ffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 260
+    },
+    {
+      "bytes": "41574156565755534883ec3889d74889ce488b05000000004831e04889442430488d0500000000488901488b99000100004885db0f850000000031db48899e00010000488d050000000048898680010000488b8e90010000e80000000048899e90010000488d8e10010000e800000000488b8e08010000e80000000048899e08010000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffff00000000ffffffffffffffff00000000ffffffffffffff",
+      "length": 131
+    },
+    {
+      "bytes": "4157415641554154565755534883ec684889ce488b05000000004831e04889442460488b4108488b80a8000000488b4060488b4820488d0500000000488d5c2430488903c74308436098c84531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903bd5a883bd7896b084c897318488d050000000048894310488d0500000000488943204883c150488b5620488d5c24304989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903896b084c897318488d0500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffff00000000",
+      "length": 257
+    },
+    {
+      "bytes": "41565657534883ec284889ce488b15000000004883c278e80000000080b887000000000f8500000000488b4608488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f94889dae8000000004889f94889dae800000000488b4608488b88a8000000488b4958488b491083b9602c0000007500488b567883ba38010000050f8400000000488b8988350000488b89c80100004885c97400488b098179fbde3bf23a7400488d15000000004889f9e800000000488b4608488b88a8000000488b4958488b5110488b8a30370000488b8968030000c6411000488b9a88350000488b8bc80100004885c90f8400000000488b098179fbde3bf23a",
+      "mask": "ffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffff00ffffff00000000ffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffff",
+      "length": 257
+    },
+    {
+      "bytes": "4157415641554154565755534883ec3889d74889ce488b05000000004831e04889442430488d0500000000488901488d050000000048894178488b9988000000488d05000000004839c30f850000000048c7868800000000000000488b5e704885db7500488d0500000000488906f64669407400488d4e60488b114885d20f8500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffffffffffffffffffffffffff00ffffff00000000ffffffffffffffff00ffffffffffffffffffffffff00000000",
+      "length": 132
+    },
+    {
+      "bytes": "41574156565755534881ec68010000c5f829b424500100004889ce488b05000000004831e04889842448010000488b4108488b80a8000000488b4060488b4820488d0500000000488d5c2430488903c743085a883bd74531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903bd0aebe15f896b084c897318488d050000000048894310488d0500000000488943204883c150488b5620488d5c24304989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903896b08",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffff",
+      "length": 257
+    },
+    {
+      "bytes": "41565657534883ec284889ce488b15000000004883c278e80000000080b88700000000750080bec3000000000f84000000004883be80000000000f8500000000488b4608488b80a8000000488b4058488b4010488b4038488b70584889f1e80000000084c00f85000000004883c4285b5f5e415ec3",
+      "mask": "ffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffff00ffffffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffff00000000ffffffffffffffffffff",
+      "length": 117
+    },
+    {
+      "bytes": "4156565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901488d050000000048894178488b8988000000e80000000048c7868800000000000000488b5e704885db7500488d0500000000488906f64669407400488d4e60488b114885d20f8500000000488d4e54e8000000008b46500fbae00e",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffff00ffffff00000000ffffffffffffffff00ffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffff",
+      "length": 131
+    },
+    {
+      "bytes": "41565657534883ec284889ce488b15000000004883c278e80000000080b88700000000750080bec3000000000f84000000004883be80000000000f8500000000488b4608488b80a8000000488b4058488b4010488b4038488b70584889f1e80000000084c075004883c4285b5f5e415ec3",
+      "mask": "ffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffff00ffffffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffff00ffffffffffffffffffff",
+      "length": 113
+    },
+    {
+      "bytes": "56574883ec2889d74889ce488d0500000000488901f64169407400488d4e60488b114885d27400e800000000488d4e54e800000000488d4e48e800000000488d4e30e80000000085ff74004889f1e8000000004889f04883c4285f5ec3",
+      "mask": "ffffffffffffffffffffffffffff00000000ffffffffffffffff00ffffffffffffffffffffff00ff00000000ffffffffff00000000ffffffffff00000000ffffffffff00000000ffffff00ffffffff00000000ffffffffffffffffffff",
+      "length": 93
+    },
+    {
+      "bytes": "41565657534883ec484889cf488b05000000004831e04889442440488b4108488b80a8000000488b4060488b4820488d77204889f2e800000000488b4708488b80a8000000488b4060488b48204889f2e800000000488b4708488b80a8000000488b4058488b4010b9280400004803883037000048c744242000000000baba25d77e41b848bdd6734531c9e800000000488b4708488b80a8000000488b4058488b4010488b98e03800004c8d35000000004889d931d24d89f0e8000000004889d931d24d89f0e8000000004889d9b2014d89f0e800000000488b4708488b80a8000000488b4060488b4858488b9190000000488b89a8000000480fbae23d7200",
+      "mask": "ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00",
+      "length": 256
+    },
+    {
+      "bytes": "56574883ec28488b4108488b80a8000000488b4058488b4010488bb0e0380000488d3d000000004889f14889fae8000000004889f14889fae8000000004889f14889fa4883c4285f5ee900000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffff00000000",
+      "length": 78
+    },
+    {
+      "bytes": "56574883ec2889d74889cee80000000085ff74004889f1e8000000004889f04883c4285f5ec3",
+      "mask": "ffffffffffffffffffffffff00000000ffffff00ffffffff00000000ffffffffffffffffffff",
+      "length": 38
+    },
+    {
+      "bytes": "5657534881eca00100004889ce488b05000000004831e04889842498010000488b4108488b80a8000000488b4060488b4820488d7e204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f931d24989d8e8000000004889f931d24989d8e800000000",
+      "mask": "ffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffffffff00000000",
+      "length": 256
+    },
+    {
+      "bytes": "4157415641554154565755534883ec4889d74889ce488b05000000004831e04889442440488d05000000004889014c8d2d000000004c89a958020000488b99680200004c8d25000000004c39e30f850000000048c78668020000000000004c89ae10020000488b9e200200004c39e30f850000000048c7862002000000000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "5657534883ec204889ce488b4108488b80a8000000488b4860488d5648e800000000488b4608488b80a8000000488b4060488b4820488d5620e8000000008b465c6685c0790089c181e1ff3f000075002500c0ffff89465c4883c4205b5f5ec3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00ffffffffffffffffff00ffffffffffffffffffffffffffffffff",
+      "length": 96
+    },
+    {
+      "bytes": "415741564154565755534883ec604889ce488b05000000004831e04889442458488b4108488b80a8000000488b4060488b4820488d0500000000488d5c2430488903c743085a883bd74531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903c74308814fa8374c897318488d050000000048894310488d0500000000488943204883c150488b5620488d5c24304989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903c7430863e367f54c897318488d0500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000",
+      "length": 258
+    },
+    {
+      "bytes": "415741565657534883ec304889ce488b05000000004831e04889442428488b4108488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f94889dae8000000004889f94889dae8000000004889f94889dae8000000004883bed0010000000f8500000000488b4608488b80a8000000488b4058488b4010488b88582c0000488b81080100004881c108010000ff1031c98988a00000008888a40000008988400100008888440100008988e00100008888e4010000898880020000888884020000898820030000888824030000894808388e840000000f8400000000488b4608488b80a8000000488b40604c8b7020498b4658418b4e604989c9",
+      "mask": "ffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 258
+    },
+    {
+      "bytes": "4156565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901488d1d0000000048899958020000488b8968020000e8000000004531f64c89b66802000048899e10020000488b8e20020000e8000000004c89b62002000048899ec8010000488b8ed8010000e8000000004c89b6d8010000",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "564883ec204889ce488b01ff50404889f14883c4205ee900000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffff00000000",
+      "length": 27
+    },
+    {
+      "bytes": "41574156565755534883ec484889ce488b05000000004831e04889442440488b4108488b80a8000000488b4060488b4820488d7e204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff",
+      "length": 261
+    },
+    {
+      "bytes": "4156565755534883ec404889ce488b05000000004831e04889442438488b4108488b80a8000000488b4058488b4010488bb8e0380000488d1d000000004889f94889dae8000000004889f94889dae8000000004889f94889dae8000000004883be98010000000f8500000000488b4608488b80a8000000488b4058488b4010488b88582c0000488b81080100004881c108010000ff1031c98988a00000008888a40000008988400100008888440100008988e00100008888e4010000898880020000888884020000898820030000888824030000894808384e7b7400488b4608488b80a8000000488b4060488b5820488d4b504c8d3500000000488d7c24284c8937",
+      "mask": "ffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffff",
+      "length": 258
+    },
+    {
+      "bytes": "4157415641554154565755534883ec4889d74889ce488b05000000004831e04889442440488d05000000004889014c8d25000000004c89a1a0010000488b99b0010000488d2d000000004839eb0f850000000048c786b0010000000000004c89a658010000488b9e680100004839eb0f850000000048c7866801000000000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "4157415641554154565755534881ece8000000c5f829bc24d0000000c5f829b424c00000004889ce488b05000000004831e048898424b8000000488b4108488b80a8000000488b4060488b4820488d0500000000488d5c2450488903bd5a883bd7896b084531f64c897318488d050000000048894310488d0500000000488943204883c150488d7e28488b56204989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000488903896b084c897318488d050000000048894310488d0500000000488943204883c150488b5620488d5c24504989f84989d9e800000000488b4608488b80a8000000488b4060488b4820488d0500000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffff00000000ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000",
+      "length": 260
+    },
+    {
+      "bytes": "41565657534883ec284889ce488b4108488b80a8000000488b4058488b4010488b80e02d000080a010020000fdb1018888a8000000488b4608488b80a8000000488b4058488b4010488b80e02d000080a010020000ef8888a8000000488b4608488b80a8000000488b4058488b4010488b4038488b78584889f9e80000000084c00f850000000080bef0000000000f8500000000488b4608488b80a8000000488b4060488b4810e8000000004883be60010000000f85000000004883bea8010000000f8500000000488b4608488b80a8000000488b4058488b4010488b4038488b4858488d1500000000e8000000004885c074008b8894040000f6c102740083e1fd",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffff00000000ffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ff00000000ffffffff00ffffffffffffffffffff00ffffff",
+      "length": 258
+    },
+    {
+      "bytes": "4156565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901488d1d00000000488999a0010000488b89b0010000e8000000004531f64c89b6b001000048899e58010000488b8e68010000e8000000004c89b66801000048899e10010000488b8e20010000e8000000004c89b620010000",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffff00000000ffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "564883ec204889ce488b4108488b90a80000008b42188941280fb7421c6689412c4883c2204883c130e800000000488b4610488b16488b4e08488b89a00000008b0903481066894e2a8a4004f6d088462d4889f14883c4205e48ff6238",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 93
+    },
+    {
+      "bytes": "415741565657534883ec20803a0074004883c4205b5f5e415e415fc3",
+      "mask": "ffffffffffffffffffffffffffffff00ffffffffffffffffffffffff",
+      "length": 28
+    },
+    {
+      "bytes": "564883ec204889ce488b4108488b90a80000008b42188941280fb7421c6689412c4883c2204883c130e800000000488b4608488b4e10488b80a00000008b000341106689462a8a4104f6d088462d4883c4205ec3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 84
+    },
+    {
+      "bytes": "5657534883ec204889ce488b4108488b80a8000000488b4838488d5648e800000000488b4608488b80a8000000488b4038488b4820488d5620e8000000008b465c6685c0790089c181e1ff3f00007400488b7e54c1e103488d1c494889f9e8000000004883c7184883c3e875008b465c2500c0ffff89465c4883c4205b5f5ec3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffff00ffffffffffffffffff00ffffffffffffffffffffffffffffff00000000ffffffffffffffffff00ffffffffffffffffffffffffffffffffffffff",
+      "length": 128
+    },
+    {
+      "bytes": "4157415641554154565755534881ece80100004889ce488b05000000004831e048898424e0010000488b4108488b80a8000000488b4038488b4820488d7e204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b48384883c1284c8d4654ba67a8a867e800000000c786a800000000000000488b4608488b80a8000000488b80b82b0000bf28040000488b88d80000004801f931db",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 257
+    },
+    {
+      "bytes": "5657534883ec304889ce488b05000000004831e04889442428488d9138010000488b4108488b80a8000000488b4038488b4858e800000000488d9640010000488b4608488b80a8000000488b4038488b48584531c0e800000000488b4608488b80a8000000488bb8d82b00004c8d44242049c70000000000488d96600100004889f1e800000000488d1d000000004889f94889dae8000000004889f94889dae80000000080bf6c140000007400c687f314000001c6876c1400000080be90000000007500488b4608488b80a8000000488b4038488b5058488b8aa80000004881c2c80100004531c0e800000000ba780f0000480315000000004889f1e800000000",
+      "mask": "ffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffff00000000ffffffffffffff00000000ffffffffffffff00000000ffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffff00000000ffffffff00000000",
+      "length": 257
+    },
+    {
+      "bytes": "41565657534881ecd80100004889ce488b05000000004831e048898424d0010000488b4108488b80a8000000488b4038488b4820488d7e204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b4038488b48204889fae800000000488b4608488b80a8000000488b48384883c1284c8d4654ba67a8a867e800000000c786a800000000000000488b4608488b80a8000000488b80b82b0000bf28040000488b88d80000004801f931db48895c2420ba475fc983",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 260
+    },
+    {
+      "bytes": "41565657534883ec284889ce488b4108488b80a8000000488b4060488b4820488d7e204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000",
+      "length": 259
+    },
+    {
+      "bytes": "5657534883ec304889cee8000000004889f1e800000000e8000000004885c07400488b80b8040000f6400b807400488b384885ff7400e8000000004881c7880000004c8b004889c14889fa41ff90f0000000488b4608488b80a8000000488b4058488b4010b9280400004803883037000048c744242000000000baf781a2334531c04531c9e800000000488b4608488b80a8000000488b4060488b4810e8000000008a9ec4000000ba200d0000480315000000004889f1e800000000889895010000488b15000000004883c2784889f1e800000000fe88090100007500c6800801000001488b15000000004883c2784889f1e8000000004883b860010000007500",
+      "mask": "ffffffffffffffffffffff00000000ffffffff00000000ff00000000ffffffff00ffffffffffffffffffffffff00ffffffffffffff00ff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffff00000000ffffffff00000000ffffffffffffffffff00000000ffffffffffffffff00000000ffffffffffffff00ffffffffffffffffffff00000000ffffffffffffffff00000000ffffffffffffffffff00",
+      "length": 257
+    },
+    {
+      "bytes": "4156565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901488b89b8000000e80000000048c786b800000000000000488b4e704885c97500488d05000000004889068b46680fbae00e0f8300000000488b5e604885db0f84000000000fbae01e0f8200000000488b05000000004889d9",
+      "mask": "ffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffff00ffffff00000000ffffffffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffff00000000ffffff00000000ffffff",
+      "length": 128
+    },
+    {
+      "bytes": "5657534883ec304889cee8000000004889f1e800000000e8000000004885c07400488b80b8040000f6400b807400488b384885ff7400e8000000004881c7880000004c8b004889c14889fa41ff90f0000000488b4608488b80a8000000488b4058488b4010b9280400004803883037000048c744242000000000baf781a2334531c04531c9e800000000488b4608488b80a8000000488b4060488b4810e8000000008a9ec4000000ba880e0000480315000000004889f1e800000000889895010000488b15000000004883c2784889f1e800000000fe88090100007500c6800801000001488b15000000004883c2784889f1e8000000004883b860010000007500",
+      "mask": "ffffffffffffffffffffff00000000ffffffff00000000ff00000000ffffffff00ffffffffffffffffffffffff00ffffffffffffff00ff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffff00000000ffffffff00000000ffffffffffffffffff00000000ffffffffffffffff00000000ffffffffffffff00ffffffffffffffffffff00000000ffffffffffffffff00000000ffffffffffffffffff00",
+      "length": 257
+    },
+    {
+      "bytes": "4157415641554154565755534883ec588954242c4889ce488b05000000004831e0488944245048bf00000000ffffffff48bbffffff01ffffff7f488d05000000004889014c8db188000000488b81880000004c89f1ff50408b86740100006685c048897424204c89742438790089c181e1ff3f00000f85000000000fbae00e7300",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffff00000000ffffffffff00",
+      "length": 129
+    },
+    {
+      "bytes": "415741565657534881ec90000000c5f829bc2480000000c5f8297424704889ce488b05000000004831e04889442468488b4108488b80a8000000488b4060488b4820488d7e204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b48204889fae800000000488b4608488b80a8000000488b4060488b4820",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffff",
+      "length": 259
+    },
+    {
+      "bytes": "41574156415541545657534883ec404889ce488b05000000004831e04889442438488b4108488b80a8000000488b4060488b78584889f9ba06000000e8000000004c8d3d000000004c39be580100007400488b97a80000004885d27400488b0500000000bb5001000048035850488d8fc8010000e8000000004885c074004c8d86580100004805f00000004889c14889dae800000000488b86600100004863580848c1fb1f4823187400488b87c801000048894424304c39f8740048b90000000001000000f048014808488d5424304889d9e8000000008b83b0000000b9060000004883f8067700488d0d000000008b0c81488b53184989f8e800000000488b4608",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffff00000000ffffffffffffffff00ffffffffffffffffffffff00ffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffff00ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffff00ffffff00000000ffffffffffffffffffffff00000000ffffffff",
+      "length": 258
+    },
+    {
+      "bytes": "415741564154565755534883ec4089d74889ce488b05000000004831e04889442438488d0500000000488901488d9988000000488b81880000004889d9ff50408b86740100006685c0790089c181e1ff3f000074004c8bb66c010000c1e1044c8d3c894531e44b8b0c26e8000000004bc70426000000004983c4504d39e77500",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffff00",
+      "length": 128
+    },
+    {
+      "bytes": "4157415641545657534883ec384889ce488b05000000004831e04889442430488b4108488b80a8000000488b4060488b78584889f9ba06000000e8000000004c8d3d000000004c39be580100007400488b97a80000004885d27400488b0500000000bb5001000048035850488d8fc8010000e8000000004885c074004c8d86580100004805f00000004889c14889dae800000000488b86600100004c63600849c1fc1f4c23200f8400000000488b87c801000048894424284c39f8740048b90000000001000000f048014808498d9c24080100004889d9e800000000498d8c24fc0000004c8d7424284c89f2e8000000004889d9ff1500000000498b0ee800000000",
+      "mask": "ffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffff00000000ffffffffffffffff00ffffffffffffffffffffff00ffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffff00ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffff00000000ffffffffff00000000ffffffff00000000",
+      "length": 258
+    },
+    {
+      "bytes": "48895c24185556574883ec200fb779424c8d4424400fb7714033ed48896c2440488bd9488b4928488b0185ff0f84000000008bd7ff501885c00f850000000048396c24400f84000000004c89742448e80000000084c074008b4b088d5501e8000000004c8b7330448bd50fb743404c8b4c24404d8d048685ff74004d8bde4d2bd8428d14950000000041ffc241892c918d420141892c818d4a02438b04038d520341890489418b004d8d400441890491443bd77200448d04f50000000033d2498bcee800000000488b4b284533c08bd7488b01ff50204c8b74244866896b42488b5c24504883c4205f5e5dc3",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffff00000000ffffffffffffff00000000ffffffffffff00000000ffffff00ffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "length": 236
+    },
+    {
+      "bytes": "4157415641554154565755534883ec584531f6803d00000000000f840000000089cd448b9424d00000004c8b9c24c00000004c8b2d00000000498d85100100004889442448418b850801000085c00f88000000008d4801f0410fb18d0801000075004889542450418b8d5001000085c90f840000000089e831d2f7f1498b8548010000",
+      "mask": "ffffffffffffffffffffffffffffffffffffffffff00000000ffffff00000000ffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffff00ffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffff",
+      "length": 131
+    }
+  ],
+  "common_filters": {
+    "3": [
+      3,
+      47
+    ],
+    "4": [
+      4,
+      48
+    ],
+    "6": [
+      6
+    ]
+  },
+  "known108": {
+    "sha256": "6f89418be0de287c7dd29893326ebfb817c3472c0106ece8a6e8f81a915c3a55",
+    "timestamp": 1791395456,
+    "image_size": 501645312,
+    "flush_rva": 98417712,
+    "post_event_rva": 8751200,
+    "xinput_iat_rva": 487049696,
+    "states": [
+      {
+        "slot": 158219864,
+        "function": 14603808
+      },
+      {
+        "slot": 158219872,
+        "function": 21102496
+      },
+      {
+        "slot": 158223064,
+        "function": 112116832
+      },
+      {
+        "slot": 158222984,
+        "function": 124637952
+      },
+      {
+        "slot": 158205736,
+        "function": 40250896
+      },
+      {
+        "slot": 158205496,
+        "function": 31173824
+      },
+      {
+        "slot": 158220664,
+        "function": 124579184
+      },
+      {
+        "slot": 158220672,
+        "function": 124579856
+      },
+      {
+        "slot": 158205016,
+        "function": 124564992
+      },
+      {
+        "slot": 158178424,
+        "function": 14627056
+      },
+      {
+        "slot": 158178432,
+        "function": 17765552
+      },
+      {
+        "slot": 158988648,
+        "function": 124230064
+      },
+      {
+        "slot": 158988656,
+        "function": 124235072
+      },
+      {
+        "slot": 158251304,
+        "function": 41307504
+      },
+      {
+        "slot": 158251312,
+        "function": 26768704
+      },
+      {
+        "slot": 158556088,
+        "function": 56319216
+      },
+      {
+        "slot": 158556096,
+        "function": 143513184
+      },
+      {
+        "slot": 158256792,
+        "function": 125766704
+      },
+      {
+        "slot": 158256800,
+        "function": 125769584
+      },
+      {
+        "slot": 158168136,
+        "function": 26280432
+      },
+      {
+        "slot": 158168144,
+        "function": 17907040
+      }
+    ]
+  }
+}
