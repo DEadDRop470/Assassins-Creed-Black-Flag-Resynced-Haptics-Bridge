@@ -304,4 +304,4 @@ The mod is provided under the warranty and liability terms in LICENSE.txt. No ga
 
 Please report controller-specific problems, missed effects or unexpected behaviour with enough detail to reproduce them.
 
-<p align="center"><strong>Not perfect but perfectible.<br>DEadDRop out!</strong></p>remaking readmea
+<p align="center"><strong>Not perfect but perfectible.<br>DEadDRop out!</strong></p>
