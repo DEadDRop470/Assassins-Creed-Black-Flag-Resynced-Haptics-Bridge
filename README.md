@@ -15,7 +15,7 @@
 
 <p align="center">
   By <strong>DEadDRop</strong><br>
-  <em>Not perfect but perfectible.</em>
+ 
 </p>
 
 <p align="center">
